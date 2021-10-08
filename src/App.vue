@@ -69,10 +69,39 @@
 
 <script>
 export default {
-  data: () => ({
-    links: ["Sensor", "mi", "mu", "bu"],
-    temperature: 30,
-    humidity: 60,
-  }),
+  name: 'Sensors',
+
+  created(){
+    this.startWebSocket();
+  },
+
+  data() {
+    return{
+      links: ["Sensor", "mi", "mu", "bu"],
+      connection: null,
+      temperature: 30,
+      humidity: 60,
+    }
+  },
+
+  methods:{
+    startWebSocket()
+    {
+      console.log("Starting connection to WebSocket Server")
+      this.connection = new WebSocket("ws://localhost:2999")
+      
+      this.connection.onopen = function(event)
+      {
+        console.log(event)
+        console.log("connected to the echo websocket server...")
+      }
+
+      this.connection.onmessage = function(event)
+      {
+        console.log(event);
+      }
+    }
+
+  }
 };
 </script>
