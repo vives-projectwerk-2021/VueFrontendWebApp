@@ -69,6 +69,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'Sensors',
 
@@ -101,7 +103,13 @@ export default {
       {
         console.log(event);
       }
+    },
+
+    startAxios()
+    {
+      const api = axios.create
     }
+
 
   }
 };
