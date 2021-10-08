@@ -90,7 +90,7 @@ export default {
     startWebSocket()
     {
       console.log("Starting connection to WebSocket Server")
-      this.connection = new WebSocket("ws://localhost:2999")
+      this.connection = new WebSocket("ws://localhost:3000")
       
       this.connection.onopen = function(event)
       {
