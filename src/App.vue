@@ -16,7 +16,7 @@
             <v-sheet min-height="80vh" rounded="lg">
               <v-col>
                 <vue-ellipse-progress
-                  :progress="(100/50)*this.temperature"
+                  :progress="(100/50)*temperature"
                   :determinate="false"
                   color="#009E45"
                   empty-color="#324c7e"
@@ -24,7 +24,7 @@
                   :thickness="5"
                   :empty-thickness="3"
                   lineMode="in 10"
-                  :legend-value="this.temperature"
+                  :legend-value="temperature"
                   animation="loop 700 1000"
                   fontSize="1.5rem"
                   font-color="#009E45"
@@ -39,7 +39,7 @@
 
                 <vue-ellipse-progress
                   class="ml-14"
-                  :progress="this.humidity"
+                  :progress="humidity"
                   :determinate="false"
                   color="#009E45"
                   empty-color="#324c7e"
@@ -47,7 +47,7 @@
                   :thickness="5"
                   :empty-thickness="3"
                   lineMode="in 10"
-                  :legend-value="this.humidity"
+                  :legend-value="humidity"
                   animation="loop 700 1000"
                   fontSize="1.5rem"
                   font-color="#009E45"
@@ -59,6 +59,7 @@
                   <p slot="legend-caption">Humidity</p>
                 </vue-ellipse-progress>
               </v-col>
+              <v-text-field type="number" v-model="temperature" label="temp"></v-text-field>
             </v-sheet>
           </v-col>
         </v-row>
@@ -79,7 +80,7 @@ export default {
     return{
       links: ["Sensor", "mi", "mu", "bu"],
       connection: null,
-      temperature: 30,
+      temperature: 31,
       humidity: 60,
     }
   },
