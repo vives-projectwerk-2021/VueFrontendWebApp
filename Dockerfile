@@ -9,5 +9,7 @@ COPY . .
 
 RUN npm install
 
+EXPOSE 8080
+
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
 CMD ["npm", "run", "serve"]
