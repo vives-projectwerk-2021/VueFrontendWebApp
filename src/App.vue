@@ -16,7 +16,7 @@
             <v-sheet min-height="80vh" rounded="lg">
               <v-col>
                 <vue-ellipse-progress
-                  :progress="(100/50)*temperature"
+                  :progress="(100/50)*deviceValues.temperature"
                   :determinate="false"
                   color="#009E45"
                   empty-color="#324c7e"
@@ -24,7 +24,7 @@
                   :thickness="5"
                   :empty-thickness="3"
                   lineMode="in 10"
-                  :legend-value="temperature"
+                  :legend-value="deviceValues.temperature"
                   animation="loop 700 1000"
                   fontSize="1.5rem"
                   font-color="#009E45"
@@ -39,7 +39,7 @@
 
                 <vue-ellipse-progress
                   class="ml-14"
-                  :progress="humidity"
+                  :progress="deviceValues.humidity"
                   :determinate="false"
                   color="#009E45"
                   empty-color="#324c7e"
@@ -47,7 +47,7 @@
                   :thickness="5"
                   :empty-thickness="3"
                   lineMode="in 10"
-                  :legend-value="humidity"
+                  :legend-value="deviceValues.humidity"
                   animation="loop 700 1000"
                   fontSize="1.5rem"
                   font-color="#009E45"
@@ -59,8 +59,6 @@
                   <p slot="legend-caption">Humidity</p>
                 </vue-ellipse-progress>
               </v-col>
-              <!-- <v-text-field type="number" v-model="temperature" label="temp"></v-text-field> -->
-
             </v-sheet>
           </v-col>
         </v-row>
@@ -73,45 +71,16 @@
 export default {
   name: 'Sensors',
 
-  created(){
-    this.startWebSocket();
-  },
-
+  created(){},
   data() {
     return{
       links: ["Sensor", "mi", "mu", "bu"],
-      connection: null,
-      temperature: 32,
-      humidity: 60,
-      values: {}
     }
   },
-
-  methods:{
-    startWebSocket()
-    {
-      console.log("Starting connection to WebSocket Server")
-      this.connection = new WebSocket("ws://localhost:3000")
-      
-      this.connection.onopen = function(event)
-      {
-        console.log(event)
-        console.log("connected to the echo websocket server...")
-      }
-
-      this.connection.onmessage = function(event)
-      {
-        this.values = JSON.parse(event.data)
-        console.log(this.values)
-
-        this.temperature = this.values.temperature
-        this.humidity = this.values.humidity
-        console.log("Temperature:" + this.temperature)
-       
-        
-      }
+  computed: {
+    deviceValues() {
+      return this.$store.state.deviceValues
     }
-
   }
 };
 </script>
