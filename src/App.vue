@@ -59,7 +59,7 @@
                   <p slot="legend-caption">Humidity</p>
                 </vue-ellipse-progress>
               </v-col>
-              <v-text-field type="number" v-model="temperature" label="temp"></v-text-field>
+              <!-- <v-text-field type="number" v-model="temperature" label="temp"></v-text-field> -->
 
             </v-sheet>
           </v-col>
@@ -81,8 +81,9 @@ export default {
     return{
       links: ["Sensor", "mi", "mu", "bu"],
       connection: null,
-      temperature: 31,
+      temperature: 32,
       humidity: 60,
+      values: {}
     }
   },
 
@@ -100,7 +101,14 @@ export default {
 
       this.connection.onmessage = function(event)
       {
-        console.log(event);
+        this.values = JSON.parse(event.data)
+        console.log(this.values)
+
+        this.temperature = this.values.temperature
+        this.humidity = this.values.humidity
+        console.log("Temperature:" + this.temperature)
+       
+        
       }
     }
 
