@@ -17,7 +17,7 @@ export default {
     name: 'NavBar',
     data(){   
         return{
-            links: ["Home", "About"],
+            links: ["Home", "About", "Sensors"],
         }
     }
 }
