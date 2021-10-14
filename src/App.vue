@@ -74,7 +74,7 @@ export default {
   created(){},
   data() {
     return{
-      links: ["Sensor", "mi", "mu", "bu"],
+      links: ["Sensor", "login", "mu", "bu"],
     }
   },
   computed: {
