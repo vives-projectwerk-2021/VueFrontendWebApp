@@ -1,13 +1,7 @@
 <template>
   <v-app id="Pulu App">
-    <!-- De bar -->
-    <v-app-bar app color="white" flat>
-      <v-container class="py-0 fill-height">
-        <v-btn v-for="link in links" :key="link" text>
-          {{ link }}
-        </v-btn>
-      </v-container>
-    </v-app-bar>
+    
+    <nav-bar/>
 
     <v-main class="grey lighten-4">
       <v-container>
@@ -15,49 +9,7 @@
           <v-col>
             <v-sheet min-height="80vh" rounded="lg">
               <v-col>
-                <vue-ellipse-progress
-                  :progress="(100/50)*deviceValues.temperature"
-                  :determinate="false"
-                  color="#009E45"
-                  empty-color="#324c7e"
-                  :size="180"
-                  :thickness="5"
-                  :empty-thickness="3"
-                  lineMode="in 10"
-                  :legend-value="deviceValues.temperature"
-                  animation="loop 700 1000"
-                  fontSize="1.5rem"
-                  font-color="#009E45"
-                  dash="4"
-                  :loading="false"
-                  
-                >
-                  <span slot="legend-value">°C</span>
-                  <p slot="legend-caption">Temperature</p>
-                </vue-ellipse-progress>
-
-
-                <vue-ellipse-progress
-                  class="ml-14"
-                  :progress="deviceValues.humidity"
-                  :determinate="false"
-                  color="#009E45"
-                  empty-color="#324c7e"
-                  :size="180"
-                  :thickness="5"
-                  :empty-thickness="3"
-                  lineMode="in 10"
-                  :legend-value="deviceValues.humidity"
-                  animation="loop 700 1000"
-                  fontSize="1.5rem"
-                  font-color="#009E45"
-                  dash="4"
-                  :loading="false"
-                  
-                >
-                  <span slot="legend-value">%</span>
-                  <p slot="legend-caption">Humidity</p>
-                </vue-ellipse-progress>
+                <router-view/>
               </v-col>
             </v-sheet>
           </v-col>
@@ -68,13 +20,16 @@
 </template>
 
 <script>
+import NavBar from '@/components/NavBar';
+// import Sensor from '@/components/Sensor';
 export default {
+  components: { NavBar},
   name: 'Sensors',
 
   created(){},
   data() {
     return{
-      links: ["Sensor", "login", "mu", "bu"],
+      
     }
   },
   computed: {
