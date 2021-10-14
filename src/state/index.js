@@ -7,20 +7,45 @@ export const store = new Vuex.Store({
     state: {
         ws: new WebSocket(`ws://${window.location.hostname}:3000`),
         deviceValues: {
-          "temperature": 0,
-          "humidity": 0,
-          "sensor1": 0
+          "device_id": String,
+          "time": String,
+          "sensors": {
+            "battery": {
+                "value": Number
+            },
+            "light": {
+                "value": Number
+            },
+            "moisture": {
+                "level1": {"value": Number},
+                "level2": {"value": Number},
+                "level3": {"value": Number},
+                "level4": {"value": Number},
+                "level5": {"value": Number},
+                "level6": {"value": Number},
+                "level7": {"value": Number},
+                "level8": {"value": Number},
+            },
+            "temperature": {
+                "air": {value: Number},
+                "ground": {value: Number}
+            }
+          }
         },
+        hasReceivedData: false
     },
     getters: {},
     mutations: {
         updateDeviceValues: (state, data) => {
-            state.deviceValues = data
+            state.hasReceivedData = true
+            state.deviceValues = data.data
         }
     },
     actions: {
         parseMessage: (store, message) => {
-            store.commit('updateDeviceValues', message)
+            if(message.message == "sensor-data"){
+                store.commit('updateDeviceValues', message)
+            }
         }
     },
     plugins: [
