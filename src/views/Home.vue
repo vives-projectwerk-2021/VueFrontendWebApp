@@ -1,5 +1,5 @@
 <template>
-  <sensor/>
+  <Sensor/>
 </template>
 
 <script>
@@ -9,8 +9,9 @@ import Sensor from '@/components/Sensor'
 
 export default {
   name: 'Home',
+
   components: {
     Sensor
-  }
+  },
 }
 </script>

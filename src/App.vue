@@ -23,10 +23,8 @@
 import NavBar from '@/components/NavBar';
 // import Sensor from '@/components/Sensor';
 export default {
-  components: { NavBar},
-  name: 'Sensors',
 
-  created(){},
+  components: { NavBar},
   data() {
     return{
       
