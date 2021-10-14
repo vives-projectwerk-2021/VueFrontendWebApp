@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from "vuex"
 import App from './App.vue'
+import router from './router'
 import { store } from "./state/index.js"
 import vuetify from './plugins/vuetify'
 import VueEllipseProgress from 'vue-ellipse-progress'
@@ -11,6 +12,7 @@ Vue.use(VueEllipseProgress)
 Vue.use(Vuex)
 
 new Vue({
+  router,
   vuetify,
   render: h => h(App),
   store: store
