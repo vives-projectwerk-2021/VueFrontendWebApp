@@ -3,13 +3,21 @@
 # 2) nginx stage to serve frontend assets
 
 # Name the node stage "builder"
-FROM node:10 AS builder
+FROM node:lts-alpine3.14 AS builder
 # Set working directory
 WORKDIR /app
+
+# Copy the package.json file voor npm the installeren.
+COPY package.json .
+
+# install node modules (blijft in de cache)
+RUN yarn install
+
 # Copy all files from current directory to working dir in image
 COPY . .
-# install node modules and build assets
-RUN yarn install && yarn build
+
+# build assets
+RUN yarn build
 
 # nginx state for serving content
 FROM nginx:alpine
