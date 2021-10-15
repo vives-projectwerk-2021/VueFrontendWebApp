@@ -19,7 +19,7 @@ export default {
         return{
 
 
-            links: ["Home", "About","Add", "Sensors"],
+            links: ["Home", "About","AddSensor", "Sensors"],
 
         }
     }
