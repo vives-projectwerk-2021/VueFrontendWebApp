@@ -35,14 +35,13 @@ export default {
       console.log(
         '{"username": "' + this.username + '", "email": "' + this.location + "}"
       );
+      let json= {name:this.username, location: this.location}
       axios.post(
         `http://localhost:3000/mongo/createdevice`,
-        `{"username": "` +
-          this.username +
-          `", "location": "` +
-          this.location +
-          `}`
-      );
+        json
+        
+      ).then(response=>{console.log(response)})
+      .catch(err=>{console.log(err)})
     },
   },
 };
