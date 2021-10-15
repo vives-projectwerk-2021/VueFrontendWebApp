@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/views/Home.vue'
-import About from '@/views/About'
+import About from '@/views/About' 
 import Sensors from '@/views/Sensors'
+import AddSensor from '@/views/AddSensor'
 
 
 Vue.use(VueRouter)
@@ -15,8 +16,15 @@ const routes = [
   },
   {
     path: '/about',
-    name: 'About',
+    name: 'About',    
     component: About
+    
+  },
+  {
+    path: '/addSensor',
+    name: 'AddSensor',
+    component: AddSensor
+
   },
   {
     path: '/sensors',
