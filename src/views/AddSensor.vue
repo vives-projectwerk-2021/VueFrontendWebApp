@@ -1,11 +1,11 @@
 <template>
   <v-row>
-    <v-col cols="12" sm="2" md="4">
+    <v-col cols="12" sm="3" md="4">
       <v-btn @click="sendData">
         Send data
       </v-btn></v-col
     >
-    <v-col cols="12" sm="10" md="8">
+    <v-col cols="12" sm="9" md="8">
       <v-text-field
         label="Name"
         hide-details="auto"
