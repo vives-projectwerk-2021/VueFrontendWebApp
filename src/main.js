@@ -14,6 +14,7 @@ Vue.use(Vuex)
 new Vue({
   router,
   vuetify,
+  store: store,
   render: h => h(App),
-  store: store
+  
 }).$mount('#app')
