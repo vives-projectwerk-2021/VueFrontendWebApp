@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
     state: {
-        ws: new WebSocket(`ws://${window.location.hostname}:3000`),
+        ws: new WebSocket(process.env.VUE_APP_WS),
         deviceValues: {
           "device_id": String,
           "time": String,
