@@ -39,7 +39,7 @@ export default {
       let json= {name:this.username, location: this.location}
       axios.post(
         
-        `${process.env.BACKEND_BASE_URL}/mongo/createdevice`,
+        `${process.env.VUE_APP_BACKEND_BASE_URL}/mongo/createdevice`,
         json
         
       ).then(response=>{console.log(response)})
