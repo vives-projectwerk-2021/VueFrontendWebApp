@@ -1,5 +1,4 @@
 <template>
-    
         <device-info/>
 </template>
 
@@ -7,10 +6,5 @@
 import DeviceInfo from '@/components/DeviceInfo'
 export default {
   components: { DeviceInfo },
-
 }
 </script>
-
-<style>
-
-</style>
