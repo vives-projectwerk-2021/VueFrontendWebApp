@@ -16,6 +16,9 @@ RUN yarn install
 ARG VUE_APP_WS
 ENV VUE_APP_WS=$VUE_APP_WS
 
+ARG BACKEND_BASE_URL
+ENV BACKEND_BASE_URL=$BACKEND_BASE_URL
+
 # Copy all files from current directory to working dir in image
 COPY . .
 
