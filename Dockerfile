@@ -13,6 +13,12 @@ COPY package.json .
 # install node modules (blijft in de cache)
 RUN yarn install
 
+ARG VUE_APP_WS
+ENV VUE_APP_WS=$VUE_APP_WS
+
+ARG VUE_APP_BACKEND_BASE_URL
+ENV VUE_APP_BACKEND_BASE_URL=$VUE_APP_BACKEND_BASE_URL
+
 # Copy all files from current directory to working dir in image
 COPY . .
 
