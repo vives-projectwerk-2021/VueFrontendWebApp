@@ -69,9 +69,9 @@ export const store = new Vuex.Store({
                     } else {
                         console.log("wait for connection...")
                     }
-                }, 5)
+                }, 100) // @todo timeouts can be different, find a better solution
             } catch (err){
-                console.log("Can't connect to WebSocket")
+                console.log(`Can't connect to WebSocket ${process.env.VUE_APP_WS}`)
             }
         }
     }
