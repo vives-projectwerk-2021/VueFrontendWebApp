@@ -7,42 +7,33 @@ export const store = new Vuex.Store({
     state: {
         ws: undefined,
         wsReadyState: undefined,
-        deviceValues: {
-          "device_id": String,
-          "time": String,
-          "sensors": {
-            "battery": {
-                "value": Number
-            },
-            "light": {
-                "value": Number
-            },
-            "moisture": {
-                "level1": {"value": Number},
-                "level2": {"value": Number},
-                "level3": {"value": Number},
-                "level4": {"value": Number},
-                "level5": {"value": Number},
-                "level6": {"value": Number},
-                "level7": {"value": Number},
-                "level8": {"value": Number},
-            },
-            "temperature": {
-                "air": {"value": Number},
-                "ground": {"value": Number}
-            }
-          }
-        },
+        liveDeviceValues: [],
         hasReceivedData: false
     },
 
     getters: {},
 
     mutations: {
-        updateDeviceValues: (state, data) => {
+        updateDeviceValues: (state, message) => {
+            let doesEntityExist = false
+            let entityPosition = 0
+
+            for(let i=0; i<state.liveDeviceValues.length; i++) {
+                if(state.liveDeviceValues.length > 0 && state.liveDeviceValues[i].device_id == message.data.device_id){
+                    doesEntityExist = true
+                    entityPosition = i
+                }
+            }
+
+            if(doesEntityExist) {
+                console.log("exists")
+                state.liveDeviceValues[entityPosition] = message.data
+            } else {
+                state.liveDeviceValues.push(message.data)
+            }
             state.hasReceivedData = true
-            state.deviceValues = data.data
         },
+
         connectToWs: (state, connection) => {
             state.ws = connection
             state.wsReadyState = connection.readyState
