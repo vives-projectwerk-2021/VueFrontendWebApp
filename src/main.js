@@ -11,6 +11,8 @@ Vue.config.productionTip = false
 Vue.use(VueEllipseProgress)
 Vue.use(Vuex)
 
+
+
 new Vue({
   router,
   vuetify,
