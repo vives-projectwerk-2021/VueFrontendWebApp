@@ -5,41 +5,12 @@
 </template>
 
 <script>
-import AddSensorPage from '@/components/AddSensorPage'
-import axios from "axios";
+import AddSensorPage from "@/components/AddSensorPage";
 
 export default {
   name: "addSensor",
   components: {
-    AddSensorPage
-  },
-  data() {
-    return {
-      devicename: "",
-      location: "",
-    };
-  },
-  methods: {
-    sendData() {
-      console.log(
-        '{"username": "' +
-          this.devicename +
-          '", "email": "' +
-          this.location +
-          "}"
-      );
-      let json = { name: this.devicename, location: this.location };
-      axios
-        .post(`http://localhost:3000/mongo/createdevice`, json)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
+    AddSensorPage,
   },
 };
 </script>
-
-<style></style>
