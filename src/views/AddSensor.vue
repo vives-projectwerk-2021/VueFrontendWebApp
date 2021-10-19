@@ -1,49 +1,75 @@
 <template>
-  <v-row>
-    <v-col cols="12" sm="3" md="4">
-      <v-btn @click="sendData">
-        Send data
-      </v-btn></v-col
-    >
-    <v-col cols="12" sm="9" md="8">
-      <v-text-field
-        label="Name"
-        hide-details="auto"
-        v-model="username"
-      ></v-text-field>
-      <v-text-field
-        label="Location"
-        hide-details="auto"
-        v-model="location"
-      ></v-text-field
-    ></v-col>
-  </v-row>
+  <v-container>
+    <v-row>
+      <v-col>
+        <p class="text-h4">Add your sensor!</p>
+      </v-col>
+      <v-col>
+        <v-btn @click="sendData" large class="mx-5">
+          <v-icon>
+            mdi-plus
+          </v-icon>
+          Add Sensor
+        </v-btn></v-col
+      >
+    </v-row>
+    <v-row>
+      <v-col>
+        <v-text-field
+          label="Device Name"
+          hide-details="auto"
+          v-model="devicename"
+        ></v-text-field>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <v-text-field
+          label="First Name"
+          hide-details="auto"
+          v-model="firstname"
+        ></v-text-field>
+      </v-col>
+      <v-col>
+        <v-text-field
+          label="Last Name"
+          hide-details="auto"
+          v-model="lastname"
+        ></v-text-field>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
 import axios from "axios";
 
 export default {
-  name: 'addSensor',
+  name: "addSensor",
   data() {
     return {
-      username: "",
+      devicename: "",
       location: "",
     };
   },
   methods: {
     sendData() {
       console.log(
-        '{"username": "' + this.username + '", "location": "' + this.location + "}"
+        '{"username": "' +
+          this.devicename +
+          '", "email": "' +
+          this.location +
+          "}"
       );
-      let json= {name:this.username, location: this.location}
-      axios.post(
-        
-        `${process.env.VUE_APP_BACKEND_BASE_URL}/mongo/createdevice`,
-        json
-        
-      ).then(response=>{console.log(response)})
-      .catch(err=>{console.log(err)})
+      let json = { name: this.devicename, location: this.location };
+      axios
+        .post(`http://localhost:3000/mongo/createdevice`, json)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 };
