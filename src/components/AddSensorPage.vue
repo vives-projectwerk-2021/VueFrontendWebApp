@@ -61,19 +61,18 @@ export default {
   data() {
     return {
       devicename: "",
-      location: "",
+      firstname: "",
+      lastname: "",
     };
   },
   methods: {
     sendData() {
       console.log(
-        '{"username": "' +
-          this.devicename +
-          '", "email": "' +
-          this.location +
-          "}"
+        'Device Name: "' + this.devicename + '"\n' +
+        'First Name: "' + this.firstname + '"\n' +
+        'Last Name: "' + this.lastname + '"\n'
       );
-      let json = { name: this.username, location: this.location };
+      let json = { name: this.devicename, location: this.firstname };
       axios
         .post(
           `${process.env.VUE_APP_BACKEND_BASE_URL}/mongo/createdevice`,
