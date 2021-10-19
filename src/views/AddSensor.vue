@@ -61,15 +61,14 @@ export default {
           this.location +
           "}"
       );
-      let json = { name: this.devicename, location: this.location };
-      axios
-        .post(`http://localhost:3000/mongo/createdevice`, json)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      let json= {name:this.username, location: this.location}
+      axios.post(
+        
+        `${process.env.VUE_APP_BACKEND_BASE_URL}/mongo/createdevice`,
+        json
+        
+      ).then(response=>{console.log(response)})
+      .catch(err=>{console.log(err)})
     },
   },
 };

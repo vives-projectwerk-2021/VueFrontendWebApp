@@ -21,19 +21,7 @@
 
 <script>
 import NavBar from '@/components/NavBar';
-// import Sensor from '@/components/Sensor';
 export default {
-
-  components: { NavBar},
-  data() {
-    return{
-      
-    }
-  },
-  computed: {
-    deviceValues() {
-      return this.$store.state.deviceValues
-    }
-  }
+  components: { NavBar}
 };
 </script>

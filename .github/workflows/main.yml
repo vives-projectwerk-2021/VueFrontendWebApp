@@ -27,6 +27,9 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ghcr.io/vives-projectwerk-2021/vue-frontend:latest
+          build-args: |
+            VUE_APP_WS=${{ secrets.VUE_APP_WS }}
+            VUE_APP_BACKEND_BASE_URL=${{ secrets.VUE_APP_BACKEND_BASE_URL }}
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
