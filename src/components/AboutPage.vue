@@ -103,6 +103,28 @@
             </div>
           </v-col>
         </v-row>
+
+        <v-row align="center" id="row2">
+          <v-col>
+            <div>
+              <h1 id="jurney">The jurney to our final product</h1>
+              <p> We are a team of 21 students, whose job is to build a
+                functioning moist sensor network with easy implementation to add
+                sensors on the go and by whoever wants or needs it.</p>
+            </div>
+          </v-col>
+          <v-col>
+            <div class="text-center">
+              <v-card elevation="2" shaped>
+                <v-parallax
+                  id="parallax1"
+                  src="https://cdn.vuetifyjs.com/images/parallax/material.jpg"
+                  height="350"
+                ></v-parallax>
+              </v-card>
+            </div>
+          </v-col>
+        </v-row>
       </v-container>
     </v-card>
   </div>
@@ -135,6 +157,10 @@ export default {
   margin-left: 20%;
   margin-right: 20%;
   margin-top: 5%;
+}
+#row2 {
+  margin-left: 20%;
+  margin-right: 20%;
 }
 #jurney {
   margin-top: -10%;
