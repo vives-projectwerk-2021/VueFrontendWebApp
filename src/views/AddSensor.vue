@@ -34,7 +34,7 @@ export default {
   methods: {
     sendData() {
       console.log(
-        '{"username": "' + this.username + '", "email": "' + this.location + "}"
+        '{"username": "' + this.username + '", "location": "' + this.location + "}"
       );
       let json= {name:this.username, location: this.location}
       axios.post(
