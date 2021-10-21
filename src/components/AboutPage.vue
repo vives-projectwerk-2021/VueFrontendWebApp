@@ -16,7 +16,7 @@
       <v-row justify="space-around">
         <v-col cols="4" md="3">
           <div class="text-center">
-            <h1 class="pa-2">The jurney to our final product</h1>
+            <h1 class="pa-2">The journey to our final product</h1>
             <p>test</p>
           </div>
         </v-col>
@@ -44,7 +44,7 @@
         </v-col>
         <v-col cols="4" md="4">
           <div class="text-center">
-            <h1 class="pa-2">The jurney to our final product</h1>
+            <h1 class="pa-2">The journey to our final product</h1>
             <p>test</p>
           </div>
         </v-col>
@@ -67,7 +67,7 @@
         <v-row align="center" id="row">
           <v-col>
             <div>
-              <h1 id="jurney">The jurney to our final product</h1>
+              <h1 id="journey">The journey to our final product</h1>
               <p>test</p>
             </div>
           </v-col>
@@ -98,7 +98,7 @@
           </v-col>
           <v-col>
             <div>
-              <h1 id="jurney2">The jurney to our final product</h1>
+              <h1 id="journey2">The journey to our final product</h1>
               <p>test</p>
             </div>
           </v-col>
@@ -107,7 +107,7 @@
         <v-row align="center" id="row2">
           <v-col>
             <div>
-              <h1 id="jurney">The jurney to our final product</h1>
+              <h1 id="journey">The journey to our final product</h1>
               <p> We are a team of 21 students, whose job is to build a
                 functioning moist sensor network with easy implementation to add
                 sensors on the go and by whoever wants or needs it.</p>
@@ -162,10 +162,10 @@ export default {
   margin-left: 20%;
   margin-right: 20%;
 }
-#jurney {
+#journey {
   margin-top: -10%;
 }
-#jurney2 {
+#journey2 {
   margin-top: -10%;
 }
 </style>
