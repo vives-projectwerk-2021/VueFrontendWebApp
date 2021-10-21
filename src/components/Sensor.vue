@@ -1,3 +1,7 @@
+/**
+ * Sensor.vue: Components on home-page that display real-time values from all devices.
+ */
+
 <template>
   <div>
     <h2>device: {{liveValues.device_id}}</h2>
@@ -11,7 +15,7 @@
       :empty-thickness="3"
       lineMode="in 10"
       :legend-value="liveValues.sensors.temperature.air.value"
-      animation="loop 700 1000"
+      animation="loop 0 0"
       fontSize="1.5rem"
       font-color="#009E45"
       dash="4"
@@ -33,7 +37,7 @@
       :empty-thickness="3"
       lineMode="in 10"
       :legend-value="liveValues.sensors.moisture.level1.value"
-      animation="loop 700 1000"
+      animation="loop 0 0"
       fontSize="1.5rem"
       font-color="#009E45"
       dash="4"
@@ -49,6 +53,6 @@
 <script>
 export default {
   name: 'Sensor',
-  props: ["liveValues"],
+  props: ['liveValues'],
 }
 </script>
