@@ -8,6 +8,8 @@ export const store = new Vuex.Store({
         ws: undefined,
         wsReadyState: undefined,
         liveDeviceValues: [],
+        sensorsComponentsUpdate: 1, /*  annoying solution to update component if device already exists,
+                                        but nothing else seems to work 😒 */
         hasReceivedData: false
     },
 
@@ -26,11 +28,11 @@ export const store = new Vuex.Store({
             }
 
             if(doesEntityExist) {
-                console.log("exists")
                 state.liveDeviceValues[entityPosition] = message.data
             } else {
                 state.liveDeviceValues.push(message.data)
             }
+            state.sensorsComponentsUpdate ^= 1
             state.hasReceivedData = true
         },
 

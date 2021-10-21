@@ -20,9 +20,9 @@
         </v-btn>
       </v-card>
 
-      <div v-else-if="hasReceivedValues">
+      <div v-else-if="hasReceivedValues" :key="sensorsComponentsUpdate">
         <v-card v-for="device in liveDeviceValues" :key="device.device_id">
-          <Sensor :liveValues="device" class="ma-4"/>
+          <Sensor :liveValues="device" class="ma-4" />
         </v-card>
       </div>
 
@@ -35,7 +35,6 @@
       </div>
 
     </div>
-
   </div>
 </template>
 
@@ -53,7 +52,7 @@ export default {
 
   data() {
     return {
-      loadingWS: true
+      loadingWS: true,
     }
   },
 
@@ -72,18 +71,21 @@ export default {
     liveDeviceValues() {
       return this.$store.state.liveDeviceValues
     },
-    hasReceivedValues(){
+    sensorsComponentsUpdate() {
+      return this.$store.state.sensorsComponentsUpdate
+    },
+    hasReceivedValues() {
       return this.$store.state.hasReceivedData
     },
-    ws(){
+    ws() {
       return this.$store.state.ws
     },
   },
 
   methods: {
-    retryWsConnection(){
+    retryWsConnection() {
       this.$store.dispatch('tryWsConnection')
-    },
+    }
   },
 }
 </script>
