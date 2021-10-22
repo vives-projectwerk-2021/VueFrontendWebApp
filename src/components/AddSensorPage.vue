@@ -103,7 +103,7 @@ export default {
         this.snackbarText = `The device: ${this.devicename} has been created!`;
 
         let json = {
-          name: this.devicename,
+          devicename: this.devicename,
           location: this.location,
           firstname: this.firstname,
           lastname: this.lastname,
