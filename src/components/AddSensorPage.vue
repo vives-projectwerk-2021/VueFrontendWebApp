@@ -109,7 +109,7 @@ export default {
           lastname: this.lastname,
         };
         axios
-          .post(`${process.env.VUE_APP_BACKEND_BASE_URL}/mongo/devices`, json)
+          .post(`${process.env.VUE_APP_BACKEND_BASE_URL}/devices`, json)
           .then((response) => {
             console.log(response);
           })
