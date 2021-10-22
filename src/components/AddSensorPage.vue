@@ -24,6 +24,16 @@
       <v-row>
         <v-col>
           <v-text-field
+            label="Location"
+            hide-details="auto"
+            v-model="location"
+          ></v-text-field>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col>
+          <v-text-field
             label="First Name"
             hide-details="auto"
             v-model="firstname"
@@ -61,23 +71,32 @@ export default {
   data() {
     return {
       devicename: "",
+      location: "",
       firstname: "",
       lastname: "",
     };
   },
   methods: {
     sendData() {
+      // Console log, has to be removed later,from here
       console.log(
-        'Device Name: "' + this.devicename + '"\n' +
-        'First Name: "' + this.firstname + '"\n' +
-        'Last Name: "' + this.lastname + '"\n'
+        'Device Name: "' +
+          this.devicename +
+          '"\n' +
+          'Location: "' +
+          this.location +
+          '"\n' +
+          'First Name: "' +
+          this.firstname +
+          '"\n' +
+          'Last Name: "' +
+          this.lastname +
+          '"\n'
       );
-      let json = { name: this.devicename, location: this.firstname };
+      // Until here
+      let json = { name: this.devicename, location: this.location };
       axios
-        .post(
-          `${process.env.VUE_APP_BACKEND_BASE_URL}/mongo/devices`,
-          json
-        )
+        .post(`${process.env.VUE_APP_BACKEND_BASE_URL}/mongo/devices`, json)
         .then((response) => {
           console.log(response);
         })
