@@ -26,13 +26,12 @@ export default {
     methods: {
         getSensors() {
             var self = this;
-            axios.get(`${process.env.VUE_APP_BACKEND_BASE_URL}/mongo/alldevices`)
+            axios.get(`${process.env.VUE_APP_BACKEND_BASE_URL}/mongo/devices`)
             .then((response) => {
                 
                 self.devices = response.data;
             })
             .catch((error) => {
-                console.log("error a niffauw");
                 console.log(error);
             })
         
