@@ -50,7 +50,7 @@
         </v-col>
       </v-row>
     </v-card> -->
-    <v-card color="#F5EEC2">
+    <!-- <v-card color="#F5EEC2"> -->
       <v-container>
         <v-row justify="center">
           <v-col cols="6">
@@ -58,7 +58,7 @@
               <p class="text-h1">About us</p>
               <p>
                 We are a team of 21 students, all in our last year, studying ICT at Vives in Bruges.
-                We are going to use our expertise and what we've learned over the years in this all-round group project 
+                We are going to use our expertise and what we've learned over the years in this all-round group project.
               </p>
               <p class="text-h2">About the project</p>
               <p>
@@ -67,7 +67,7 @@
                 sensors on the go and by whoever wants or needs it.
               </p>
               <p>
-                We got split into 4 groups, being: DevOps,Hardware,Software and Firmware
+                We got split into 4 groups, being: DevOps,Hardware,Software and Firmware.
               </p>
             </div>
           </v-col>
@@ -144,8 +144,34 @@
             </div>
           </v-col>
         </v-row>
+
+        <v-row align="center">
+          <v-col>
+            <div class="text-center">
+              <v-card elevation="2" shaped>
+                <v-parallax
+                  id="parallax2"
+                  src="../assets/pcb_front_.png"
+                  height="350"
+                ></v-parallax>
+              </v-card>
+            </div>
+          </v-col>
+          <v-col>
+            <div>
+              <p id="hardware" class="text-h2">Firmware</p>
+              <p id ="hardwareText">
+                In team Hardware we focus on the most essential item in this project, the hardware.
+                <br>
+                Our job consists out of designing and assembling the print, that will be used in every complete sensor. We make this from scratch.
+                <br>
+                We have worked with multiple prototypes, so that at the end of the journey we get the best result for this project.
+              </p>
+            </div>
+          </v-col>
+        </v-row>
       </v-container>
-    </v-card>
+    <!-- </v-card> -->
   </div>
 </template>
 
