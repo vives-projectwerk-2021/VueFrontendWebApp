@@ -92,33 +92,32 @@ export default {
   },
   methods: {
     sendData() {
+      if (
+        this.devicename == "" ||
+        this.location == "" ||
+        this.firstname == "" ||
+        this.lastname == ""
+      ) {
+        this.snackbarText = "ERROR: All fields have to be filled in!";
+      } else {
+        this.snackbarText = `The device: ${this.devicename} has been created!`;
+
+        let json = {
+          name: this.devicename,
+          location: this.location,
+          firstname: this.firstname,
+          lastname: this.lastname,
+        };
+        axios
+          .post(`${process.env.VUE_APP_BACKEND_BASE_URL}/mongo/devices`, json)
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
       this.snackbar = true;
-      this.snackbarText = `The device: ${this.devicename} has been created!`;
-      // Console log, has to be removed later,from here
-      console.log(
-        'Device Name: "' +
-          this.devicename +
-          '"\n' +
-          'Location: "' +
-          this.location +
-          '"\n' +
-          'First Name: "' +
-          this.firstname +
-          '"\n' +
-          'Last Name: "' +
-          this.lastname +
-          '"\n'
-      );
-      // Until here
-      let json = { name: this.devicename, location: this.location };
-      axios
-        .post(`${process.env.VUE_APP_BACKEND_BASE_URL}/mongo/devices`, json)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
     },
   },
 };
