@@ -87,12 +87,13 @@ export default {
       lastname: "",
 
       snackbar: false,
-      snackbarText: `The device: ${this.devicename} has been created!`,
+      snackbarText: "",
     };
   },
   methods: {
     sendData() {
       this.snackbar = true;
+      this.snackbarText = `The device: ${this.devicename} has been created!`;
       // Console log, has to be removed later,from here
       console.log(
         'Device Name: "' +
