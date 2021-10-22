@@ -118,6 +118,35 @@ export default {
           });
       }
       this.snackbar = true;
+<<<<<<< HEAD
+=======
+      this.snackbarText = `The device: ${this.devicename} has been created!`;
+      // Console log, has to be removed later,from here
+      console.log(
+        'Device Name: "' +
+          this.devicename +
+          '"\n' +
+          'Location: "' +
+          this.location +
+          '"\n' +
+          'First Name: "' +
+          this.firstname +
+          '"\n' +
+          'Last Name: "' +
+          this.lastname +
+          '"\n'
+      );
+      // Until here
+      let json = { name: this.devicename, location: this.location };
+      axios
+        .post(`${process.env.VUE_APP_BACKEND_BASE_URL}/devices`, json)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+>>>>>>> bc324e3081e054655374eccb68434764c3e577bf
     },
   },
 };
