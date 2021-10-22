@@ -112,7 +112,7 @@ export default {
       // Until here
       let json = { name: this.devicename, location: this.location };
       axios
-        .post(`${process.env.VUE_APP_BACKEND_BASE_URL}/mongo/devices`, json)
+        .post(`${process.env.VUE_APP_BACKEND_BASE_URL}/devices`, json)
         .then((response) => {
           console.log(response);
         })

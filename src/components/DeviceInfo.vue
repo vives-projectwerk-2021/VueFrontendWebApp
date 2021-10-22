@@ -26,7 +26,7 @@ export default {
     methods: {
         getSensors() {
             var self = this;
-            axios.get(`${process.env.VUE_APP_BACKEND_BASE_URL}/mongo/devices`)
+            axios.get(`${process.env.VUE_APP_BACKEND_BASE_URL}/devices`)
             .then((response) => {
                 
                 self.devices = response.data;
