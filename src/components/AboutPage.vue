@@ -50,7 +50,7 @@
         </v-col>
       </v-row>
     </v-card> -->
-    <v-card color="#B1B1AC">
+    <v-card color="white">
       <v-container>
         <v-row justify="center">
           <v-col cols="6">
