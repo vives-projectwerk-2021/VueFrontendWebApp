@@ -1,56 +1,5 @@
 <template>
   <div>
-    <!-- <v-card color="#B1B1AC">
-      <v-row justify="center">
-        <v-col cols="3">
-          <div class="text-center">
-            <h1>About the pulu project</h1>
-            <p>
-              We are a team of 21 students, whose job is to build a functioning
-              moist sensor network with easy implementation to add sensors on
-              the go and by whoever wants or needs it.
-            </p>
-          </div>
-        </v-col>
-      </v-row>
-      <v-row justify="space-around">
-        <v-col cols="4" md="3">
-          <div class="text-center">
-            <h1 class="pa-2">The journey to our final product</h1>
-            <p>test</p>
-          </div>
-        </v-col>
-        <v-col cols="4" md="3">
-          <v-card>
-            <v-parallax
-              src="https://cdn.vuetifyjs.com/images/parallax/material.jpg"
-              height="300"
-            ></v-parallax>
-          </v-card>
-        </v-col>
-      </v-row>
-      start of the 3rd row
-      <v-row justify="space-around" id="second_row_table">
-        <v-col cols="8" md="3" >
-          <div >
-            <v-card>
-            <v-parallax
-              src="https://cdn.vuetifyjs.com/images/parallax/material.jpg"
-              height="300"
-            ></v-parallax>
-          </v-card>
-          </div>
-          
-        </v-col>
-        <v-col cols="4" md="4">
-          <div class="text-center">
-            <h1 class="pa-2">The journey to our final product</h1>
-            <p>test</p>
-          </div>
-        </v-col>
-      </v-row>
-    </v-card> -->
-    <!-- <v-card color="#F5EEC2"> -->
       <v-container>
         <v-row justify="center">
           <v-col cols="6">
