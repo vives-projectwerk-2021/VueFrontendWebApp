@@ -38,7 +38,7 @@
                   id="parallax1"
                   src="../assets/DevOps.png"
                   height="350"
-                ></v-parallax>
+                ></v-parallax> <!-- All picture are under the creative common license -->
               </v-card>
             </div>
           </v-col>
@@ -86,7 +86,7 @@
               <v-card elevation="2" shaped>
                 <v-parallax
                   id="parallax1"
-                  src="https://cdn.vuetifyjs.com/images/parallax/material.jpg"
+                  src="../assets/software_pic.jpg"
                   height="350"
                 ></v-parallax>
               </v-card>
@@ -100,7 +100,7 @@
               <v-card elevation="2" shaped>
                 <v-parallax
                   id="parallax2"
-                  src="../assets/pcb_front_.png"
+                  src="../assets/firmeware.png"
                   height="350"
                 ></v-parallax>
               </v-card>
