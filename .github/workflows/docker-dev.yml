@@ -29,7 +29,7 @@ jobs:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: ghcr.io/vives-projectwerk-2021/vue-frontend-dev:latest
+          tags: ghcr.io/vives-projectwerk-2021/vue-frontend:dev
           build-args: |
             VUE_APP_WS=${{ secrets.VUE_APP_WS }}
             VUE_APP_BACKEND_BASE_URL=${{ secrets.VUE_APP_BACKEND_BASE_URL }}
