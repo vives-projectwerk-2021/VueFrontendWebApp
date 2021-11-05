@@ -52,7 +52,7 @@ export const store = new Vuex.Store({
             let wsConnection = undefined
             let isValidConnection = false
             try {
-                wsConnection =  new WebSocket(process.env.VUE_APP_WS)
+                wsConnection =  new WebSocket(Vue.prototype.$VUE_APP_WS)
                 wsConnection.addEventListener('message', (message) => {
                     message = JSON.parse(message.data)
                     console.log(message)
@@ -64,7 +64,7 @@ export const store = new Vuex.Store({
                     }
                 })
             } catch (err){
-                console.log(`Can't connect to WebSocket ${process.env.VUE_APP_WS}`)
+                console.log(`Can't connect to WebSocket ${Vue.prototype.$VUE_APP_WS}`)
             }
         }
     }

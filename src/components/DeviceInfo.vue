@@ -27,7 +27,7 @@ export default {
     },
     methods: {
         getSensors() {
-            axios.get(`${process.env.VUE_APP_BACKEND_BASE_URL}/devices`)
+            axios.get(`${this.$VUE_APP_BACKEND_BASE_URL}/devices`)
             .then((response) => {
                 
                 this.devices = response.data;
