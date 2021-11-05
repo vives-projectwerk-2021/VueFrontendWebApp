@@ -6,8 +6,8 @@
             <v-card-text>lastname: {{ device.lastname }}</v-card-text>
             <v-card-text>Location: {{ device.location }}</v-card-text>
             <v-card-actions>
-                <v-btn text>
-                See data
+                <v-btn  :to="{ name: 'Sensor', params: {deviceId: device.deviceid} }" text>
+                    See data
                 </v-btn>
             </v-card-actions>
         </v-card>
