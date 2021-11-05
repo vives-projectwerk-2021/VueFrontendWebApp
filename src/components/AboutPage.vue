@@ -82,9 +82,10 @@
           <div>
             <p id="DevOps" class="text-h2">Software</p>
             <p>
-              We are a team of 21 students, whose job is to build a functioning
-              moist sensor network with easy implementation to add sensors on
-              the go and by whoever wants or needs it.
+              In team Software we take care of the back- and front-end.
+              The backend is formating the data and sending it to the right position, which could be a database or the frontend for example.
+              We also make sure that all databases are configured as they should be.
+              Getting the data from the firmware is also our job so we have a ttn listener that receives incoming messanges.
             </p>
           </div>
         </v-col>
