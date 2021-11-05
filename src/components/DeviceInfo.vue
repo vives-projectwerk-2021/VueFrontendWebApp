@@ -27,11 +27,10 @@ export default {
     },
     methods: {
         getSensors() {
-            var self = this;
             axios.get(`${process.env.VUE_APP_BACKEND_BASE_URL}/devices`)
             .then((response) => {
                 
-                self.devices = response.data;
+                this.devices = response.data;
             })
             .catch((error) => {
                 console.log(error);
