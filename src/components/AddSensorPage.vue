@@ -112,7 +112,7 @@ export default {
       ) {
         this.snackbarText = "ERROR: All fields have to be filled in!";
       } else {
-        this.snackbarText = `The device: ${this.devicename} has been created!`;
+        
 
         let json = {
           deviceid: this.deviceid,
@@ -125,6 +125,11 @@ export default {
           .post(`${process.env.VUE_APP_BACKEND_BASE_URL}/devices`, json)
           .then((response) => {
             console.log(response);
+            if(response.data=="Already exists"){
+              this.snackbarText = `The device with deviceid: ${this.deviceid} already exists`;
+            }else{
+              this.snackbarText = `The device: ${this.devicename} has been created!`;
+            }
           })
           .catch((err) => {
             console.log(err);
