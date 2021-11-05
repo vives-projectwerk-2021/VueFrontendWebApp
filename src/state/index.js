@@ -50,19 +50,19 @@ export const store = new Vuex.Store({
         },
         tryWsConnection: (store) => {
             let wsConnection = undefined
+            let isValidConnection = false
             try {
                 wsConnection =  new WebSocket(process.env.VUE_APP_WS)
-                setTimeout(() => {
-                    if (wsConnection.readyState === 1) {
+                wsConnection.addEventListener('message', (message) => {
+                    message = JSON.parse(message.data)
+                    console.log(message)
+                    if(isValidConnection){
+                        store.dispatch('parseMessage', message)
+                    } else if (message.message == "welcome") {
+                        isValidConnection = true
                         store.commit('connectToWs', wsConnection)
-                        wsConnection.addEventListener('message', (message) => {
-                            console.log(message.data)
-                            store.dispatch('parseMessage', JSON.parse(message.data))
-                        })
-                    } else {
-                        console.log("wait for connection...")
                     }
-                }, 100) // @todo timeouts can be different, find a better solution
+                })
             } catch (err){
                 console.log(`Can't connect to WebSocket ${process.env.VUE_APP_WS}`)
             }
