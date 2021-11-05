@@ -7,42 +7,35 @@ export const store = new Vuex.Store({
     state: {
         ws: undefined,
         wsReadyState: undefined,
-        deviceValues: {
-          "device_id": String,
-          "time": String,
-          "sensors": {
-            "battery": {
-                "value": Number
-            },
-            "light": {
-                "value": Number
-            },
-            "moisture": {
-                "level1": {"value": Number},
-                "level2": {"value": Number},
-                "level3": {"value": Number},
-                "level4": {"value": Number},
-                "level5": {"value": Number},
-                "level6": {"value": Number},
-                "level7": {"value": Number},
-                "level8": {"value": Number},
-            },
-            "temperature": {
-                "air": {"value": Number},
-                "ground": {"value": Number}
-            }
-          }
-        },
+        liveDeviceValues: [],
+        sensorsComponentsUpdate: 1, /*  annoying solution to update component if device already exists,
+                                        but nothing else seems to work 😒 */
         hasReceivedData: false
     },
 
     getters: {},
 
     mutations: {
-        updateDeviceValues: (state, data) => {
+        updateDeviceValues: (state, message) => {
+            let doesEntityExist = false
+            let entityPosition = 0
+
+            for(let i=0; i<state.liveDeviceValues.length; i++) {
+                if(state.liveDeviceValues.length > 0 && state.liveDeviceValues[i].device_id == message.data.device_id){
+                    doesEntityExist = true
+                    entityPosition = i
+                }
+            }
+
+            if(doesEntityExist) {
+                state.liveDeviceValues[entityPosition] = message.data
+            } else {
+                state.liveDeviceValues.push(message.data)
+            }
+            state.sensorsComponentsUpdate ^= 1
             state.hasReceivedData = true
-            state.deviceValues = data.data
         },
+
         connectToWs: (state, connection) => {
             state.ws = connection
             state.wsReadyState = connection.readyState
@@ -57,19 +50,19 @@ export const store = new Vuex.Store({
         },
         tryWsConnection: (store) => {
             let wsConnection = undefined
+            let isValidConnection = false
             try {
                 wsConnection =  new WebSocket(process.env.VUE_APP_WS)
-                setTimeout(() => {
-                    if (wsConnection.readyState === 1) {
+                wsConnection.addEventListener('message', (message) => {
+                    message = JSON.parse(message.data)
+                    console.log(message)
+                    if(isValidConnection){
+                        store.dispatch('parseMessage', message)
+                    } else if (message.message == "welcome") {
+                        isValidConnection = true
                         store.commit('connectToWs', wsConnection)
-                        wsConnection.addEventListener('message', (message) => {
-                            console.log(message.data)
-                            store.dispatch('parseMessage', JSON.parse(message.data))
-                        })
-                    } else {
-                        console.log("wait for connection...")
                     }
-                }, 100) // @todo timeouts can be different, find a better solution
+                })
             } catch (err){
                 console.log(`Can't connect to WebSocket ${process.env.VUE_APP_WS}`)
             }

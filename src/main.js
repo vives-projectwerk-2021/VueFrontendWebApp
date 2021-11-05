@@ -4,11 +4,8 @@ import App from './App.vue'
 import router from './router'
 import { store } from "./state/index.js"
 import vuetify from './plugins/vuetify'
-import VueEllipseProgress from 'vue-ellipse-progress'
 
 Vue.config.productionTip = false
-
-Vue.use(VueEllipseProgress)
 Vue.use(Vuex)
 
 new Vue({
