@@ -5,6 +5,7 @@ import About from '@/views/About'
 import Sensors from '@/views/Sensors'
 import AddSensor from '@/views/AddSensor'
 import SensorPub from '@/views/SensorPub'
+import Sensor from '@/views/Sensor'
 
 
 Vue.use(VueRouter)
@@ -36,6 +37,11 @@ const routes = [
     path: '/sensorPub',
     name: 'SensorPub',
     component: SensorPub
+  },
+  {
+    path: '/sensors/:deviceId',
+    name: 'Sensor',
+    component: Sensor
   }
 
 ]

@@ -15,6 +15,16 @@
         <v-row>
           <v-col>
             <v-text-field
+              label="Device ID"
+              hide-details="auto"
+              v-model="deviceid"
+            ></v-text-field>
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col>
+            <v-text-field
               label="Device Name"
               hide-details="auto"
               v-model="devicename"
@@ -81,6 +91,7 @@ export default {
   name: "AddSensorPage",
   data() {
     return {
+      deviceid: "",
       devicename: "",
       location: "",
       firstname: "",
@@ -93,6 +104,7 @@ export default {
   methods: {
     sendData() {
       if (
+        this.deviceid == "" ||
         this.devicename == "" ||
         this.location == "" ||
         this.firstname == "" ||
@@ -100,9 +112,10 @@ export default {
       ) {
         this.snackbarText = "ERROR: All fields have to be filled in!";
       } else {
-        this.snackbarText = `The device: ${this.devicename} has been created!`;
+        
 
         let json = {
+          deviceid: this.deviceid,
           devicename: this.devicename,
           location: this.location,
           firstname: this.firstname,
@@ -112,6 +125,11 @@ export default {
           .post(`${process.env.VUE_APP_BACKEND_BASE_URL}/devices`, json)
           .then((response) => {
             console.log(response);
+            if(response.data=="Already exists"){
+              this.snackbarText = `The device with deviceid: ${this.deviceid} already exists`;
+            }else{
+              this.snackbarText = `The device: ${this.devicename} has been created!`;
+            }
           })
           .catch((err) => {
             console.log(err);
