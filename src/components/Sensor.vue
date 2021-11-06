@@ -4,55 +4,42 @@
 
 <template>
   <div>
-    <h2>device: {{liveValues.device_id}}</h2>
-    <vue-ellipse-progress
-      :progress="(100/50)*liveValues.sensors.temperature.air.value"
-      :determinate="false"
-      color="#009E45"
-      empty-color="#324c7e"
-      :size="180"
-      :thickness="5"
-      :empty-thickness="3"
-      lineMode="in 10"
-      :legend-value="liveValues.sensors.temperature.air.value"
-      animation="loop 0 0"
-      fontSize="1.5rem"
-      font-color="#009E45"
-      dash="4"
-      :loading="false"
-    >
-      <span slot="legend-value">°C</span>
-      <p slot="legend-caption">Air temperature</p>
-    </vue-ellipse-progress>
+    <h2>Device: {{liveValues.device_id}}</h2> 
+      <div class="d-flex flex-wrap">
+        <moisture-card  v-for="(moisture, index) in liveValues.sensors.moisture" :key="moisture.key" 
+          class="ma-1"
+          :percentage="moisture.value"
+          :level="index">
+        </moisture-card>
 
+        <SensorValueCard v-for="(temp, index) in liveValues.sensors.temperature" :key="temp.key" 
+          class="ma-1"
+          sensor="🌡️ Temperature"
+          :value="temp.value"
+          unit="°C"
+          :level="index">
+        </SensorValueCard>
 
-    <vue-ellipse-progress
-      class="ml-14"
-      :progress="liveValues.sensors.moisture.level1.value"
-      :determinate="false"
-      color="#009E45"
-      empty-color="#324c7e"
-      :size="180"
-      :thickness="5"
-      :empty-thickness="3"
-      lineMode="in 10"
-      :legend-value="liveValues.sensors.moisture.level1.value"
-      animation="loop 0 0"
-      fontSize="1.5rem"
-      font-color="#009E45"
-      dash="4"
-      :loading="false"
-    >
-      <span slot="legend-value">%</span>
-      <p slot="legend-caption">Moisture level1</p>
-    </vue-ellipse-progress>
+        <SensorValueCard
+          class="ma-1"
+          sensor="☀️ Light intensity"
+          :value="liveValues.sensors.light.value"
+          unit="Lumens">
+        </SensorValueCard>
+      </div>
   </div>
 </template>
 
 
 <script>
+import MoistureCard from '@/components/MoistureCard'
+import SensorValueCard from '@/components/SensorValueCard'
 export default {
   name: 'Sensor',
   props: ['liveValues'],
+  components: {
+    MoistureCard,
+    SensorValueCard
+  },
 }
 </script>

@@ -76,10 +76,10 @@
       </v-row>
     </v-card>
 
-    <v-snackbar v-model="snackbar" :color="snackbarcolor">
+    <v-snackbar v-model="snackbar">
       {{ snackbarText }}
       <template v-slot:action="{ attrs }">
-        <v-btn text v-bind="attrs" @click="snackbar = false">
+        <v-btn color="#A9C25D" text v-bind="attrs" @click="snackbar = false">
           Close
         </v-btn>
       </template>
@@ -139,9 +139,14 @@ export default {
           lastname: this.lastname,
         };
         axios
-          .post(`${process.env.VUE_APP_BACKEND_BASE_URL}/devices`, json)
+          .post(`${this.$VUE_APP_BACKEND_BASE_URL}/devices`, json)
           .then((response) => {
             console.log(response);
+            if(response.data=="Already exists"){
+              this.snackbarText = `The device with deviceid: ${this.deviceid} already exists`;
+            }else{
+              this.snackbarText = `The device: ${this.devicename} has been created!`;
+            }
           })
           .catch((err) => {
             console.log(err);
