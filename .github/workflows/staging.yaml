@@ -32,3 +32,16 @@ jobs:
         build-args: |
           VUE_APP_WS=${{ secrets.VUE_APP_WS }}
           VUE_APP_BACKEND_BASE_URL=${{ secrets.VUE_APP_BACKEND_BASE_URL }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: shimataro/ssh-key-action@v2
+      with:
+        key: ${{ secrets.SSH_DEPLOY_KEY }}
+    - name: install pulu-cli
+      run: |
+        curl -L https://github.com/vives-projectwerk-2021/pulu-cli/releases/latest/download/pulu-linux -o /usr/local/bin/pulu
+        chmod +x /usr/local/bin/pulu
+    - run: |
+        pulu update staging
