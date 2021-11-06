@@ -16,7 +16,7 @@
           <v-col>
             <v-text-field
               label="Device ID"
-              :rules="[rules.required]"
+ 
               hide-details="auto"
               v-model="deviceid"
             ></v-text-field>
@@ -27,7 +27,7 @@
           <v-col>
             <v-text-field
               label="Device Name"
-              :rules="[rules.required]"
+        
               hide-details="auto"
               v-model="devicename"
             ></v-text-field>
@@ -38,7 +38,7 @@
           <v-col>
             <v-text-field
               label="Location"
-              :rules="[rules.required]"
+     
               hide-details="auto"
               v-model="location"
             ></v-text-field>
@@ -49,7 +49,7 @@
           <v-col>
             <v-text-field
               label="First Name"
-              :rules="[rules.required]"
+      
               hide-details="auto"
               v-model="firstname"
             ></v-text-field>
@@ -57,7 +57,7 @@
           <v-col>
             <v-text-field
               label="Last Name"
-              :rules="[rules.required]"
+
               hide-details="auto"
               v-model="lastname"
             ></v-text-field>
@@ -105,10 +105,8 @@ export default {
       snackbar: false,
       snackbarcolor: "success",
       snackbarText: "",
-      rules: {
-        required: (value) => !!value || "Required.",
-      },
     };
+    
   },
   methods: {
     sendData() {
