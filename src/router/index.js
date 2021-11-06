@@ -31,7 +31,8 @@ const routes = [
   {
     path: '/sensors',
     name: 'Sensors',
-    component: Sensors
+    component: Sensors,
+    meta: { title: 'Sensor' },
   },
   {
     path: '/sensorPub',
