@@ -16,7 +16,6 @@
           <v-col>
             <v-text-field
               label="Device ID"
- 
               hide-details="auto"
               v-model="deviceid"
             ></v-text-field>
@@ -27,7 +26,7 @@
           <v-col>
             <v-text-field
               label="Device Name"
-        
+              :rules="[rules.required, rules.counter]"
               hide-details="auto"
               v-model="devicename"
             ></v-text-field>
@@ -38,7 +37,6 @@
           <v-col>
             <v-text-field
               label="Location"
-     
               hide-details="auto"
               v-model="location"
             ></v-text-field>
@@ -49,7 +47,7 @@
           <v-col>
             <v-text-field
               label="First Name"
-      
+              :rules="[rules.required, rules.counter, rules.nameValidator]"
               hide-details="auto"
               v-model="firstname"
             ></v-text-field>
@@ -57,7 +55,7 @@
           <v-col>
             <v-text-field
               label="Last Name"
-
+              :rules="[rules.required, rules.counter, rules.nameValidator]"
               hide-details="auto"
               v-model="lastname"
             ></v-text-field>
@@ -105,8 +103,20 @@ export default {
       snackbar: false,
       snackbarcolor: "success",
       snackbarText: "",
+
+      rules: {
+        required: (value) => !!value || "Required.",
+        counter: (value) => value.length <= 20 || "Max 20 characters",
+        nameValidator: (value) => {
+          const pattern = /^[a-zA-Z][a-z]+$/;
+          return pattern.test(value) || "Invalid name."
+        },
+        email: (value) => {
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          return pattern.test(value) || "Invalid e-mail.";
+        },
+      },
     };
-    
   },
   methods: {
     sendData() {
