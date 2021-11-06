@@ -25,7 +25,8 @@ const routes = [
   {
     path: '/addSensor',
     name: 'AddSensor',
-    component: AddSensor
+    component: AddSensor,
+    meta: { title: 'Add Sensor' },
 
   },
   {
