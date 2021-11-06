@@ -15,7 +15,19 @@
         <v-row>
           <v-col>
             <v-text-field
+              label="Device ID"
+              :rules="[rules.required]"
+              hide-details="auto"
+              v-model="deviceid"
+            ></v-text-field>
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col>
+            <v-text-field
               label="Device Name"
+              :rules="[rules.required]"
               hide-details="auto"
               v-model="devicename"
             ></v-text-field>
@@ -26,6 +38,7 @@
           <v-col>
             <v-text-field
               label="Location"
+              :rules="[rules.required]"
               hide-details="auto"
               v-model="location"
             ></v-text-field>
@@ -36,6 +49,7 @@
           <v-col>
             <v-text-field
               label="First Name"
+              :rules="[rules.required]"
               hide-details="auto"
               v-model="firstname"
             ></v-text-field>
@@ -43,6 +57,7 @@
           <v-col>
             <v-text-field
               label="Last Name"
+              :rules="[rules.required]"
               hide-details="auto"
               v-model="lastname"
             ></v-text-field>
@@ -63,10 +78,10 @@
       </v-row>
     </v-card>
 
-    <v-snackbar v-model="snackbar">
+    <v-snackbar v-model="snackbar" :color="snackbarcolor">
       {{ snackbarText }}
       <template v-slot:action="{ attrs }">
-        <v-btn color="#A9C25D" text v-bind="attrs" @click="snackbar = false">
+        <v-btn text v-bind="attrs" @click="snackbar = false">
           Close
         </v-btn>
       </template>
@@ -81,18 +96,24 @@ export default {
   name: "AddSensorPage",
   data() {
     return {
+      deviceid: "",
       devicename: "",
       location: "",
       firstname: "",
       lastname: "",
 
       snackbar: false,
+      snackbarcolor: "success",
       snackbarText: "",
+      rules: {
+        required: (value) => !!value || "Required.",
+      },
     };
   },
   methods: {
     sendData() {
       if (
+        this.deviceid == "" ||
         this.devicename == "" ||
         this.location == "" ||
         this.firstname == "" ||
@@ -103,6 +124,7 @@ export default {
         this.snackbarText = `The device: ${this.devicename} has been created!`;
 
         let json = {
+          deviceid: this.deviceid,
           devicename: this.devicename,
           location: this.location,
           firstname: this.firstname,
