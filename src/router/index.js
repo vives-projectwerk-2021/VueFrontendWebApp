@@ -19,8 +19,8 @@ const routes = [
   {
     path: '/about',
     name: 'About',    
-    component: About
-    
+    component: About,
+    meta: { title: 'About' },
   },
   {
     path: '/addSensor',
@@ -50,6 +50,12 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.afterEach((to) => {
+  Vue.nextTick(() => {
+    document.title = to.meta.title ? `${to.meta.title} - Pulu` : 'Pulu';
+  })
 })
 
 export default router
