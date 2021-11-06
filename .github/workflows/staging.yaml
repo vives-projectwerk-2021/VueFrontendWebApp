@@ -35,10 +35,12 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    needs: build
     steps:
     - uses: shimataro/ssh-key-action@v2
       with:
         key: ${{ secrets.SSH_DEPLOY_KEY }}
+        known_hosts: 'no-hosts'
     - name: install pulu-cli
       run: |
         curl -L https://github.com/vives-projectwerk-2021/pulu-cli/releases/latest/download/pulu-linux -o /usr/local/bin/pulu
