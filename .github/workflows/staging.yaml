@@ -60,4 +60,11 @@ jobs:
 
         pulu exec staging "docker start pulu-frontend.${{ needs.build.outputs.pr }}"
     - name: Sandbox port
-      run: echo $PULU_FRONTEND_PORT
+      id: sandbox
+      run: |
+        echo "::set-output name=PORT::$PULU_FRONTEND_PORT"
+
+    - uses: thollander/actions-comment-pull-request@v1
+      with:
+        message: 'You can now proxy this deployment: `pulu proxy staging ${{ steps.sandbox.outputs.PORT }}`'
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
