@@ -54,4 +54,6 @@ jobs:
         -p 5555:8080 \
         -e PULU_FRONTEND="${{ needs.build.outputs.image }}" \
         ghcr.io/vives-projectwerk-2021/pulu-sandbox \
-        make production" | cat
+        make production"
+
+        pulu exec staging "docker start pulu-frontend.${{ needs.build.outputs.pr }}"
