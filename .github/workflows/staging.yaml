@@ -46,7 +46,8 @@ jobs:
       run: |
         curl -L https://github.com/vives-projectwerk-2021/pulu-cli/releases/latest/download/pulu-linux -o /usr/local/bin/pulu
         chmod +x /usr/local/bin/pulu
-    - run: |
+    - id: sandbox
+      run: |
         pulu exec staging "docker rm -f pulu-frontend.${{ needs.build.outputs.pr }}"
         export PULU_FRONTEND_PORT=$(ruby -e 'require "socket"; puts Addrinfo.tcp("", 0).bind {|s| s.local_address.ip_port }')
         pulu exec staging " \
@@ -59,9 +60,7 @@ jobs:
         make production"
 
         pulu exec staging "docker start pulu-frontend.${{ needs.build.outputs.pr }}"
-    - name: Sandbox port
-      id: sandbox
-      run: |
+
         echo "::set-output name=PORT::$PULU_FRONTEND_PORT"
 
     - uses: thollander/actions-comment-pull-request@v1
