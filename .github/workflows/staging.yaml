@@ -47,6 +47,8 @@ jobs:
         curl -L https://github.com/vives-projectwerk-2021/pulu-cli/releases/latest/download/pulu-linux -o /usr/local/bin/pulu
         chmod +x /usr/local/bin/pulu
     - run: |
+        pulu exec staging "docker rm -f pulu-frontend.${{ needs.build.outputs.pr }}"
+
         pulu exec staging " \
         docker run -t --name pulu-frontend.${{ needs.build.outputs.pr }} --privileged \
         -v /devops/.ssh/id_rsa:/root/.ssh/id_rsa \
