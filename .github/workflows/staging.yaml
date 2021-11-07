@@ -19,10 +19,8 @@ jobs:
     - uses: docker/metadata-action@v3
       id: meta
       with:
-        images: |
-          ghcr.io/vives-projectwerk-2021/pulu-frontend
-        tags: |
-          type=ref,event=pr
+        images: ghcr.io/vives-projectwerk-2021/pulu-frontend
+        tags: type=ref,event=pr
     - uses: docker/build-push-action@v2
       with:
         push: true
@@ -46,4 +44,11 @@ jobs:
         curl -L https://github.com/vives-projectwerk-2021/pulu-cli/releases/latest/download/pulu-linux -o /usr/local/bin/pulu
         chmod +x /usr/local/bin/pulu
     - run: |
-        pulu update staging
+        pulu exec staging " \
+        docker run -t --name pulu-frontend.${{ steps.meta.outputs.version }} --privileged \
+        -v ~/.ssh/id_rsa:/root/.ssh/id_rsa \
+        -v /devops/deployment/staging/.env:/pulu.env \
+        -p 5555:8080 \
+        -e PULU_FRONTEND="${{ steps.meta.outputs.version }}" \
+        ghcr.io/vives-projectwerk-2021/pulu-sandbox \
+        make production"
