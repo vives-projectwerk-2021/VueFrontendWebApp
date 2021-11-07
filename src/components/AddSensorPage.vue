@@ -16,6 +16,7 @@
           <v-col>
             <v-text-field
               label="Device ID"
+              :rules="[rules.required, rules.counter, rules.deviceidValidator]"
               hide-details="auto"
               v-model="deviceid"
             ></v-text-field>
@@ -26,7 +27,7 @@
           <v-col>
             <v-text-field
               label="Device Name"
-              :rules="[rules.required, rules.counter]"
+              :rules="[rules.required, rules.counter, rules.devicenameValidator]"
               hide-details="auto"
               v-model="devicename"
             ></v-text-field>
@@ -37,6 +38,7 @@
           <v-col>
             <v-text-field
               label="Location"
+              :rules="[rules.required]"
               hide-details="auto"
               v-model="location"
             ></v-text-field>
@@ -55,7 +57,7 @@
           <v-col>
             <v-text-field
               label="Last Name"
-              :rules="[rules.required, rules.counter, rules.nameValidator]"
+              :rules="[rules.required, rules.counter, rules.lastnameValidator]"
               hide-details="auto"
               v-model="lastname"
             ></v-text-field>
@@ -108,12 +110,36 @@ export default {
         required: (value) => !!value || "Required.",
         counter: (value) => value.length <= 20 || "Max 20 characters",
         nameValidator: (value) => {
-          const pattern = /^[a-zA-Z][a-z]+$/;
-          return pattern.test(value) || "Invalid name."
+          // First char can be a (non)capital letter, all other chars can only be non-capital letters!
+          const pattern = /^([a-zA-Z][a-z]+([ ]?[[a-zA-Z][a-z]+)*)$/;
+          return (
+            pattern.test(value) ||
+            "Invalid Name: Can only be 1 (non)capital letter + lowercase letters."
+          );
         },
-        email: (value) => {
-          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-          return pattern.test(value) || "Invalid e-mail.";
+        lastnameValidator: (value) => {
+          // First char can be a (non)capital letter, all other chars can only be non-capital letters, 1 or more names!
+          const pattern = /^([a-zA-Z][a-z]+([ ]?[a-z]?['-]?[a-zA-Z][a-z]+)*)$/;
+          return (
+            pattern.test(value) ||
+            "Invalid Name: Can only be 1 (non)capital letter + lowercase letters (- and ')."
+          );
+        },
+        deviceidValidator: (value) => {
+          // Can only be lowercase letters, numbers or dashes
+          const pattern = /^[a-z0-9-]+$/;
+          return (
+            pattern.test(value) ||
+            "Invalid Device ID: Can only be lowercase letters, numbers or dashes."
+          );
+        },
+        devicenameValidator: (value) => {
+          // Can only be lowercase letters, numbers, underscores or dashes (multiple words)
+          const pattern = /^([a-zA-Z-_]+([ ]?[a-z]?['-]?[a-zA-Z-_]+)*)$/;
+          return (
+            pattern.test(value) ||
+            "Invalid Device Name: Can only be letters, numbers, underscores or dashes."
+          );
         },
       },
     };
@@ -142,9 +168,9 @@ export default {
           .post(`${this.$VUE_APP_BACKEND_BASE_URL}/devices`, json)
           .then((response) => {
             console.log(response);
-            if(response.data=="Already exists"){
+            if (response.data == "Already exists") {
               this.snackbarText = `The device with deviceid: ${this.deviceid} already exists`;
-            }else{
+            } else {
               this.snackbarText = `The device: ${this.devicename} has been created!`;
             }
           })
