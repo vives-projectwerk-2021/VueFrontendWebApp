@@ -48,14 +48,16 @@ jobs:
         chmod +x /usr/local/bin/pulu
     - run: |
         pulu exec staging "docker rm -f pulu-frontend.${{ needs.build.outputs.pr }}"
-
+        export PULU_FRONTEND_PORT=$(ruby -e 'require "socket"; puts Addrinfo.tcp("", 0).bind {|s| s.local_address.ip_port }')
         pulu exec staging " \
         docker run -t --name pulu-frontend.${{ needs.build.outputs.pr }} --privileged \
         -v /devops/.ssh/id_rsa:/root/.ssh/id_rsa \
         -v /devops/deployment/staging/.env:/pulu.env \
-        -p 5555:8080 \
+        -p $PULU_FRONTEND_PORT:8080 \
         -e PULU_FRONTEND="${{ needs.build.outputs.image }}" \
         ghcr.io/vives-projectwerk-2021/pulu-sandbox \
         make production"
 
         pulu exec staging "docker start pulu-frontend.${{ needs.build.outputs.pr }}"
+    - name: Sandbox port
+      run: echo $PULU_FRONTEND_PORT
