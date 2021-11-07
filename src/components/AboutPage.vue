@@ -4,7 +4,6 @@
       <v-row justify="center">
         <v-col cols="6">
           <div class="text-center">
-            <p class="text-h1">Dit is een test om te kijken of de sandbox werkt</p>
             <p class="text-h1">About us</p>
             <p>
               We are a team of 21 students, all in our last year, studying ICT
