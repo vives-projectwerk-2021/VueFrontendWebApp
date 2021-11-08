@@ -4,19 +4,28 @@
 
 <template>
   <div>
-    <h2>device: {{liveValues.device_id}}</h2> 
+    <h2>Device: {{liveValues.device_id}}</h2> 
       <div class="d-flex flex-wrap">
         <moisture-card  v-for="(moisture, index) in liveValues.sensors.moisture" :key="moisture.key" 
           class="ma-1"
           :percentage="moisture.value"
           :level="index">
         </moisture-card>
-        
-        <temperature-card v-for="(temp, index) in liveValues.sensors.temperature" :key="temp.key" 
+
+        <SensorValueCard v-for="(temp, index) in liveValues.sensors.temperature" :key="temp.key" 
           class="ma-1"
-          :temperature="temp.value"
+          sensor="🌡️ Temperature"
+          :value="temp.value"
+          unit="°C"
           :level="index">
-        </temperature-card>
+        </SensorValueCard>
+
+        <SensorValueCard
+          class="ma-1"
+          sensor="☀️ Light intensity"
+          :value="liveValues.sensors.light.value"
+          unit="Lumens">
+        </SensorValueCard>
       </div>
   </div>
 </template>
@@ -24,14 +33,13 @@
 
 <script>
 import MoistureCard from '@/components/MoistureCard'
-import TemperatureCard from '@/components/TemperatureCard'
-
+import SensorValueCard from '@/components/SensorValueCard'
 export default {
   name: 'Sensor',
   props: ['liveValues'],
   components: {
     MoistureCard,
-    TemperatureCard
+    SensorValueCard
   },
 }
 </script>
