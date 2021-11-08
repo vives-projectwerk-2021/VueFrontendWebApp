@@ -16,13 +16,12 @@
 </template>
 
 <script>
-// Weg gedaan door matthias
-// import Progress from "easy-circular-progress";
+import Progress from "easy-circular-progress";
 export default {
   name: 'MoistureCard',
   props: ['percentage', 'level'],
   components: {
-   // Progress
+   Progress
   }
 }
 </script>
