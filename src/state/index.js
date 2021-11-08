@@ -28,10 +28,10 @@ export const store = new Vuex.Store({
             }
 
             if(doesEntityExist) {
-                state.liveDeviceValues[entityPosition] = message.data
-            } else {
-                state.liveDeviceValues.push(message.data)
+                state.liveDeviceValues.splice(entityPosition, 1)
             }
+            state.liveDeviceValues.unshift(message.data)
+
             state.sensorsComponentsUpdate ^= 1
             state.hasReceivedData = true
         },
