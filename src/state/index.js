@@ -1,5 +1,6 @@
 import Vuex from "vuex"
 import Vue from "vue"
+import { Sensors } from "@/api/pulu"
 
 Vue.use(Vuex)
 
@@ -10,7 +11,8 @@ export const store = new Vuex.Store({
         liveDeviceValues: [],
         sensorsComponentsUpdate: 1, /*  annoying solution to update component if device already exists,
                                         but nothing else seems to work 😒 */
-        hasReceivedData: false
+        hasReceivedData: false,
+        devicelist: null,
     },
 
     getters: {},
@@ -39,6 +41,10 @@ export const store = new Vuex.Store({
         connectToWs: (state, connection) => {
             state.ws = connection
             state.wsReadyState = connection.readyState
+        },
+
+        changeDevices(state,payload) {
+            state.devicelist = payload.devicelist;
         }
     },
     
@@ -66,6 +72,19 @@ export const store = new Vuex.Store({
             } catch (err){
                 console.log(`Can't connect to WebSocket ${Vue.prototype.$VUE_APP_WS}`)
             }
+        },
+
+        getAllSensors({commit} ){
+            Sensors.get_all_sensors()
+            .then((response) => {
+                console.log(response);
+
+                commit('changeDevices', {
+                    devicelist: response.data
+                })
+                this.devicelist = response.data
+            })
+            .catch((error) => console.log(error));
         }
     }
 })

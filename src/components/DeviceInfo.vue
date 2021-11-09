@@ -1,6 +1,6 @@
 <template>
     <div >
-        <v-card class="my-6" v-for="device in devices" :key="device.id" elevation="5" >
+        <v-card class="my-6" v-for="device in devicelist" :key="device.id" elevation="5" >
             <v-card-title>{{ device.devicename }}</v-card-title>
             <v-card-text>firstname: {{ device.firstname }} </v-card-text>
             <v-card-text>lastname: {{ device.lastname }}</v-card-text>
@@ -16,30 +16,24 @@
 
 <script>
 
-import axios from "axios";
+import { mapState} from 'vuex';
+
 
 export default {
     name: "DeviceInfo",
-    data() {
-        return {
-            devices: null
-        }
+
+
+    created(){
+        this.$store.dispatch('getAllSensors');
     },
-    methods: {
-        getSensors() {
-            axios.get(`${this.$VUE_APP_BACKEND_BASE_URL}/devices`)
-            .then((response) => {
-                
-                this.devices = response.data;
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-        
-        }
-    },
-    created: function(){
-        this.getSensors();
-    },
+
+    computed:{
+        ...mapState([
+            'devicelist'
+        ]),
+    }
+
+
+    
 }
 </script>
