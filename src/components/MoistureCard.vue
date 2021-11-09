@@ -21,7 +21,7 @@ export default {
   name: 'MoistureCard',
   props: ['percentage', 'level'],
   components: {
-    Progress
+   Progress
   }
 }
 </script>

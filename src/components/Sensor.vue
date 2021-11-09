@@ -1,3 +1,7 @@
+/**
+ * Sensor.vue: Components on home-page that display real-time values from all devices.
+ */
+
 <template>
   <div>
     <h2>Device: {{liveValues.device_id}}</h2> 
