@@ -1,7 +1,8 @@
 import axios from 'axios';
+import Vue from 'vue';
 
 const api = axios.create({
-    baseURL: `${process.env.VUE_APP_BACKEND_BASE_URL}`
+    baseURL: `${Vue.prototype.$VUE_APP_BACKEND_BASE_URL}`
     
 });
 
