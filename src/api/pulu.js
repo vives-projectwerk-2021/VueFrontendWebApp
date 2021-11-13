@@ -12,6 +12,11 @@ const Sensors = {
     get_all_sensors(){
         console.log("Getting all sensors");
         return api.get(`/devices`);
+    },
+    
+    add_sensor(json){
+        console.log("Post new sensor");
+        return api.post(`/devices`, json);
     }
 }
 

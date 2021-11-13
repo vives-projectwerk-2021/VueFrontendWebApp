@@ -45,7 +45,12 @@ export const store = new Vuex.Store({
 
         changeDevices(state,payload) {
             state.devicelist = payload.devicelist;
+        },
+
+        addSensor(state, payload) {
+            state.snackbarText = payload
         }
+
     },
     
     actions: {
@@ -85,6 +90,25 @@ export const store = new Vuex.Store({
                 this.devicelist = response.data
             })
             .catch((error) => console.log(error));
+        },
+        
+        addSensor(store, payload) {
+            console.log(payload);
+            Sensors.add_sensor(payload)
+            .then((response) => {
+                console.log(response);
+                if (response.data == "Already exists") {
+                  //this.snackbarText = `The device with deviceid: ${this.deviceid} already exists`;
+                  this.commit('addSensor', `The device with deviceid: ${this.deviceid} already exists`)
+                } else {
+                  //this.snackbarText = `The device: ${this.devicename} has been created!`;
+                  this.commit('addSensor', `The device: ${this.devicename} has been created!`)
+                }
+              })
+            .catch((err) => {
+                console.log(err);
+              });
         }
+
     }
 })
