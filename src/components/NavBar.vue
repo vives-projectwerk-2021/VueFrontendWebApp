@@ -8,8 +8,8 @@
       <v-col class="px-0">
         <v-card fill-height flat rounded="false">
           <v-card-title class="py-0">
-            <span class="text-h5">Pulu</span>
-
+            <v-btn :to="{name: 'Home'}" class="text-h5" depressed plain>Pulu</v-btn>
+            
             <v-spacer></v-spacer>
 
             <v-menu bottom left>
