@@ -2,7 +2,7 @@ import axios from 'axios';
 import Vue from 'vue';
 
 const api = axios.create({
-    baseURL: Vue.prototype.$VUE_APP_BACKEND_BASE_URL
+    baseURL: Vue.prototype.$VUE_APP_BACKEND_BASE_URL || process.env.VUE_APP_BACKEND_BASE_URL
     
 });
 
