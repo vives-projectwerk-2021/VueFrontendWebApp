@@ -3,10 +3,11 @@
    <!--
     Navbar for mobile devices
     -->
-    <v-row class="hidden-sm-and-up">
-      <v-col>
-        <v-card>
-          <v-card-title >
+    <v-app-bar app class="pa-0 hidden-sm-and-up" flat color="white" elevate-on-scroll>
+    <v-row >
+      <v-col class="px-0">
+        <v-card fill-height flat rounded="false">
+          <v-card-title class="py-0">
             <span class="text-h5">Pulu</span>
 
             <v-spacer></v-spacer>
@@ -28,12 +29,13 @@
         </v-card>
       </v-col>
     </v-row>
+    </v-app-bar>
 
     <!--
     Navbar for bigger screens
     -->
 
-    <v-app-bar app color="white" flat class="hidden-xs-only">
+    <v-app-bar app color="white" flat class="hidden-xs-only" elevate-on-scroll>
       <v-container class="py-0 fill-height">
         <v-btn :exact="true" v-for="link in links" :key="link" :to="{ name: link }" text>
           {{ link }}
