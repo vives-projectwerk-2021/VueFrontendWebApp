@@ -13,6 +13,7 @@ export const store = new Vuex.Store({
                                         but nothing else seems to work 😒 */
         hasReceivedData: false,
         devicelist: null,
+        snackbarText: "",
     },
 
     getters: {},
@@ -98,11 +99,9 @@ export const store = new Vuex.Store({
             .then((response) => {
                 console.log(response);
                 if (response.data == "Already exists") {
-                  //this.snackbarText = `The device with deviceid: ${this.deviceid} already exists`;
-                  this.commit('addSensor', `The device with deviceid: ${this.deviceid} already exists`)
+                  this.commit('addSensor', `The device with deviceid: ${payload.deviceid} already exists`)
                 } else {
-                  //this.snackbarText = `The device: ${this.devicename} has been created!`;
-                  this.commit('addSensor', `The device: ${this.devicename} has been created!`)
+                  this.commit('addSensor', `The device: ${payload.devicename} has been created!`)
                 }
               })
             .catch((err) => {

@@ -103,8 +103,6 @@ export default {
       lastname: "",
 
       snackbar: false,
-      snackbarcolor: "success",
-      //snackbarText: "",
 
       rules: {
         required: (value) => !!value || "Required.",
@@ -153,10 +151,8 @@ export default {
         this.firstname == "" ||
         this.lastname == ""
       ) {
-        this.snackbarText = "ERROR: All fields have to be filled in!";
+        this.$store.commit('addSensor', "ERROR: All fields have to be filled in!")
       } else {
-        //this.snackbarText = `The device: ${this.devicename} has been created!`;
-
         let json = {
           deviceid: this.deviceid,
           devicename: this.devicename,
@@ -166,7 +162,6 @@ export default {
         };
 
         this.$store.dispatch('addSensor', json)
-
       }
       this.snackbar = true;
     },
