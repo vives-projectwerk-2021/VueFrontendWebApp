@@ -1,9 +1,8 @@
 import axios from 'axios';
-import Vue from 'vue';
+import {config} from '@/config.js';
 
 const api = axios.create({
-    baseURL: Vue.prototype.$VUE_APP_BACKEND_BASE_URL || process.env.VUE_APP_BACKEND_BASE_URL
-    
+    baseURL: config.VUE_APP_BACKEND_BASE_URL
 });
 
 const Sensors = {
