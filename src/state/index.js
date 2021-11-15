@@ -1,5 +1,6 @@
 import Vuex from "vuex"
 import Vue from "vue"
+import { Sensors } from "@/api/pulu"
 
 Vue.use(Vuex)
 
@@ -10,7 +11,10 @@ export const store = new Vuex.Store({
         liveDeviceValues: [],
         sensorsComponentsUpdate: 1, /*  annoying solution to update component if device already exists,
                                         but nothing else seems to work 😒 */
-        hasReceivedData: false
+        hasReceivedData: false,
+        devicelist: [],
+        devicevalues: {},
+        snackbarText: "",
     },
 
     getters: {},
@@ -39,7 +43,20 @@ export const store = new Vuex.Store({
         connectToWs: (state, connection) => {
             state.ws = connection
             state.wsReadyState = connection.readyState
+        },
+
+        changeDevices(state,payload) {
+            state.devicelist = payload.devicelist;
+        },
+
+        changeDeviceInfo(state,payload){
+            state.devicevalues = payload.devicevalues
+          
+        },
+        addSensor(state, payload) {
+            state.snackbarText = payload
         }
+
     },
     
     actions: {
@@ -66,6 +83,50 @@ export const store = new Vuex.Store({
             } catch (err){
                 console.log(`Can't connect to WebSocket ${Vue.prototype.$VUE_APP_WS}`)
             }
+        },
+
+        getAllSensors({commit} ){
+            Sensors.get_all_sensors()
+            .then((response) => {
+                console.log(response);
+
+                commit('changeDevices', {
+                    devicelist: response.data
+                })
+                this.devicelist = response.data
+            })
+            .catch((error) => console.log(error));
+        },
+
+        getSensorById({commit}, id){
+            Sensors.get_sensor_by_id(id)
+            .then((response) => {
+
+                commit('changeDeviceInfo', {
+                    devicevalues: response.data
+                })
+                this.devicevalues = response.data
+                console.log(this.devicevalues)
+            })
+            .catch((error) => console.log(error));
+          
+          },
+        
+        addSensor(store, payload) {
+            console.log(payload);
+            Sensors.add_sensor(payload)
+            .then((response) => {
+                console.log(response);
+                if (response.data == "Already exists") {
+                  this.commit('addSensor', `The device with deviceid: ${payload.deviceid} already exists`)
+                } else {
+                  this.commit('addSensor', `The device: ${payload.devicename} has been created!`)
+                }
+              })
+            .catch((err) => {
+                console.log(err);
+              });
         }
+
     }
 })

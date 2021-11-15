@@ -90,7 +90,7 @@
 </template>
 
 <script>
-import axios from "axios";
+
 
 export default {
   name: "AddSensorPage",
@@ -103,8 +103,6 @@ export default {
       lastname: "",
 
       snackbar: false,
-      snackbarcolor: "success",
-      snackbarText: "",
 
       rules: {
         required: (value) => !!value || "Required.",
@@ -153,10 +151,8 @@ export default {
         this.firstname == "" ||
         this.lastname == ""
       ) {
-        this.snackbarText = "ERROR: All fields have to be filled in!";
+        this.$store.commit('addSensor', "ERROR: All fields have to be filled in!")
       } else {
-        this.snackbarText = `The device: ${this.devicename} has been created!`;
-
         let json = {
           deviceid: this.deviceid,
           devicename: this.devicename,
@@ -164,22 +160,17 @@ export default {
           firstname: this.firstname,
           lastname: this.lastname,
         };
-        axios
-          .post(`${this.$VUE_APP_BACKEND_BASE_URL}/devices`, json)
-          .then((response) => {
-            console.log(response);
-            if (response.data == "Already exists") {
-              this.snackbarText = `The device with deviceid: ${this.deviceid} already exists`;
-            } else {
-              this.snackbarText = `The device: ${this.devicename} has been created!`;
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+
+        this.$store.dispatch('addSensor', json)
       }
       this.snackbar = true;
     },
   },
+  computed: {
+    snackbarText() {
+      return this.$store.state.snackbarText;
+    }
+
+  }
 };
 </script>
