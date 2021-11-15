@@ -2,7 +2,7 @@
   <div>
     <v-container>
       <v-row justify="center">
-        <v-col cols="6">
+        <v-col cols="10" md="7">
           <div class="text-center">
             <p class="text-h1">About us</p>
             <p>
@@ -23,8 +23,8 @@
           </div>
         </v-col>
       </v-row>
-      <v-row align="center" id="row">
-        <v-col>
+      <v-row justify="center" class="flex-wrap">
+        <v-col cols="10" md="4">
           <div>
             <p id="DevOps" class="text-h2">DevOps</p>
             <p>
@@ -36,7 +36,7 @@
             </p>
           </div>
         </v-col>
-        <v-col>
+        <v-col cols="8" md="3">
           <div class="text-center">
             <v-card elevation="2" shaped>
               <v-parallax
@@ -50,19 +50,8 @@
         </v-col>
       </v-row>
 
-      <v-row align="center">
-        <v-col>
-          <div class="text-center">
-            <v-card elevation="2" shaped>
-              <v-parallax
-                id="parallax2"
-                src="../assets/pcb_front_.png"
-                height="350"
-              ></v-parallax>
-            </v-card>
-          </div>
-        </v-col>
-        <v-col>
+      <v-row justify="center">
+        <v-col order-sm="1" order-md="3" cols="10" md="4">
           <div>
             <p id="hardware" class="text-h2">Hardware</p>
             <p id="hardwareText">
@@ -75,10 +64,21 @@
             </p>
           </div>
         </v-col>
+        <v-col order="2" cols="8" md="3">
+          <div class="text-center">
+            <v-card elevation="2" shaped>
+              <v-parallax
+                id="parallax2"
+                src="../assets/pcb_front_.png"
+                height="350"
+              ></v-parallax>
+            </v-card>
+          </div>
+        </v-col>
       </v-row>
 
-      <v-row align="center" id="row2">
-        <v-col>
+      <v-row justify="center">
+        <v-col cols="10" md="4">
           <div>
             <p id="DevOps" class="text-h2">Software</p>
             <p>
@@ -89,7 +89,7 @@
             </p>
           </div>
         </v-col>
-        <v-col>
+        <v-col cols="8" md="3">
           <div class="text-center">
             <v-card elevation="2" shaped>
               <v-parallax
@@ -102,19 +102,8 @@
         </v-col>
       </v-row>
 
-      <v-row align="center">
-        <v-col>
-          <div class="text-center">
-            <v-card elevation="2" shaped>
-              <v-parallax
-                id="parallax2"
-                src="../assets/firmeware.png"
-                height="350"
-              ></v-parallax>
-            </v-card>
-          </div>
-        </v-col>
-        <v-col>
+      <v-row justify="center" cols="8">
+        <v-col order-sm="1" order-md="3" cols="10" md="4">
           <div>
             <p id="hardware" class="text-h2">Firmware</p>
             <p id="hardwareText">
@@ -126,6 +115,17 @@
               Then we can use these sensor values in the dashboard of the
               application.
             </p>
+          </div>
+        </v-col>
+        <v-col order="2" cols="8" md="3">
+          <div class="text-center">
+            <v-card elevation="2" shaped>
+              <v-parallax
+                id="parallax2"
+                src="../assets/firmeware.png"
+                height="350"
+              ></v-parallax>
+            </v-card>
           </div>
         </v-col>
       </v-row>
@@ -141,39 +141,5 @@ export default {
 
 
 <style>
-#second_row_table {
-  margin-top: 10%;
-}
-#parallax1 {
-  width: 100%;
-  /* display: block;
-  margin: 0 auto; */
-  float: left;
-}
-#parallax2 {
-  width: 59%;
-  /* display: block;
-  margin: 0 auto; */
-  float: right;
-}
-#row {
-  margin-left: 20%;
-  margin-right: 20%;
-  margin-top: 5%;
-}
-#row2 {
-  margin-left: 20%;
-  margin-right: 20%;
-}
-#DevOps {
-  margin-top: -10%;
-}
-#hardware {
-  margin-top: -5%;
-  margin-left: 3%;
-}
-#hardwareText {
-  margin-left: 3%;
-  margin-right: 41%;
-}
+
 </style>
