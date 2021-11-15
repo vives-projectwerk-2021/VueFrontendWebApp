@@ -11,7 +11,7 @@
         </v-col>
       </v-row>
 
-      <v-container>
+      <v-form ref="form" v-model="valid" class="mx-4">
         <v-row>
           <v-col>
             <v-text-field
@@ -27,7 +27,11 @@
           <v-col>
             <v-text-field
               label="Device Name"
-              :rules="[rules.required, rules.counter, rules.devicenameValidator]"
+              :rules="[
+                rules.required,
+                rules.counter,
+                rules.devicenameValidator,
+              ]"
               hide-details="auto"
               v-model="devicename"
             ></v-text-field>
@@ -63,15 +67,13 @@
             ></v-text-field>
           </v-col>
         </v-row>
-      </v-container>
+      </v-form>
 
       <v-row>
         <v-col class="text-center">
           <v-divider />
           <v-btn @click="sendData" large class="mt-3">
-            <v-icon>
-              mdi-plus
-            </v-icon>
+            <v-icon> mdi-plus </v-icon>
             Add Sensor
           </v-btn>
         </v-col>
@@ -90,8 +92,6 @@
 </template>
 
 <script>
-
-
 export default {
   name: "AddSensorPage",
   data() {
@@ -102,6 +102,7 @@ export default {
       firstname: "",
       lastname: "",
 
+      valid: true,
       snackbar: false,
 
       rules: {
@@ -134,6 +135,7 @@ export default {
         devicenameValidator: (value) => {
           // Can only be lowercase letters, numbers, underscores or dashes (multiple words)
           const pattern = /^([a-zA-Z-_]+([ ]?[a-z]?['-]?[a-zA-Z-_]+)*)$/;
+
           return (
             pattern.test(value) ||
             "Invalid Device Name: Can only be letters, numbers, underscores or dashes."
@@ -144,14 +146,9 @@ export default {
   },
   methods: {
     sendData() {
-      if (
-        this.deviceid == "" ||
-        this.devicename == "" ||
-        this.location == "" ||
-        this.firstname == "" ||
-        this.lastname == ""
-      ) {
-        this.$store.commit('addSensor', "ERROR: All fields have to be filled in!")
+      this.$refs.form.validate();
+      if (this.valid == false) {
+        this.$store.commit("addSensor", "ERROR");
       } else {
         let json = {
           deviceid: this.deviceid,
@@ -161,7 +158,7 @@ export default {
           lastname: this.lastname,
         };
 
-        this.$store.dispatch('addSensor', json)
+        this.$store.dispatch("addSensor", json);
       }
       this.snackbar = true;
     },
@@ -169,8 +166,7 @@ export default {
   computed: {
     snackbarText() {
       return this.$store.state.snackbarText;
-    }
-
-  }
+    },
+  },
 };
 </script>
