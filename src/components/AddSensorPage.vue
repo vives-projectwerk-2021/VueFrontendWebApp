@@ -16,7 +16,7 @@
           <v-col>
             <v-text-field
               label="Device ID"
-              :rules="[rules.required, rules.counter, rules.deviceidValidator]"
+              :rules="[rules.required, rules.devIdCounter, rules.deviceidValidator]"
               hide-details="auto"
               v-model="deviceid"
             ></v-text-field>
@@ -108,6 +108,7 @@ export default {
       rules: {
         required: (value) => !!value || "Required.",
         counter: (value) => value.length <= 20 || "Max 20 characters",
+        devIdCounter: (value) => value.length <= 16 || "Max 16 characters",
         nameValidator: (value) => {
           // First char can be a (non)capital letter, all other chars can only be non-capital letters!
           const pattern = /^([a-zA-Z][a-z]+([ ]?[[a-zA-Z][a-z]+)*)$/;
