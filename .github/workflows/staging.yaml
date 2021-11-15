@@ -44,4 +44,4 @@ jobs:
           pulu_build: pulu-frontend.${{ needs.build.outputs.pr }}
           ssh_deploy_key: ${{secrets.SSH_DEPLOY_KEY}}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          # image: ${{ steps.meta.outputs.image }}
+          image: ${{ needs.build.outputs.image }}
