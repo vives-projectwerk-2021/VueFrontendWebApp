@@ -83,7 +83,7 @@
     <v-snackbar v-model="snackbar">
       {{ snackbarText }}
       <template v-slot:action="{ attrs }">
-        <v-btn color="#A9C25D" text v-bind="attrs" @click="snackbar = false">
+        <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
           Close
         </v-btn>
       </template>
@@ -147,9 +147,12 @@ export default {
   methods: {
     sendData() {
       this.$refs.form.validate();
+
       if (this.valid == false) {
-        this.$store.commit("addSensor", "ERROR");
+
+        this.$store.commit("addSensor", "Please, check for problems!");
       } else {
+
         let json = {
           deviceid: this.deviceid,
           devicename: this.devicename,

@@ -120,7 +120,7 @@ export const store = new Vuex.Store({
                 if (response.data == "Already exists") {
                   this.commit('addSensor', `The device with deviceid: ${payload.deviceid} already exists`)
                 } else {
-                  this.commit('addSensor', `The device: ${payload.devicename} has been created!`)
+                  this.commit('addSensor', `The device: ${payload.devicename} have been created!`)
                 }
               })
             .catch((err) => {
