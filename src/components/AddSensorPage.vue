@@ -149,10 +149,8 @@ export default {
       this.$refs.form.validate();
 
       if (this.valid == false) {
-
         this.$store.commit("addSensor", "Please, check for problems!");
       } else {
-
         let json = {
           deviceid: this.deviceid,
           devicename: this.devicename,
