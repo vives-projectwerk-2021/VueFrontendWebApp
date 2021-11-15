@@ -11,6 +11,11 @@ const Sensors = {
     get_all_sensors(){
         console.log("Getting all sensors");
         return api.get(`/devices`);
+    },
+
+    get_sensor_by_id(id){
+        console.log("Getting sensor with id: " + id );
+        return api.get(`/devices/${id}`)
     }
 }
 

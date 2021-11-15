@@ -12,7 +12,8 @@ export const store = new Vuex.Store({
         sensorsComponentsUpdate: 1, /*  annoying solution to update component if device already exists,
                                         but nothing else seems to work 😒 */
         hasReceivedData: false,
-        devicelist: null,
+        devicelist: [],
+        devicevalues: {},
     },
 
     getters: {},
@@ -45,6 +46,10 @@ export const store = new Vuex.Store({
 
         changeDevices(state,payload) {
             state.devicelist = payload.devicelist;
+        },
+
+        changeDeviceInfo(state,payload){
+            state.devicevalues = payload.devicevalues
         }
     },
     
@@ -83,6 +88,19 @@ export const store = new Vuex.Store({
                     devicelist: response.data
                 })
                 this.devicelist = response.data
+            })
+            .catch((error) => console.log(error));
+        },
+
+        getSensorById({commit}, id){
+            Sensors.get_sensor_by_id(id)
+            .then((response) => {
+
+                commit('changeDeviceInfo', {
+                    devicevalues: response.data
+                })
+                this.devicevalues = response.data
+                console.log(this.devicevalues)
             })
             .catch((error) => console.log(error));
         }
