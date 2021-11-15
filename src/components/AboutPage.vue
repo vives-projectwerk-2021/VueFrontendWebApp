@@ -130,7 +130,7 @@
         </v-col>
       </v-row>
       <div class="pt-14 text-center">
-        <a href="https://www.paypal.com/donate/?hosted_button_id=P5DB7PHDYZWNU">
+        <a href="https://www.paypal.com/donate/?hosted_button_id=WS3PMFHP8UWY6">
         <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif">
       </a>
       </div>
