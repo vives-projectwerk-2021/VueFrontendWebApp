@@ -1,5 +1,5 @@
 <template>
-  <p>hello</p>
+  <p>id: {{this.$route.params.deviceId}}</p>
 </template>
 
 <script>
