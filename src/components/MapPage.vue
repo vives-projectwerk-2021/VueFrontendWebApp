@@ -8,6 +8,7 @@
 <script>
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import { Icon } from 'leaflet';
 export default {
   name: "Map",
   data() {
@@ -20,7 +21,6 @@ export default {
   methods: {
     setupLeafletMap () {
       this.map = L.map("mapContainer").setView(this.center, 14);
-      L.marker([51.209348, 3.2246995]).addTo(mapLeaflet);
       L.tileLayer(
         "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
         {
@@ -30,6 +30,23 @@ export default {
             "pk.eyJ1IjoiYXJ0aHVyMiIsImEiOiJja3c3djNudHMwOGY2Mm5zM2w1d2MzengyIn0.1Ihd1j68_0ipew2AjE85Hw",
         }
       ).addTo(this.map);
+
+      delete Icon.Default.prototype._getIconUrl;
+      Icon.Default.mergeOptions({
+        iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+        iconUrl: require('leaflet/dist/images/marker-icon.png'),
+        shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+      });
+      
+      var loc = [51.2024949, 3.227196];
+      var marker = L.marker(loc).addTo(this.map);
+      marker.bindTooltip("Device Sensor 1");
+      marker.bindPopup("<b>Device Sensor 1</b><br>Brugge Centrum<br>51.2024949, 3.227196");
+
+      var loc2 = [51.21511504695216, 3.2265794559620704];
+      var marker2 = L.marker(loc2).addTo(this.map);
+      marker2.bindPopup("<b>Device Sensor 2</b><br>Sint-Gillis Kerk<br>51.21511504695216, 3.2265794559620704");
+      marker2.bindTooltip("Device Sensor 2");
     },
   },
   mounted() {
@@ -39,13 +56,12 @@ export default {
 </script>
 
 <style>
-
-#info {
-  width: 18vw;
-  height: 100vh;
+h1 {
+  text-align: center;
+  margin: 20px;
 }
 #mapContainer {
-  width: 80vw;
+  width: 100%;
   height: 100vh;
 }
 </style>
