@@ -33,6 +33,7 @@ jobs:
         build-args: |
           VUE_APP_WS=${{ secrets.VUE_APP_WS }}
           VUE_APP_BACKEND_BASE_URL=${{ secrets.VUE_APP_BACKEND_BASE_URL }}
+	        VUE_APP_MAPBOX_TOKEN=${{ secrets.VUE_APP_MAPBOX_TOKEN }}
 
   deploy:
     runs-on: ubuntu-latest
