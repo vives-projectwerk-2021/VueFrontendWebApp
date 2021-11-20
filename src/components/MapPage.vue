@@ -9,6 +9,7 @@
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { Icon } from 'leaflet';
+import { config } from '@/config.js'
 export default {
   name: "Map",
   data() {
@@ -26,8 +27,7 @@ export default {
         {
           maxZoom: 18,
           id: "mapbox/streets-v11",
-          accessToken:
-            "pk.eyJ1IjoiYXJ0aHVyMiIsImEiOiJja3c3djNudHMwOGY2Mm5zM2w1d2MzengyIn0.1Ihd1j68_0ipew2AjE85Hw",
+          accessToken: config.VUE_APP_MAPBOX_TOKEN,
         }
       ).addTo(this.map);
 
