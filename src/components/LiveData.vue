@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="d-flex justify-space-between my-3">
-      <h2>Device: {{liveValues.device_id}}</h2>
+      <h2>Live data</h2>
       <v-btn
         @click="fold"
         elevation="0" fab plain small

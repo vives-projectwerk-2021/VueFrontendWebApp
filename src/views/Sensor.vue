@@ -21,14 +21,14 @@
         </v-btn>
       </v-card>
 
-      <div v-else-if="hasReceivedValues" :key="sensorsComponentsUpdate">
-        <v-card v-for="device in liveDeviceValues" :key="device.device_id">
-          <LiveData :liveValues="device" class="ma-4" />
+      <div v-else-if="liveDeviceValues && liveDeviceValues.device_id == deviceId">
+        <v-card>
+          <LiveData :liveValues="liveDeviceValues" class="ma-4" />
         </v-card>
       </div>
 
       <div v-else>
-        <p>Waiting for data...</p>
+        <p>Waiting for live data...</p>
         <v-progress-linear
         indeterminate
         color="yellow darken-2"
@@ -37,15 +37,14 @@
 
     </div>
   </div>
-    <div v-for="field in Object.keys(devicevalues)" :key="field">
-      {{field}}: {{ devicevalues[field] }}
+    <div v-for="value in deviceValues" :key="value">
+      {{value}}: {{ devicevalues[value] }}
     </div>
   </div>
 </template>
 
 <script>
 import LiveData from '@/components/LiveData'
-import { mapState } from 'vuex'
 
 export default {
   name: "Sensor",
@@ -55,10 +54,12 @@ export default {
   data() {
     return {
       loadingWS: true,
+      deviceId: this.$route.params.deviceId
     }
   },
   created(){
-    this.$store.dispatch("getSensorById",this.$route.params.deviceId)
+    this.$store.dispatch("getSensorById", this.deviceId)
+    this.$store.dispatch("deviceListener" , this.deviceId)
     if (this.$store.state.wsReadyState != 1) {
       setTimeout(() => {
         this.retryWsConnection()
@@ -69,17 +70,11 @@ export default {
     }
   },
   computed:{
-    ...mapState([
-      'devicevalues'
-    ]),
-        liveDeviceValues() {
+    deviceValues() {
+      return this.$store.deviceValues
+    },
+    liveDeviceValues() {
       return this.$store.state.liveDeviceValues
-    },
-    sensorsComponentsUpdate() {
-      return this.$store.state.sensorsComponentsUpdate
-    },
-    hasReceivedValues() {
-      return this.$store.state.hasReceivedData
     },
     ws() {
       return this.$store.state.ws
