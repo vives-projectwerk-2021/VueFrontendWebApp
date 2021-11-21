@@ -1,7 +1,3 @@
-/**
- * Sensor.vue: Components on home-page that display real-time values from all devices.
- */
-
 <template>
   <div>
     <div class="d-flex justify-space-between my-3">
@@ -13,14 +9,14 @@
         <v-icon>mdi-chevron-down</v-icon>
       </v-btn>
     </div>
-    
-    
+  
+  
     <div v-if="displayContent" class="d-flex flex-wrap">
-      <moisture-card  v-for="(moisture, index) in liveValues.sensors.moisture" :key="moisture.key" 
+      <MoistureCard  v-for="(moisture, index) in liveValues.sensors.moisture" :key="moisture.key" 
         class="ma-1"
         :percentage="moisture.value"
         :level="index">
-      </moisture-card>
+      </MoistureCard>
 
       <SensorValueCard v-for="(temp, index) in liveValues.sensors.temperature" :key="temp.key" 
         class="ma-1"
@@ -40,12 +36,11 @@
   </div>
 </template>
 
-
 <script>
 import MoistureCard from '@/components/MoistureCard'
 import SensorValueCard from '@/components/SensorValueCard'
 export default {
-  name: 'Sensor',
+  name:"LiveData",
   props: ['liveValues'],
   components: {
     MoistureCard,
@@ -61,5 +56,6 @@ export default {
       this.displayContent = !this.displayContent
     }
   }
+
 }
 </script>
