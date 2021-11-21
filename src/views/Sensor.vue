@@ -37,7 +37,7 @@
 
     </div>
   </div>
-    <div v-for="value in deviceValues" :key="value">
+    <div v-for="value in devicevalues" :key="value">
       {{value}}: {{ devicevalues[value] }}
     </div>
   </div>
@@ -70,8 +70,8 @@ export default {
     }
   },
   computed:{
-    deviceValues() {
-      return this.$store.deviceValues
+    devicevalues() {
+      return this.$store.devicevalues
     },
     liveDeviceValues() {
       return this.$store.state.liveDeviceValues
