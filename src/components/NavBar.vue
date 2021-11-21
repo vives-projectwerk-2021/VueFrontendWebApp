@@ -50,7 +50,7 @@ export default {
   name: "NavBar",
   data() {
     return {
-      links: ["Home", "About", "AddSensor", "Sensors"],
+      links: ["Home", "About", "AddSensor", "Sensors", "Map"],
     };
   },
 };
