@@ -7,10 +7,9 @@
           <p class="text-subtitle-1 text-center">
             You can add your pulu sensor here!
           </p>
-          <v-divider />
         </v-col>
       </v-row>
-
+      <v-divider />
       <v-form ref="form" v-model="valid" class="mx-4">
         <v-row>
           <v-col>
@@ -44,8 +43,9 @@
         </v-row>
 
         <v-row>
-          <v-col>
+          <v-col class="pt-0">
             <v-text-field
+              class="pt-0"
               label="Location (for now)"
               :rules="[rules.required]"
               hide-details="auto"
@@ -54,8 +54,33 @@
           </v-col>
         </v-row>
 
-        <v-row class="mx-1 mt-4">
-          <p class="text-subtitle-1 text-center">Add the location</p>
+        <v-row>
+          <v-col class="pt-0">
+            <v-text-field
+              class="pt-0"
+              label="First Name"
+              :rules="[rules.required, rules.counter, rules.nameValidator]"
+              hide-details="auto"
+              v-model="firstname"
+            ></v-text-field>
+          </v-col>
+          <v-col class="pt-0">
+            <v-text-field
+              class="pt-0"
+              label="Last Name"
+              :rules="[rules.required, rules.counter, rules.lastnameValidator]"
+              hide-details="auto"
+              v-model="lastname"
+            ></v-text-field>
+          </v-col>
+        </v-row>
+
+        <v-row class="mt-4">
+          <v-col class="py-0">
+            <p class="text-subtitle-1 text-center my-0">
+              Add the location of the sensor
+            </p>
+          </v-col>
         </v-row>
 
         <v-row>
@@ -87,31 +112,10 @@
           </v-col>
         </v-row>
 
-        <v-row class="text-center">
-          <v-col>
-            <v-btn class="mx-3" @click="mapLocation"> </v-btn>
-            <v-btn class="mx-3" @click="qrLocation"> </v-btn>
-          </v-col>
-        </v-row>
-
-        <v-row>
-          <v-col class="pt-0">
-            <v-text-field
-              class="pt-0"
-              label="First Name"
-              :rules="[rules.required, rules.counter, rules.nameValidator]"
-              hide-details="auto"
-              v-model="firstname"
-            ></v-text-field>
-          </v-col>
-          <v-col class="pt-0">
-            <v-text-field
-              class="pt-0"
-              label="Last Name"
-              :rules="[rules.required, rules.counter, rules.lastnameValidator]"
-              hide-details="auto"
-              v-model="lastname"
-            ></v-text-field>
+        <v-row class="text-center mb-3">
+          <v-col class="py-0">
+            <v-btn class="mx-2" @click="mapLocation">With QR</v-btn>
+            <v-btn class="mx-2" @click="qrLocation">With MAP</v-btn>
           </v-col>
         </v-row>
       </v-form>
