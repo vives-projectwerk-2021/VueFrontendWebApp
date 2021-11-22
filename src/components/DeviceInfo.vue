@@ -1,5 +1,5 @@
 <template>
-    <div >
+    <div>
         <v-card class="my-6" v-for="device in devicelist" :key="device.id" elevation="5" >
             <v-card-title>{{ device.devicename }}</v-card-title>
             <v-card-text>device id: {{ device.deviceid }} </v-card-text>

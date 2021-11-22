@@ -11,12 +11,12 @@
         </v-col>
       </v-row>
 
-      <v-container>
+      <v-form ref="form" v-model="valid" class="mx-4">
         <v-row>
           <v-col>
             <v-text-field
               label="Device ID"
-              :rules="[rules.required, rules.counter, rules.deviceidValidator]"
+              :rules="[rules.required, rules.devIdCounter, rules.deviceidValidator]"
               hide-details="auto"
               v-model="deviceid"
             ></v-text-field>
@@ -27,7 +27,11 @@
           <v-col>
             <v-text-field
               label="Device Name"
-              :rules="[rules.required, rules.counter, rules.devicenameValidator]"
+              :rules="[
+                rules.required,
+                rules.counter,
+                rules.devicenameValidator,
+              ]"
               hide-details="auto"
               v-model="devicename"
             ></v-text-field>
@@ -63,15 +67,13 @@
             ></v-text-field>
           </v-col>
         </v-row>
-      </v-container>
+      </v-form>
 
       <v-row>
         <v-col class="text-center">
           <v-divider />
           <v-btn @click="sendData" large class="mt-3">
-            <v-icon>
-              mdi-plus
-            </v-icon>
+            <v-icon> mdi-plus </v-icon>
             Add Sensor
           </v-btn>
         </v-col>
@@ -81,7 +83,7 @@
     <v-snackbar v-model="snackbar">
       {{ snackbarText }}
       <template v-slot:action="{ attrs }">
-        <v-btn color="#A9C25D" text v-bind="attrs" @click="snackbar = false">
+        <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
           Close
         </v-btn>
       </template>
@@ -90,8 +92,6 @@
 </template>
 
 <script>
-
-
 export default {
   name: "AddSensorPage",
   data() {
@@ -102,11 +102,13 @@ export default {
       firstname: "",
       lastname: "",
 
+      valid: true,
       snackbar: false,
 
       rules: {
         required: (value) => !!value || "Required.",
         counter: (value) => value.length <= 20 || "Max 20 characters",
+        devIdCounter: (value) => value.length <= 16 || "Max 16 characters",
         nameValidator: (value) => {
           // First char can be a (non)capital letter, all other chars can only be non-capital letters!
           const pattern = /^([a-zA-Z][a-z]+([ ]?[[a-zA-Z][a-z]+)*)$/;
@@ -134,6 +136,7 @@ export default {
         devicenameValidator: (value) => {
           // Can only be lowercase letters, numbers, underscores or dashes (multiple words)
           const pattern = /^([a-zA-Z-_]+([ ]?[a-z]?['-]?[a-zA-Z-_]+)*)$/;
+
           return (
             pattern.test(value) ||
             "Invalid Device Name: Can only be letters, numbers, underscores or dashes."
@@ -144,14 +147,10 @@ export default {
   },
   methods: {
     sendData() {
-      if (
-        this.deviceid == "" ||
-        this.devicename == "" ||
-        this.location == "" ||
-        this.firstname == "" ||
-        this.lastname == ""
-      ) {
-        this.$store.commit('addSensor', "ERROR: All fields have to be filled in!")
+      this.$refs.form.validate();
+
+      if (this.valid == false) {
+        this.$store.commit("addSensor", "Please, check for problems!");
       } else {
         let json = {
           deviceid: this.deviceid,
@@ -161,7 +160,7 @@ export default {
           lastname: this.lastname,
         };
 
-        this.$store.dispatch('addSensor', json)
+        this.$store.dispatch("addSensor", json);
       }
       this.snackbar = true;
     },
@@ -169,8 +168,7 @@ export default {
   computed: {
     snackbarText() {
       return this.$store.state.snackbarText;
-    }
-
-  }
+    },
+  },
 };
 </script>
