@@ -2,59 +2,90 @@
   <div>
     <div>
 
-    <div v-if="loadingWS" >
-      <p>Waiting for websocket connection</p>
-      <v-progress-linear
-      indeterminate
-      color="yellow darken-2"
-      ></v-progress-linear>
-    </div>
-
-    <div v-else>
-      <v-card v-if="!ws || ws.readyState != 1" class="mx-auto text-center pa-6 red accent-1">
-        <h3>No WebSocket Connection</h3>
-        <v-btn @click="retryWsConnection" 
-          elevation="2"
-          large
-          outlined
-          >Retry Connecting
-        </v-btn>
-      </v-card>
-
-      <div v-else-if="liveDeviceValues && liveDeviceValues.device_id == deviceId">
-        <v-card>
-          <LiveData :liveValues="liveDeviceValues" class="ma-4" />
-        </v-card>
-      </div>
-
-      <div v-else>
-        <p>Waiting for live data...</p>
+      <div v-if="loadingWS" >
+        <p>Waiting for websocket connection</p>
         <v-progress-linear
         indeterminate
         color="yellow darken-2"
         ></v-progress-linear>
       </div>
 
+      <div v-else>
+        <v-card v-if="!ws || ws.readyState != 1" class="mx-auto text-center pa-6 red accent-1">
+          <h3>No WebSocket Connection</h3>
+          <v-btn @click="retryWsConnection" 
+            elevation="2"
+            large
+            outlined
+            >Retry Connecting
+          </v-btn>
+        </v-card>
+
+        <div v-else-if="liveDeviceValues && liveDeviceValues.device_id == deviceId">
+          <v-card>
+            <LiveData :liveValues="liveDeviceValues" class="ma-4" />
+          </v-card>
+        </div>
+
+        <div v-else>
+          <p>Waiting for live data...</p>
+          <v-progress-linear
+          indeterminate
+          color="yellow darken-2"
+          ></v-progress-linear>
+        </div>
+      </div>
     </div>
-  </div>
     <div v-for="value in devicevalues" :key="value">
       {{value}}: {{ devicevalues[value] }}
     </div>
+
+    <div>
+
+      <line-chart
+      :v-if="loaded" 
+      :chartdata="chartdata"
+      :options="options" />
+
+    </div>
+
   </div>
 </template>
 
 <script>
 import LiveData from '@/components/LiveData'
+import LineChart from '@/components/Chart.vue'
 
 export default {
   name: "Sensor",
   components: {
-    LiveData
+    LiveData,
+    LineChart
   },
   data() {
     return {
       loadingWS: true,
-      deviceId: this.$route.params.deviceId
+      deviceId: this.$route.params.deviceId,
+      chartdata:  {
+        labels: [1,2,3,4,5,6,7],
+        datasets: [
+          {
+            label: "temp",
+            data: [2, 10, 5, 9, 0, 6, 20],
+            backgroundColor: "transparent",
+            borderColor: "red",
+            pointBackgroundColor: "black"
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        title: {
+          display: false,
+          text: "My Data"
+              }
+          }
     }
   },
   created(){
