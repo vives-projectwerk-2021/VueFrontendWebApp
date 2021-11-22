@@ -58,7 +58,7 @@ export default {
     }
   },
   created(){
-    this.$store.dispatch("getSensorById", this.$route.params.deviceId)
+    this.$store.dispatch("getSensorById", this.deviceId)
     this.$store.dispatch("deviceListener" , this.deviceId)
     if (this.$store.state.wsReadyState != 1) {
       setTimeout(() => {
