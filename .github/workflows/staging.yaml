@@ -46,3 +46,4 @@ jobs:
           ssh_deploy_key: ${{secrets.SSH_DEPLOY_KEY}}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           image: ${{ needs.build.outputs.image }}
+          pulu_endpoint: 'PULU_FRONTEND'
