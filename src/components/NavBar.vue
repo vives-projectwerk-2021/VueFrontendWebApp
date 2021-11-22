@@ -3,8 +3,8 @@
    <!--
     Navbar for mobile devices
     -->
-    <v-app-bar app class="pa-0 hidden-sm-and-up" flat color="white" elevate-on-scroll>
-    <v-row >
+    <v-app-bar app class="pa-0 hidden-sm-and-up" flat color="white" elevate-on-scroll style="z-index:10000;">
+    <v-row>
       <v-col class="px-0">
         <v-card fill-height flat rounded="false">
           <v-card-title class="py-0">
@@ -35,7 +35,7 @@
     Navbar for bigger screens
     -->
 
-    <v-app-bar app color="white" flat class="hidden-xs-only" elevate-on-scroll>
+    <v-app-bar app color="white" flat class="hidden-xs-only" elevate-on-scroll style="z-index:10000;">
       <v-container class="py-0 fill-height">
         <v-btn :exact="true" v-for="link in links" :key="link" :to="{ name: link }" text>
           {{ link }}
@@ -50,7 +50,7 @@ export default {
   name: "NavBar",
   data() {
     return {
-      links: ["Home", "About", "AddSensor", "Sensors"],
+      links: ["Home", "About", "AddSensor", "Sensors", "Map"],
     };
   },
 };
