@@ -204,7 +204,7 @@ export default {
         this.$store.commit("addSensor", "Please, check for problems!");
       } else {
         let json = {
-          deviceid: this.deviceid.toLowerCase,
+          deviceid: this.deviceid.toLowerCase(),
           devicename: this.devicename,
           location: this.location,
           firstname: this.firstname,
