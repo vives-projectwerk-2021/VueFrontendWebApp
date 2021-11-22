@@ -108,7 +108,7 @@ export default {
       rules: {
         required: (value) => !!value || "Required.",
         counter: (value) => value.length <= 20 || "Max 20 characters",
-        devIdCounter: (value) => value.length <= 16 || "Max 16 characters",
+        devIdCounter: (value) => value.length == 24 || "Exactly 24 characters",
         nameValidator: (value) => {
           // First char can be a (non)capital letter, all other chars can only be non-capital letters!
           const pattern = /^([a-zA-Z][a-z]+([ ]?[[a-zA-Z][a-z]+)*)$/;
@@ -127,10 +127,10 @@ export default {
         },
         deviceidValidator: (value) => {
           // Can only be lowercase letters, numbers or dashes
-          const pattern = /^[a-z0-9-]+$/;
+          const pattern = /^[a-f0-9]+$/;
           return (
             pattern.test(value) ||
-            "Invalid Device ID: Can only be lowercase letters, numbers or dashes."
+            "Invalid Device ID: Can only be a hexadecimal value. (Lowercase letters a to f, and numbers)"
           );
         },
         devicenameValidator: (value) => {
