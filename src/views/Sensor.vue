@@ -78,14 +78,7 @@ export default {
           }
         ]
       },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        title: {
-          display: false,
-          text: "My Data"
-              }
-          }
+
     }
   },
   created(){
