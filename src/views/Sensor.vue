@@ -1,45 +1,49 @@
 <template>
   <div>
+    
+    <v-card class="mb-6" elevation="5" >
+      <v-card-title>Device name: {{ devicevalues.devicename }}</v-card-title>
+      <v-card-text>firstname:  {{ devicevalues.firstname }} </v-card-text>
+      <v-card-text>Lastname:  {{ devicevalues.lastname }} </v-card-text>
+      <v-card-text>📍 Location:  {{ devicevalues.location }} </v-card-text>
+    </v-card>
     <div>
-
-    <div v-if="loadingWS" >
-      <p>Waiting for websocket connection</p>
-      <v-progress-linear
-      indeterminate
-      color="yellow darken-2"
-      ></v-progress-linear>
-    </div>
-
-    <div v-else>
-      <v-card v-if="!ws || ws.readyState != 1" class="mx-auto text-center pa-6 red accent-1">
-        <h3>No WebSocket Connection</h3>
-        <v-btn @click="retryWsConnection" 
-          elevation="2"
-          large
-          outlined
-          >Retry Connecting
-        </v-btn>
-      </v-card>
-
-      <div v-else-if="liveDeviceValues && liveDeviceValues.device_id == deviceId">
-        <v-card>
-          <LiveData :liveValues="liveDeviceValues" class="ma-4" />
-        </v-card>
-      </div>
-
-      <div v-else>
-        <p>Waiting for live data...</p>
+      
+      <div v-if="loadingWS" >
+        <p>Waiting for websocket connection</p>
         <v-progress-linear
-        indeterminate
-        color="yellow darken-2"
+          indeterminate
+          color="yellow darken-2"
         ></v-progress-linear>
       </div>
 
-    </div>
+      <div v-else>
+        <v-card v-if="!ws || ws.readyState != 1" class="mx-auto text-center pa-6 red accent-1">
+          <h3>No WebSocket Connection</h3>
+          <v-btn @click="retryWsConnection" 
+            elevation="2"
+            large
+            outlined
+            >Retry Connecting
+          </v-btn>
+        </v-card>
+
+        <div v-else-if="liveDeviceValues && liveDeviceValues.device_id == deviceId">
+          <v-card elevation="5">
+            <LiveData :liveValues="liveDeviceValues" class="ma-4" />
+          </v-card>
+        </div>
+
+        <div v-else>
+          <p>Waiting for live data...</p>
+          <v-progress-linear
+          indeterminate
+          color="yellow darken-2"
+          ></v-progress-linear>
+        </div>
+      </div>
   </div>
-    <div v-for="value in devicevalues" :key="value">
-      {{value}}: {{ devicevalues[value] }}
-    </div>
+    
   </div>
 </template>
 
