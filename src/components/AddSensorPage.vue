@@ -3,7 +3,7 @@
     <v-card color="#A9C25D" elevation="5">
       <v-row>
         <v-col>
-          <p class="text-h2 text-center">Add Sensor</p>
+          <p class="text-h2 text-center">Add a Sensor</p>
           <p class="text-subtitle-1 text-center">
             You can add your pulu sensor here!
           </p>
