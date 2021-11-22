@@ -54,11 +54,11 @@ export default {
   data() {
     return {
       loadingWS: true,
-      deviceId: this.$route.params.deviceId
+      deviceId: this.$route.params.deviceId,
     }
   },
   created(){
-    this.$store.dispatch("getSensorById", this.deviceId)
+    this.$store.dispatch("getSensorById", this.$route.params.deviceId)
     this.$store.dispatch("deviceListener" , this.deviceId)
     if (this.$store.state.wsReadyState != 1) {
       setTimeout(() => {
@@ -71,7 +71,7 @@ export default {
   },
   computed:{
     devicevalues() {
-      return this.$store.devicevalues
+      return this.$store.getters.devicevalues
     },
     liveDeviceValues() {
       return this.$store.state.liveDeviceValues
