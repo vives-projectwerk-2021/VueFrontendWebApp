@@ -21,6 +21,7 @@
               v-model="deviceid"
             ></v-text-field>
           </v-col>
+          <SerialConnect></SerialConnect>
         </v-row>
 
         <v-row>
@@ -92,8 +93,13 @@
 </template>
 
 <script>
+import SerialConnect from '@/components/SerialConnect.vue'
+
 export default {
   name: "AddSensorPage",
+  components: {
+    SerialConnect
+  },
   data() {
     return {
       deviceid: "",
