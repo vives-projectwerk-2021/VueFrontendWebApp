@@ -21,7 +21,7 @@
               v-model="deviceid"
             ></v-text-field>
           </v-col>
-          <SerialConnect></SerialConnect>
+          <SerialConnect v-on:deviceId="updateDeviceId" class="my-auto" ></SerialConnect>
         </v-row>
 
         <v-row>
@@ -170,6 +170,9 @@ export default {
       }
       this.snackbar = true;
     },
+    updateDeviceId(id){
+      this.deviceid = id
+    }
   },
   computed: {
     snackbarText() {
