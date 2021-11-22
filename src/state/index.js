@@ -15,7 +15,12 @@ export const store = new Vuex.Store({
         activeDevice: ""
     },
 
-    getters: {},
+    getters: {
+
+        devicevalues(state) {
+            return state.devicevalues;
+        }
+    },
 
     mutations: {
         updateDeviceValues: (state, message) => {

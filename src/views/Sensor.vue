@@ -54,7 +54,7 @@ export default {
   data() {
     return {
       loadingWS: true,
-      deviceId: this.$route.params.deviceId
+      deviceId: this.$route.params.deviceId,
     }
   },
   created(){
@@ -71,7 +71,7 @@ export default {
   },
   computed:{
     devicevalues() {
-      return this.$store.devicevalues
+      return this.$store.getters.devicevalues
     },
     liveDeviceValues() {
       return this.$store.state.liveDeviceValues
