@@ -16,7 +16,11 @@
           <v-col>
             <v-text-field
               label="Device ID"
-              :rules="[rules.required, rules.devIdCounter, rules.deviceidValidator]"
+              :rules="[
+                rules.required,
+                rules.devIdCounter,
+                rules.deviceidValidator,
+              ]"
               hide-details="auto"
               v-model="deviceid"
             ></v-text-field>
@@ -24,8 +28,9 @@
         </v-row>
 
         <v-row>
-          <v-col>
+          <v-col class="pt-0">
             <v-text-field
+              class="pt-0"
               label="Device Name"
               :rules="[
                 rules.required,
@@ -41,7 +46,7 @@
         <v-row>
           <v-col>
             <v-text-field
-              label="Location"
+              label="Location (for now)"
               :rules="[rules.required]"
               hide-details="auto"
               v-model="location"
@@ -49,17 +54,59 @@
           </v-col>
         </v-row>
 
+        <v-row class="mx-1 mt-4">
+          <p class="text-subtitle-1 text-center">Add the location</p>
+        </v-row>
+
         <v-row>
           <v-col>
             <v-text-field
+              class="py-4"
+              outlined
+              readonly
+              disabled
+              dense
+              hide-details="auto"
+              value="12345"
+              label="Latitude"
+              prepend-inner-icon="mdi-map-marker"
+            ></v-text-field>
+          </v-col>
+          <v-col>
+            <v-text-field
+              class="py-4"
+              outlined
+              readonly
+              disabled
+              dense
+              hide-details="auto"
+              value="56789"
+              label="Longitude"
+              prepend-inner-icon="mdi-map-marker"
+            ></v-text-field>
+          </v-col>
+        </v-row>
+
+        <v-row class="text-center">
+          <v-col>
+            <v-btn class="mx-3" @click="mapLocation"> </v-btn>
+            <v-btn class="mx-3" @click="qrLocation"> </v-btn>
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col class="pt-0">
+            <v-text-field
+              class="pt-0"
               label="First Name"
               :rules="[rules.required, rules.counter, rules.nameValidator]"
               hide-details="auto"
               v-model="firstname"
             ></v-text-field>
           </v-col>
-          <v-col>
+          <v-col class="pt-0">
             <v-text-field
+              class="pt-0"
               label="Last Name"
               :rules="[rules.required, rules.counter, rules.lastnameValidator]"
               hide-details="auto"
@@ -127,10 +174,10 @@ export default {
         },
         deviceidValidator: (value) => {
           // Can only be lowercase letters, numbers or dashes
-          const pattern = /^[a-f0-9]+$/;
+          const pattern = /^[a-fA-F0-9]+$/;
           return (
             pattern.test(value) ||
-            "Invalid Device ID: Can only be a hexadecimal value. (Lowercase letters a to f, and numbers)"
+            "Invalid Device ID: Can only be a hexadecimal value. (Letters from a to f, and numbers)"
           );
         },
         devicenameValidator: (value) => {
@@ -153,7 +200,7 @@ export default {
         this.$store.commit("addSensor", "Please, check for problems!");
       } else {
         let json = {
-          deviceid: this.deviceid,
+          deviceid: this.deviceid.toLowerCase,
           devicename: this.devicename,
           location: this.location,
           firstname: this.firstname,
