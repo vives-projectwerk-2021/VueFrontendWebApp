@@ -10,18 +10,18 @@ const Sensors = {
 
     get_all_sensors(){
         console.log("Getting all sensors");
-        return api.get(`/devices`);
+        return api.get(`/${this.resource}`);
     },
 
 
     get_sensor_by_id(id){
         console.log("Getting sensor with id: " + id );
-        return api.get(`/devices/${id}`)
+        return api.get(`/${this.resource}/${id}`)
     },
     
     add_sensor(json){
         console.log("Post new sensor");
-        return api.post(`/devices`, json);
+        return api.post(`/${this.resource}`, json);
     }
 }
 
