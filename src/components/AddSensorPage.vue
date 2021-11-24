@@ -3,30 +3,35 @@
     <v-card color="#A9C25D" elevation="5">
       <v-row>
         <v-col>
-          <p class="text-h2 text-center">Add Sensor</p>
+          <p class="text-h2 text-center">Add a Sensor</p>
           <p class="text-subtitle-1 text-center">
             You can add your pulu sensor here!
           </p>
-          <v-divider />
         </v-col>
       </v-row>
-
+      <v-divider />
       <v-form ref="form" v-model="valid" class="mx-4">
         <v-row>
-          <v-col>
+          <v-col class="pb-0">
             <v-text-field
               label="Device ID"
-              :rules="[rules.required, rules.devIdCounter, rules.deviceidValidator]"
+              :rules="[
+                rules.required,
+                rules.deviceidValidator,
+                rules.devIdCounter,
+              ]"
               hide-details="auto"
               v-model="deviceid"
+              counter="24"
             ></v-text-field>
           </v-col>
           <SerialConnect v-on:deviceId="updateDeviceId" class="my-auto" ></SerialConnect>
         </v-row>
 
         <v-row>
-          <v-col>
+          <v-col class="pt-0">
             <v-text-field
+              class="pt-0"
               label="Device Name"
               :rules="[
                 rules.required,
@@ -40,9 +45,9 @@
         </v-row>
 
         <v-row>
-          <v-col>
+          <v-col class="pt-0">
             <v-text-field
-              label="Location"
+              label="Location (for now, will be removed later)"
               :rules="[rules.required]"
               hide-details="auto"
               v-model="location"
@@ -53,6 +58,7 @@
         <v-row>
           <v-col>
             <v-text-field
+              class="pt-0"
               label="First Name"
               :rules="[rules.required, rules.counter, rules.nameValidator]"
               hide-details="auto"
@@ -61,11 +67,56 @@
           </v-col>
           <v-col>
             <v-text-field
+              class="pt-0"
               label="Last Name"
               :rules="[rules.required, rules.counter, rules.lastnameValidator]"
               hide-details="auto"
               v-model="lastname"
             ></v-text-field>
+          </v-col>
+        </v-row>
+
+        <v-row class="mt-4">
+          <v-col class="pb-0">
+            <p class="text-subtitle-1 text-center my-0">
+              Add the location of the sensor
+            </p>
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col>
+            <v-text-field
+              class="py-4"
+              outlined
+              readonly
+              disabled
+              dense
+              hide-details="auto"
+              value="12345"
+              label="Latitude"
+              prepend-inner-icon="mdi-map-marker"
+            ></v-text-field>
+          </v-col>
+          <v-col>
+            <v-text-field
+              class="py-4"
+              outlined
+              readonly
+              disabled
+              dense
+              hide-details="auto"
+              value="56789"
+              label="Longitude"
+              prepend-inner-icon="mdi-map-marker"
+            ></v-text-field>
+          </v-col>
+        </v-row>
+
+        <v-row class="text-center mb-3">
+          <v-col class="py-0">
+            <v-btn class="mx-2" @click="mapLocation">With QR</v-btn>
+            <v-btn class="mx-2" @click="qrLocation">With MAP</v-btn>
           </v-col>
         </v-row>
       </v-form>
@@ -132,11 +183,11 @@ export default {
           );
         },
         deviceidValidator: (value) => {
-          // Can only be lowercase letters, numbers or dashes
-          const pattern = /^[a-f0-9]+$/;
+          // Can only be a hexadecimal value
+          const pattern = /^[a-fA-F0-9]+$/;
           return (
             pattern.test(value) ||
-            "Invalid Device ID: Can only be a hexadecimal value. (Lowercase letters a to f, and numbers)"
+            "Invalid Device ID: Can only be a hexadecimal value. (Letters from a to f, and numbers)"
           );
         },
         devicenameValidator: (value) => {
@@ -159,7 +210,7 @@ export default {
         this.$store.commit("addSensor", "Please, check for problems!");
       } else {
         let json = {
-          deviceid: this.deviceid,
+          deviceid: this.deviceid.toLowerCase().replace(" ", ""),
           devicename: this.devicename,
           location: this.location,
           firstname: this.firstname,
@@ -177,6 +228,13 @@ export default {
   computed: {
     snackbarText() {
       return this.$store.state.snackbarText;
+    },
+  },
+  watch: {
+    deviceid() {
+      this.$nextTick(() => {
+        this.deviceid = this.deviceid.replace(/\s+/g, "");
+      });
     },
   },
 };
