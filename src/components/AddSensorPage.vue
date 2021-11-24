@@ -12,16 +12,17 @@
       <v-divider />
       <v-form ref="form" v-model="valid" class="mx-4">
         <v-row>
-          <v-col>
+          <v-col class="pb-0">
             <v-text-field
               label="Device ID"
               :rules="[
                 rules.required,
-                rules.devIdCounter,
                 rules.deviceidValidator,
+                rules.devIdCounter,
               ]"
               hide-details="auto"
               v-model="deviceid"
+              counter="24"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -45,8 +46,7 @@
         <v-row>
           <v-col class="pt-0">
             <v-text-field
-              class="pt-0"
-              label="Location (for now)"
+              label="Location (for now, will be removed later)"
               :rules="[rules.required]"
               hide-details="auto"
               v-model="location"
@@ -55,7 +55,7 @@
         </v-row>
 
         <v-row>
-          <v-col class="pt-0">
+          <v-col>
             <v-text-field
               class="pt-0"
               label="First Name"
@@ -64,7 +64,7 @@
               v-model="firstname"
             ></v-text-field>
           </v-col>
-          <v-col class="pt-0">
+          <v-col>
             <v-text-field
               class="pt-0"
               label="Last Name"
@@ -76,7 +76,7 @@
         </v-row>
 
         <v-row class="mt-4">
-          <v-col class="py-0">
+          <v-col class="pb-0">
             <p class="text-subtitle-1 text-center my-0">
               Add the location of the sensor
             </p>
@@ -177,7 +177,7 @@ export default {
           );
         },
         deviceidValidator: (value) => {
-          // Can only be lowercase letters, numbers or dashes
+          // Can only be a hexadecimal value
           const pattern = /^[a-fA-F0-9]+$/;
           return (
             pattern.test(value) ||
@@ -204,7 +204,7 @@ export default {
         this.$store.commit("addSensor", "Please, check for problems!");
       } else {
         let json = {
-          deviceid: this.deviceid.toLowerCase(),
+          deviceid: this.deviceid.toLowerCase().replace(" ", ""),
           devicename: this.devicename,
           location: this.location,
           firstname: this.firstname,
@@ -219,6 +219,13 @@ export default {
   computed: {
     snackbarText() {
       return this.$store.state.snackbarText;
+    },
+  },
+  watch: {
+    deviceid() {
+      this.$nextTick(() => {
+        this.deviceid = this.deviceid.replace(/\s+/g, "");
+      });
     },
   },
 };
