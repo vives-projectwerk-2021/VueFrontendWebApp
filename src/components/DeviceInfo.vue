@@ -1,11 +1,11 @@
 <template>
     <div>
         <v-card class="mb-6" v-for="device in devicelist" :key="device.id" elevation="5" >
-            <v-card-title>{{ device.info.devicename }}</v-card-title>
-            <v-card-text>device id: {{ device.info.deviceid }} </v-card-text>
-            <v-card-text>firstname: {{ device.info.firstname }} </v-card-text>
-            <v-card-text>lastname: {{ device.info.lastname }}</v-card-text>
-            <v-card-text>Location: {{ device.info.location }}</v-card-text>
+            <v-card-title>{{ device.devicename }}</v-card-title>
+            <v-card-text>device id: {{ device.deviceid }} </v-card-text>
+            <v-card-text>firstname: {{ device.firstname }} </v-card-text>
+            <v-card-text>lastname: {{ device.lastname }}</v-card-text>
+            <v-card-text>Location: {{ device.location }}</v-card-text>
             <v-card-actions>
                 <v-btn :to="{ name: 'Sensor', params: {deviceId: device.deviceid} }" text>
                     See data
