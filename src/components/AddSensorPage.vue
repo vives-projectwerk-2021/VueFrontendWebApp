@@ -25,6 +25,7 @@
               counter="24"
             ></v-text-field>
           </v-col>
+          <SerialConnect v-on:deviceId="updateDeviceId" class="my-auto" ></SerialConnect>
         </v-row>
 
         <v-row>
@@ -143,8 +144,13 @@
 </template>
 
 <script>
+import SerialConnect from '@/components/SerialConnect.vue'
+
 export default {
   name: "AddSensorPage",
+  components: {
+    SerialConnect
+  },
   data() {
     return {
       deviceid: "",
@@ -215,6 +221,9 @@ export default {
       }
       this.snackbar = true;
     },
+    updateDeviceId(id){
+      this.deviceid = id
+    }
   },
   computed: {
     snackbarText() {
