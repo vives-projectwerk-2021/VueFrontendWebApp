@@ -64,7 +64,7 @@ export default {
   created(){
     this.$store.dispatch("getSensorById", this.deviceId)
     this.$store.dispatch("deviceListener" , this.deviceId)
-    if (this.$store.state.wsReadyState != 1) {
+    if (this.$store.state.websocket.wsReadyState != 1) {
       setTimeout(() => {
         this.retryWsConnection()
         this.loadingWS = false
@@ -81,12 +81,12 @@ export default {
       return this.$store.state.liveDeviceValues
     },
     ws() {
-      return this.$store.state.ws
+      return this.$store.state.websocket.ws
     },
   },
   methods: {
     retryWsConnection() {
-      this.$store.dispatch('tryWsConnection')
+      this.$store.dispatch('websocket/tryWsConnection')
     }
   },
 }
