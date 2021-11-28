@@ -60,7 +60,7 @@ export default {
   methods: {
     async getDeviceId() {
       this.dialog = false
-      await this.$store.dispatch("openSerialPort")
+      await this.$store.dispatch("serial/openSerialPort")
       .then( async () => {      // Read the response
         this.serialWriter("aWQ=")
         const device_Id = await this.read()
@@ -73,8 +73,8 @@ export default {
     },
     async read() {
       let text = ""
-      while (text.length <= 16 && this.$store.state.serialPort.readable) {
-        let reader = this.$store.state.serialPort.readable.getReader();
+      while (text.length <= 16 && this.$store.state.serial.serialPort.readable) {
+        let reader = this.$store.state.serial.serialPort.readable.getReader();
         try {
           while (text.length <= 16) {
             let { value, done } = await reader.read();
@@ -97,7 +97,7 @@ export default {
     },
     async serialWriter(str) {
       const encoder = new TextEncoder();
-      const writer = this.$store.state.serialPort.writable.getWriter();
+      const writer = this.$store.state.serial.serialPort.writable.getWriter();
       await writer.write(encoder.encode(str));
       writer.releaseLock();
     }

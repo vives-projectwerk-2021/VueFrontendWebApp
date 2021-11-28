@@ -236,11 +236,6 @@ export default {
       .then((res) => {
         console.log(res.data)
         if (res.status == 201){
-          this.ttnInfo = {
-            dev_eui: res.data.ids.dev_eui,
-            app_eui: "what",
-            app_key: res.data.root_keys.app_key.key
-          }
           const bytes =  res.data.ids.dev_eui + res.data.ids.join_eui 
           + res.data.root_keys.app_key.key + "001E"
           const buffer = Uint8Array.from(bytes.match(/(..)/g).map((b)=>'0x'+b))
@@ -253,7 +248,7 @@ export default {
     },
     async serialWriter(str) {
       const encoder = new TextEncoder();
-      const writer = this.$store.state.serialPort.writable.getWriter();
+      const writer = this.$store.state.serial.serialPort.writable.getWriter();
       await writer.write(encoder.encode(str));
       writer.releaseLock();
     }
