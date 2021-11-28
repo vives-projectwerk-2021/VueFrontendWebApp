@@ -12,7 +12,8 @@ export const store = new Vuex.Store({
         devicelist: [],
         devicevalues: {},
         snackbarText: "",
-        activeDevice: ""
+        activeDevice: "",
+        serialPort: undefined
     },
 
     getters: {
@@ -47,8 +48,10 @@ export const store = new Vuex.Store({
         },
         setDevice(state, device) {
             state.activeDevice = device
+        },
+        setSerialPort(state, port) {
+            state.serialPort = port
         }
-
     },
     
     actions: {
@@ -120,7 +123,17 @@ export const store = new Vuex.Store({
         },
         deviceListener(store, device) {
             this.commit('setDevice', device)
-        }
-
+        },
+        openSerialPort: async(store) => {
+            let serialPort = undefined
+            await navigator.serial.requestPort()
+            .then(async (port) => {   // Open serial port
+                serialPort = port
+                if (!serialPort.readable){
+                    await serialPort.open({ baudRate: 115200 });
+                    store.commit('setSerialPort', serialPort)
+                }
+            })
+        },
     }
 })

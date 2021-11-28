@@ -124,7 +124,7 @@
       <v-row>
         <v-col class="text-center">
           <v-divider />
-          <v-btn @click="sendData" large class="mt-3">
+          <v-btn @click="sendData(); getTTNInfo();" large class="mt-3">
             <v-icon> mdi-plus </v-icon>
             Add Sensor
           </v-btn>
@@ -145,6 +145,7 @@
 
 <script>
 import SerialConnect from '@/components/SerialConnect.vue'
+import { TTN } from "@/api/ttn.js"
 
 export default {
   name: "AddSensorPage",
@@ -200,6 +201,9 @@ export default {
           );
         },
       },
+
+      ttnInfo: {}
+
     };
   },
   methods: {
@@ -223,6 +227,35 @@ export default {
     },
     updateDeviceId(id){
       this.deviceid = id
+    },
+    getTTNInfo() {
+      TTN.registerDevice({
+        device_id: this.deviceid,
+        name: this.devicename
+      })
+      .then((res) => {
+        console.log(res.data)
+        if (res.status == 201){
+          this.ttnInfo = {
+            dev_eui: res.data.ids.dev_eui,
+            app_eui: "what",
+            app_key: res.data.root_keys.app_key.key
+          }
+          const bytes =  res.data.ids.dev_eui + res.data.ids.join_eui 
+          + res.data.root_keys.app_key.key + "001E"
+          const buffer = Uint8Array.from(bytes.match(/(..)/g).map((b)=>'0x'+b))
+          this.serialWriter(Buffer.from(String.fromCharCode(...buffer), 'binary').toString('base64'))
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
+    async serialWriter(str) {
+      const encoder = new TextEncoder();
+      const writer = this.$store.state.serialPort.writable.getWriter();
+      await writer.write(encoder.encode(str));
+      writer.releaseLock();
     }
   },
   computed: {
