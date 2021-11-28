@@ -38,7 +38,7 @@
           <v-btn
             color="primary"
             text
-            @click="connectToSerial"
+            @click="getDeviceId"
           >
             Proceed
           </v-btn>
@@ -54,12 +54,11 @@ export default {
   data(){
     return {
       serialPort: undefined,
-      device_id: "",
       dialog: false
     }
   },
   methods: {
-    connectToSerial() {
+    getDeviceId() {
       this.dialog = false
       navigator.serial.requestPort()
       .then(async (port) => {   // Open serial port
@@ -68,18 +67,11 @@ export default {
           await this.serialPort.open({ baudRate: 115200 });
         }
       })
-      .then( async () => {       // Write "aWQ=" to serial port
-        const encoder = new TextEncoder();
-        const writer = this.serialPort.writable.getWriter();
-        await writer.write(encoder.encode("aWQ="));
-        writer.releaseLock();
-      })
-      .then( async () => {      // Read and decode the response
-        const encodedId = await this.read()
-        const buffer = Buffer.from(encodedId, 'base64')
-        this.device_id = buffer.toString('hex');
-        console.log("Device-id: " + this.device_id)
-        this.$emit('deviceId', this.device_id)
+      .then( async () => {      // Read the response
+        this.serialWriter("aWQ=")
+        const device_Id = await this.read()
+        console.log("Device-id: " + device_Id)
+        this.$emit('deviceId', device_Id)
       })
       .catch((error) => {
         console.log(error)
@@ -104,9 +96,17 @@ export default {
           reader.releaseLock();
         }
       }
-      await this.serialPort.close();
-      return text
+
+      const buffer = Buffer.from(text, 'base64')
+      const deviceId = buffer.toString('hex');
+      return deviceId
     },
+    async serialWriter(str) {
+      const encoder = new TextEncoder();
+      const writer = this.serialPort.writable.getWriter();
+      await writer.write(encoder.encode(str));
+      writer.releaseLock();
+    }
   }
 }
 </script>
