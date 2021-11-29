@@ -1,7 +1,6 @@
 <template>
   <div id="container">
-    <h1>Map with sensor-devices.</h1>
-    <div id="mapContainer"></div>
+    <div id="mapContainer" class="mx-1"></div>
   </div>
 </template>
 
@@ -56,12 +55,7 @@ export default {
 </script>
 
 <style>
-h1 {
-  text-align: center;
-  margin: 20px;
-}
 #mapContainer {
-  width: 100%;
-  height: 100vh;
+  height: 70vh;
 }
 </style>
