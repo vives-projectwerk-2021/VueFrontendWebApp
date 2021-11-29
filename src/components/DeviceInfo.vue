@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <v-card v-if="devicelist" class="mb-6" v-for="device in devicelist" :key="device.id" elevation="5" >
+    <div v-if="devicelist">
+        <v-card class="mb-6" v-for="device in devicelist" :key="device.id" elevation="5" >
             <v-card-title>{{ device.devicename }}</v-card-title>
             <v-card-text>device id: {{ device.deviceid }} </v-card-text>
             <v-card-text>firstname: {{ device.firstname }} </v-card-text>
