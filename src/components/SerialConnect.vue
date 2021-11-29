@@ -63,37 +63,13 @@ export default {
       await this.$store.dispatch("serial/openSerialPort")
       .then( async () => {      // Read the response
         this.serialWriter("aWQ=")
-        const device_Id = await this.read()
+        const device_Id = await this.$store.dispatch("serial/readSerialPort", 16)
         console.log("Device-id: " + device_Id)
         this.$emit('deviceId', device_Id)
       })
       .catch((error) => {
         console.log(error)
       });
-    },
-    async read() {
-      let text = ""
-      while (text.length <= 16 && this.$store.state.serial.serialPort.readable) {
-        let reader = this.$store.state.serial.serialPort.readable.getReader();
-        try {
-          while (text.length <= 16) {
-            let { value, done } = await reader.read();
-            if (done) {
-              break;
-            }
-            const part = new TextDecoder().decode(value)
-            text += part
-          }
-        } catch (error) {
-          console.log(error)
-        } finally {
-          reader.releaseLock();
-        }
-      }
-
-      const buffer = Buffer.from(text, 'base64')
-      const deviceId = buffer.toString('hex');
-      return deviceId
     },
     async serialWriter(str) {
       const encoder = new TextEncoder();

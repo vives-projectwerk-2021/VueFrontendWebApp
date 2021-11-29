@@ -20,6 +20,30 @@ const serial =  {
           }
       })
     },
+    async readSerialPort({state}, length) {
+      let text = ""
+      while (text.length <= length && state.serialPort.readable) {
+        let reader = state.serialPort.readable.getReader();
+        try {
+          while (text.length <= length) {
+            let { value, done } = await reader.read();
+            if (done) {
+              break;
+            }
+            const part = new TextDecoder().decode(value)
+            text += part
+          }
+        } catch (error) {
+          console.log(error)
+        } finally {
+          reader.releaseLock();
+        }
+      }
+      
+      const buffer = Buffer.from(text, 'base64')
+      const deviceId = buffer.toString('hex');
+      return deviceId
+    }
   },
 }
 
