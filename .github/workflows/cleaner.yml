@@ -2,8 +2,7 @@ name: cleaner
 
 on:
   pull_request:
-    branches:
-      - types: [closed]
+    types: [closed]
 
 jobs:
   merge_job:
