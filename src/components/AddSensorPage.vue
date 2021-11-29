@@ -223,6 +223,12 @@ export default {
     },
     updateDeviceId(id){
       this.deviceid = id
+    },
+    mapLocation() {
+      console.log("Location map!")
+    },
+    qrLocation() {
+      console.log("Location QR!")
     }
   },
   computed: {
