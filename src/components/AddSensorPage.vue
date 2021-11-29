@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card elevation="5">
+    <v-card elevation="5" color="green lighten-2">
       <v-row>
         <v-col>
           <p class="text-h2 text-center">Add a Sensor</p>
