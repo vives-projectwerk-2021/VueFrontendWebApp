@@ -53,9 +53,10 @@ import LiveData from '@/components/LiveData'
 export default {
   name: "Sensor",
   components: {
-    LiveData
+    LiveData,
   },
   data() {
+    
     return {
       loadingWS: true,
       deviceId: this.$route.params.deviceId,
