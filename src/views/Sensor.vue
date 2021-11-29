@@ -1,12 +1,18 @@
 <template>
   <div>
+    
+    <v-card class="mb-6" elevation="5" >
+      <v-card-title>Device name: {{ devicevalues.info.devicename }}</v-card-title>
+      <v-card-text>firstname:  {{ devicevalues.info.firstname }} </v-card-text>
+      <v-card-text>Lastname:  {{ devicevalues.info.lastname }} </v-card-text>
+      <v-card-text>📍 Location:  {{ devicevalues.info.location }} </v-card-text>
+    </v-card>
     <div>
-
       <div v-if="loadingWS" >
         <p>Waiting for websocket connection</p>
         <v-progress-linear
-        indeterminate
-        color="yellow darken-2"
+          indeterminate
+          color="yellow darken-2"
         ></v-progress-linear>
       </div>
 
@@ -95,7 +101,7 @@ export default {
   },
   computed:{
     devicevalues() {
-      return this.$store.devicevalues
+      return this.$store.getters.devicevalues
     },
     liveDeviceValues() {
       return this.$store.state.liveDeviceValues
