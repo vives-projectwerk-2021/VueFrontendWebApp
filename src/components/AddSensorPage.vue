@@ -236,8 +236,6 @@ export default {
       .then(async (res) => {
         console.log(res.data)
         const bytes =  res.data.ids.dev_eui + res.data.ids.join_eui 
-          const bytes =  res.data.ids.dev_eui + res.data.ids.join_eui 
-        const bytes =  res.data.ids.dev_eui + res.data.ids.join_eui 
         + res.data.root_keys.app_key.key + "001E"
         const buffer = Uint8Array.from(bytes.match(/(..)/g).map((b)=>'0x'+b))
         const payload = Buffer.from(String.fromCharCode(...buffer), 'binary').toString('base64')
