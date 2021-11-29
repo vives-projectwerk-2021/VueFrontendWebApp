@@ -15,7 +15,7 @@ jobs:
       - name: composite action
         uses: vives-projectwerk-2021/pulu-action@clean
         with: 
-          pulu_build: 'pulu-frontend.${{ needs.build.outputs.pr }}'
+          pulu_build: 'pulu-frontend.pr-${{ github.event.number }}'
           ssh_deploy_key: ${{secrets.SSH_DEPLOY_KEY}}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           image: ${{ needs.build.outputs.image }}
