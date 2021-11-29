@@ -8,36 +8,20 @@ export const store = new Vuex.Store({
     state: {
         ws: undefined,
         wsReadyState: undefined,
-        liveDeviceValues: [],
-        sensorsComponentsUpdate: 1, /*  annoying solution to update component if device already exists,
-                                        but nothing else seems to work 😒 */
-        hasReceivedData: false,
+        liveDeviceValues: {},
         devicelist: [],
         devicevalues: {},
         snackbarText: "",
+        activeDevice: ""
     },
 
     getters: {},
 
     mutations: {
         updateDeviceValues: (state, message) => {
-            let doesEntityExist = false
-            let entityPosition = 0
-
-            for(let i=0; i<state.liveDeviceValues.length; i++) {
-                if(state.liveDeviceValues.length > 0 && state.liveDeviceValues[i].device_id == message.data.device_id){
-                    doesEntityExist = true
-                    entityPosition = i
-                }
+            if (message.data && message.data.device_id == state.activeDevice) {
+                state.liveDeviceValues = message.data
             }
-
-            if(doesEntityExist) {
-                state.liveDeviceValues.splice(entityPosition, 1)
-            }
-            state.liveDeviceValues.unshift(message.data)
-
-            state.sensorsComponentsUpdate ^= 1
-            state.hasReceivedData = true
         },
 
         connectToWs: (state, connection) => {
@@ -55,6 +39,9 @@ export const store = new Vuex.Store({
         },
         addSensor(state, payload) {
             state.snackbarText = payload
+        },
+        setDevice(state, device) {
+            state.activeDevice = device
         }
 
     },
@@ -72,7 +59,6 @@ export const store = new Vuex.Store({
                 wsConnection =  new WebSocket(Vue.prototype.$VUE_APP_WS)
                 wsConnection.addEventListener('message', (message) => {
                     message = JSON.parse(message.data)
-                    console.log(message)
                     if(isValidConnection){
                         store.dispatch('parseMessage', message)
                     } else if (message.message == "welcome") {
@@ -110,7 +96,7 @@ export const store = new Vuex.Store({
             })
             .catch((error) => console.log(error));
           
-          },
+        },
         
         addSensor(store, payload) {
             console.log(payload);
@@ -120,12 +106,15 @@ export const store = new Vuex.Store({
                 if (response.data == "Already exists") {
                   this.commit('addSensor', `The device with deviceid: ${payload.deviceid} already exists`)
                 } else {
-                  this.commit('addSensor', `The device: ${payload.devicename} has been created!`)
+                  this.commit('addSensor', `The device: ${payload.devicename} have been created!`)
                 }
               })
             .catch((err) => {
                 console.log(err);
               });
+        },
+        deviceListener(store, device) {
+            this.commit('setDevice', device)
         }
 
     }
