@@ -124,7 +124,7 @@
       <v-row>
         <v-col class="text-center">
           <v-divider />
-          <v-btn @click="sendData(); getTTNInfo();" large class="mt-3">
+          <v-btn @click="sendData" large class="mt-3">
             <v-icon> mdi-plus </v-icon>
             Add Sensor
           </v-btn>
@@ -222,6 +222,7 @@ export default {
         };
 
         this.$store.dispatch("addSensor", json);
+        this.getTTNInfo()
       }
       this.snackbar = true;
     },
@@ -239,7 +240,11 @@ export default {
         + res.data.root_keys.app_key.key + "001E"
         const buffer = Uint8Array.from(bytes.match(/(..)/g).map((b)=>'0x'+b))
         const payload = Buffer.from(String.fromCharCode(...buffer), 'binary').toString('base64')
-        this.serialWriter(payload)
+        if(this.$store.state.serial.serialPort) {
+          this.serialWriter(payload)
+        } else {
+          console.log(payload)
+        }
       })
       .catch((err) => {
         console.log(err)
