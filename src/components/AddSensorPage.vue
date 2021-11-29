@@ -25,7 +25,10 @@
               counter="24"
             ></v-text-field>
           </v-col>
-          <SerialConnect v-on:deviceId="updateDeviceId" class="my-auto" ></SerialConnect>
+          <SerialConnect
+            v-on:deviceId="updateDeviceId"
+            class="my-auto"
+          ></SerialConnect>
         </v-row>
 
         <v-row>
@@ -93,7 +96,7 @@
               disabled
               dense
               hide-details="auto"
-              value="12345"
+              v-model="latitude"
               label="Latitude"
               prepend-inner-icon="mdi-map-marker"
             ></v-text-field>
@@ -106,7 +109,7 @@
               disabled
               dense
               hide-details="auto"
-              value="56789"
+              v-model="longitude"
               label="Longitude"
               prepend-inner-icon="mdi-map-marker"
             ></v-text-field>
@@ -115,8 +118,68 @@
 
         <v-row class="text-center mb-3">
           <v-col class="py-0">
-            <v-btn class="mx-2" @click="mapLocation">With QR</v-btn>
-            <v-btn class="mx-2" @click="qrLocation">With MAP</v-btn>
+            <v-expansion-panels>
+
+              <v-expansion-panel>
+                <v-expansion-panel-header disable-icon-rotate>
+                  With QR
+                  <template v-slot:actions>
+                    <v-icon> mdi-qrcode-scan </v-icon>
+                  </template>
+                </v-expansion-panel-header>
+                <v-expansion-panel-content>
+                  QR-CODE-SCANNER (Coming soon!)
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+
+              <v-expansion-panel>
+                <v-expansion-panel-header disable-icon-rotate>
+                  With map
+                  <template v-slot:actions>
+                    <v-icon> mdi-map </v-icon>
+                  </template>
+                </v-expansion-panel-header>
+                <v-expansion-panel-content>
+                  MAP-COMPONENT (Coming soon!)
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+
+              <v-expansion-panel>
+                <v-expansion-panel-header disable-icon-rotate>
+                  Manual input (Temporary)
+                  <template v-slot:actions>
+                    <v-icon> mdi-pen </v-icon>
+                  </template>
+                </v-expansion-panel-header>
+                <v-expansion-panel-content>
+                  <v-row>
+          <v-col>
+            <v-text-field
+              class="py-4"
+              outlined
+              dense
+              hide-details="auto"
+              v-model="latitude"
+              label="Latitude"
+              prepend-inner-icon="mdi-map-marker"
+            ></v-text-field>
+          </v-col>
+          <v-col>
+            <v-text-field
+              class="py-4"
+              outlined
+              dense
+              hide-details="auto"
+              v-model="longitude"
+              label="Longitude"
+              prepend-inner-icon="mdi-map-marker"
+            ></v-text-field>
+          </v-col>
+        </v-row>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+
+            </v-expansion-panels>
           </v-col>
         </v-row>
       </v-form>
@@ -144,12 +207,12 @@
 </template>
 
 <script>
-import SerialConnect from '@/components/SerialConnect.vue'
+import SerialConnect from "@/components/SerialConnect.vue";
 
 export default {
   name: "AddSensorPage",
   components: {
-    SerialConnect
+    SerialConnect,
   },
   data() {
     return {
@@ -158,6 +221,8 @@ export default {
       location: "",
       firstname: "",
       lastname: "",
+      longitude: "",
+      latitude: "",
 
       valid: true,
       snackbar: false,
@@ -221,15 +286,9 @@ export default {
       }
       this.snackbar = true;
     },
-    updateDeviceId(id){
-      this.deviceid = id
+    updateDeviceId(id) {
+      this.deviceid = id;
     },
-    mapLocation() {
-      console.log("Location map!")
-    },
-    qrLocation() {
-      console.log("Location QR!")
-    }
   },
   computed: {
     snackbarText() {
