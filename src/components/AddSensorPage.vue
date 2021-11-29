@@ -48,17 +48,6 @@
         </v-row>
 
         <v-row>
-          <v-col class="pt-0">
-            <v-text-field
-              label="Location (for now, will be removed later)"
-              :rules="[rules.required]"
-              hide-details="auto"
-              v-model="location"
-            ></v-text-field>
-          </v-col>
-        </v-row>
-
-        <v-row>
           <v-col>
             <v-text-field
               class="pt-0"
@@ -99,6 +88,7 @@
               v-model="latitude"
               label="Latitude"
               prepend-inner-icon="mdi-map-marker"
+              :rules="[rules.required, rules.latValidator]"
             ></v-text-field>
           </v-col>
           <v-col>
@@ -112,6 +102,7 @@
               v-model="longitude"
               label="Longitude"
               prepend-inner-icon="mdi-map-marker"
+              :rules="[rules.required, rules.longValidator]"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -119,10 +110,9 @@
         <v-row class="text-center mb-3">
           <v-col class="py-0">
             <v-expansion-panels>
-
               <v-expansion-panel>
                 <v-expansion-panel-header disable-icon-rotate>
-                  With QR
+                  With QR code
                   <template v-slot:actions>
                     <v-icon> mdi-qrcode-scan </v-icon>
                   </template>
@@ -153,32 +143,33 @@
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
                   <v-row>
-          <v-col>
-            <v-text-field
-              class="py-4"
-              outlined
-              dense
-              hide-details="auto"
-              v-model="latitude"
-              label="Latitude"
-              prepend-inner-icon="mdi-map-marker"
-            ></v-text-field>
-          </v-col>
-          <v-col>
-            <v-text-field
-              class="py-4"
-              outlined
-              dense
-              hide-details="auto"
-              v-model="longitude"
-              label="Longitude"
-              prepend-inner-icon="mdi-map-marker"
-            ></v-text-field>
-          </v-col>
-        </v-row>
+                    <v-col>
+                      <v-text-field
+                        class="py-4"
+                        outlined
+                        dense
+                        hide-details="auto"
+                        v-model="latitude"
+                        label="Latitude"
+                        prepend-inner-icon="mdi-map-marker"
+                        :rules="[rules.latValidator]"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col>
+                      <v-text-field
+                        class="py-4"
+                        outlined
+                        dense
+                        hide-details="auto"
+                        v-model="longitude"
+                        label="Longitude"
+                        prepend-inner-icon="mdi-map-marker"
+                        :rules="[rules.longValidator]"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
                 </v-expansion-panel-content>
               </v-expansion-panel>
-
             </v-expansion-panels>
           </v-col>
         </v-row>
@@ -264,6 +255,16 @@ export default {
             "Invalid Device Name: Can only be letters, numbers, underscores or dashes."
           );
         },
+        latValidator: (value) => {
+          const pattern = /^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$/;
+
+          return pattern.test(value) || "Invalid coordinate!";
+        },
+        longValidator: (value) => {
+          const pattern = /^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$/;
+
+          return pattern.test(value) || "Invalid coordinate!";
+        },
       },
     };
   },
@@ -277,7 +278,10 @@ export default {
         let json = {
           deviceid: this.deviceid.toLowerCase().replace(" ", ""),
           devicename: this.devicename,
-          location: this.location,
+          location: {
+            lat: this.latitude,
+            long: this.longitude,
+          },
           firstname: this.firstname,
           lastname: this.lastname,
         };
