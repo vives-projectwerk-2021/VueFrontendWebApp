@@ -229,6 +229,7 @@ export default {
     updateDeviceId(id){
       this.deviceid = id
     },
+
     getTTNInfo() {
       TTN.registerDevice({
         device_id: this.deviceid,
@@ -255,6 +256,12 @@ export default {
       const writer = this.$store.state.serial.serialPort.writable.getWriter();
       await writer.write(encoder.encode(str));
       writer.releaseLock();
+    },
+    mapLocation() {
+      console.log("Location map!")
+    },
+    qrLocation() {
+      console.log("Location QR!")
     }
   },
   computed: {
