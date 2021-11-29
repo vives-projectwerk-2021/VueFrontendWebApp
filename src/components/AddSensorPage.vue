@@ -1,12 +1,9 @@
 <template>
   <v-container>
-    <v-card color="#A9C25D" elevation="5">
+    <v-card elevation="5">
       <v-row>
         <v-col>
           <p class="text-h2 text-center">Add a Sensor</p>
-          <p class="text-subtitle-1 text-center">
-            You can add your pulu sensor here!
-          </p>
         </v-col>
       </v-row>
       <v-divider />
@@ -25,10 +22,12 @@
               counter="24"
             ></v-text-field>
           </v-col>
-          <SerialConnect
+  
+            <SerialConnect
             v-on:deviceId="updateDeviceId"
-            class="my-auto"
+            class="my-auto mr-3"
           ></SerialConnect>
+       
         </v-row>
 
         <v-row>
@@ -43,27 +42,6 @@
               ]"
               hide-details="auto"
               v-model="devicename"
-            ></v-text-field>
-          </v-col>
-        </v-row>
-
-        <v-row>
-          <v-col>
-            <v-text-field
-              class="pt-0"
-              label="First Name"
-              :rules="[rules.required, rules.counter, rules.nameValidator]"
-              hide-details="auto"
-              v-model="firstname"
-            ></v-text-field>
-          </v-col>
-          <v-col>
-            <v-text-field
-              class="pt-0"
-              label="Last Name"
-              :rules="[rules.required, rules.counter, rules.lastnameValidator]"
-              hide-details="auto"
-              v-model="lastname"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -136,7 +114,7 @@
 
               <v-expansion-panel>
                 <v-expansion-panel-header disable-icon-rotate>
-                  Manual input (Temporary)
+                  Manual input
                   <template v-slot:actions>
                     <v-icon> mdi-pen </v-icon>
                   </template>
@@ -209,9 +187,6 @@ export default {
     return {
       deviceid: "",
       devicename: "",
-      location: "",
-      firstname: "",
-      lastname: "",
       longitude: "",
       latitude: "",
 
@@ -222,48 +197,28 @@ export default {
         required: (value) => !!value || "Required.",
         counter: (value) => value.length <= 20 || "Max 20 characters",
         devIdCounter: (value) => value.length == 24 || "Exactly 24 characters",
-        nameValidator: (value) => {
-          // First char can be a (non)capital letter, all other chars can only be non-capital letters!
-          const pattern = /^([a-zA-Z][a-z]+([ ]?[[a-zA-Z][a-z]+)*)$/;
-          return (
-            pattern.test(value) ||
-            "Invalid Name: Can only be 1 (non)capital letter + lowercase letters."
-          );
-        },
-        lastnameValidator: (value) => {
-          // First char can be a (non)capital letter, all other chars can only be non-capital letters, 1 or more names!
-          const pattern = /^([a-zA-Z][a-z]+([ ]?[a-z]?['-]?[a-zA-Z][a-z]+)*)$/;
-          return (
-            pattern.test(value) ||
-            "Invalid Name: Can only be 1 (non)capital letter + lowercase letters (- and ')."
-          );
-        },
         deviceidValidator: (value) => {
           // Can only be a hexadecimal value
           const pattern = /^[a-fA-F0-9]+$/;
-          return (
-            pattern.test(value) ||
-            "Invalid Device ID: Can only be a hexadecimal value. (Letters from a to f, and numbers)"
-          );
+          return pattern.test(value) || this.deviceidText;
         },
         devicenameValidator: (value) => {
           // Can only be lowercase letters, numbers, underscores or dashes (multiple words)
-          const pattern = /^([a-zA-Z-_]+([ ]?[a-z]?['-]?[a-zA-Z-_]+)*)$/;
+          const pattern = /^([a-zA-Z-_]+([a-z]?['-]?[a-zA-Z-_]+)*)$/;
 
-          return (
-            pattern.test(value) ||
-            "Invalid Device Name: Can only be letters, numbers, underscores or dashes."
-          );
+          return pattern.test(value) || this.devicenameText;
         },
         latValidator: (value) => {
-          const pattern = /^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$/;
+          const pattern =
+            /^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$/;
 
-          return pattern.test(value) || "Invalid coordinate!";
+          return pattern.test(value) || this.devicelocationText;
         },
         longValidator: (value) => {
-          const pattern = /^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$/;
+          const pattern =
+            /^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$/;
 
-          return pattern.test(value) || "Invalid coordinate!";
+          return pattern.test(value) || this.devicelocationText;
         },
       },
     };
@@ -282,8 +237,6 @@ export default {
             lat: this.latitude,
             long: this.longitude,
           },
-          firstname: this.firstname,
-          lastname: this.lastname,
         };
 
         this.$store.dispatch("addSensor", json);
@@ -297,6 +250,15 @@ export default {
   computed: {
     snackbarText() {
       return this.$store.state.snackbarText;
+    },
+    deviceidText() {
+      return this.$store.state.deviceidText;
+    },
+    devicenameText() {
+      return this.$store.state.devicenameText;
+    },
+    devicelocationText() {
+      return this.$store.state.devicelocationText;
     },
   },
   watch: {
