@@ -210,13 +210,15 @@ export default {
         },
         latValidator: (value) => {
           const pattern =
-            /^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$/;
+          // -90.0000000 to 90.0000000 --> Match exactly 7 chars after .
+            /^(\+|-)?(?:90(?:\.0{7})|(?:[0-9]|[1-8][0-9])(?:\.[0-9]{7}))$/;
 
           return pattern.test(value) || this.devicelocationText;
         },
         longValidator: (value) => {
+          // -180.0000000 to 180.0000000 --> Match exactly 7 chars after .
           const pattern =
-            /^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$/;
+            /^(\+|-)?(?:180(?:\.0{7})|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:\.[0-9]{7}))$/;
 
           return pattern.test(value) || this.devicelocationText;
         },

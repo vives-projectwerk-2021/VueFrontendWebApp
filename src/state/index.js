@@ -16,7 +16,7 @@ export const store = new Vuex.Store({
         snackbarText: "",
         deviceidText: "Invalid Device ID: Can only be a hexadecimal value.",
         devicenameText: "Invalid Device Name: Can only be letters, numbers, underscores or dashes.",
-        devicelocationText: "Invalid coordinate!",
+        devicelocationText: "Invalid coordinate! -180.0000000 to 180.0000000 (Exactly 7 decimals after the .)",
     },
 
     getters: {
