@@ -1,7 +1,8 @@
 import axios from 'axios';
+import {config} from '@/config.js';
 
 const api = axios.create({
-  baseURL: process.env.VUE_APP_TTN_DEVICE_MANAGER_BASE_URL
+  baseURL: config.VUE_APP_TTN_DEVICE_MANAGER_BASE_URL
 });
 
 const TTN = {    
