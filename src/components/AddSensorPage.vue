@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card elevation="5">
+    <v-card elevation="5" rounded="lg" color="green lighten-2">
       <v-row>
         <v-col>
           <p class="text-h2 text-center">Add a Sensor</p>
@@ -88,37 +88,37 @@
           <v-col class="py-0">
             <v-expansion-panels>
               <v-expansion-panel>
-                <v-expansion-panel-header disable-icon-rotate>
+                <v-expansion-panel-header disable-icon-rotate color="green lighten-5">
                   With QR code
                   <template v-slot:actions>
                     <v-icon> mdi-qrcode-scan </v-icon>
                   </template>
                 </v-expansion-panel-header>
-                <v-expansion-panel-content>
+                <v-expansion-panel-content color="green lighten-5">
                   QR-CODE-SCANNER (Coming soon!)
                 </v-expansion-panel-content>
               </v-expansion-panel>
 
               <v-expansion-panel>
-                <v-expansion-panel-header disable-icon-rotate>
+                <v-expansion-panel-header disable-icon-rotate color="green lighten-4">
                   With map
                   <template v-slot:actions>
                     <v-icon> mdi-map </v-icon>
                   </template>
                 </v-expansion-panel-header>
-                <v-expansion-panel-content>
+                <v-expansion-panel-content color="green lighten-4">
                   MAP-COMPONENT (Coming soon!)
                 </v-expansion-panel-content>
               </v-expansion-panel>
 
               <v-expansion-panel>
-                <v-expansion-panel-header disable-icon-rotate>
+                <v-expansion-panel-header disable-icon-rotate color="green lighten-5">
                   Manual input
                   <template v-slot:actions>
                     <v-icon> mdi-pen </v-icon>
                   </template>
                 </v-expansion-panel-header>
-                <v-expansion-panel-content>
+                <v-expansion-panel-content color="green lighten-5">
                   <v-row>
                     <v-col>
                       <v-text-field
