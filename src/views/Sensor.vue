@@ -1,7 +1,7 @@
 <template>
   <div>
     
-    <v-card class="mb-6" elevation="5" >
+    <v-card class="mb-6" elevation="5" v-if="devicevalues.info" >
       <v-card-title>Device name: {{ devicevalues.info.devicename }}</v-card-title>
       <v-card-text>firstname:  {{ devicevalues.info.firstname }} </v-card-text>
       <v-card-text>Lastname:  {{ devicevalues.info.lastname }} </v-card-text>
@@ -42,7 +42,7 @@
         </div>
       </div>
     </div>
-    <!-- <p>{{devicevalues}} </p> -->
+    <p>{{devicevaluep}} </p>
     <div v-for="value in devicevalues.value" :key="value">
       <div v-if="value.moisture=='level4' "> 
       {{value._value}}
@@ -55,8 +55,7 @@
 
       <line-chart
       :v-if="loaded" 
-      :chartdata="chartdata"
-      :options="options" />
+      :chartdata="chartdata" />
 
     </div>
 
@@ -66,6 +65,7 @@
 <script>
 import LiveData from '@/components/LiveData'
 import LineChart from '@/components/Chart.vue'
+import {mapGetters} from 'vuex';
 
 export default {
   name: "Sensor",
@@ -78,7 +78,7 @@ export default {
       loadingWS: true,
       deviceId: this.$route.params.deviceId,
       chartdata:  {
-        labels: [1,2,3,4,5,6,7],
+        labels: [1,2,3,4,5,6,7,8,9,10],
         datasets: [
           {
             label: "temp",
@@ -103,7 +103,6 @@ export default {
     } else {
       this.loadingWS = false
     }
-    this.dataForChart()
   },
   computed:{
     devicevalues() {
@@ -115,6 +114,23 @@ export default {
     ws() {
       return this.$store.state.ws
     },
+    level4Values() {
+
+      return this.devicevalues
+      .filter((element)=>{
+        return element.moisture === "level4"
+      })
+      .map((element)=>{
+        return element._value
+      })
+      // console.log(foo)
+      // console.log("ééééééééééééééééééééééééééééééééééééé")
+      // return foo
+
+    },
+    ...mapGetters({
+      devicevaluep:"devicevalues"
+    })
   },
   methods: {
     retryWsConnection() {
@@ -123,11 +139,11 @@ export default {
     dataForChart() {
 
       
-      let devicevalues = this.$store.getters.devicevalues
-      console.log("datatest")
-      console.log(devicevalues.value[0]._value)
-      
-    }
+    },
   },
+  watch: {
+    
+  }
+
 }
 </script>
