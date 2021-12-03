@@ -22,12 +22,11 @@
               counter="24"
             ></v-text-field>
           </v-col>
-  
-            <SerialConnect
+
+          <SerialConnect
             v-on:deviceId="updateDeviceId"
             class="my-auto mr-3"
           ></SerialConnect>
-       
         </v-row>
 
         <v-row>
@@ -127,7 +126,7 @@
                         outlined
                         dense
                         hide-details="auto"
-                        v-model="latitude"
+                        v-model="lat"
                         label="Latitude"
                         prepend-inner-icon="mdi-map-marker"
                         :rules="[rules.latValidator]"
@@ -139,7 +138,7 @@
                         outlined
                         dense
                         hide-details="auto"
-                        v-model="longitude"
+                        v-model="long"
                         label="Longitude"
                         prepend-inner-icon="mdi-map-marker"
                         :rules="[rules.longValidator]"
@@ -190,6 +189,9 @@ export default {
       longitude: "",
       latitude: "",
 
+      long: "",
+      lat: "",
+
       valid: true,
       snackbar: false,
 
@@ -210,15 +212,17 @@ export default {
         },
         latValidator: (value) => {
           const pattern =
-          // -90.0000000 to 90.0000000 --> Match exactly 7 chars after .
-            /^(\+|-)?(?:90(?:\.0{7})|(?:[0-9]|[1-8][0-9])(?:\.[0-9]{7}))$/;
+            // -90.0000000 to 90.0000000 --> Match exactly 7 chars after .
+            // /^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$/;
+            /^(\+|-)?(?:90(?:(?:\.0*)?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]*)?))$/;
 
           return pattern.test(value) || this.devicelocationText;
         },
         longValidator: (value) => {
           // -180.0000000 to 180.0000000 --> Match exactly 7 chars after .
+          // /^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$/;
           const pattern =
-            /^(\+|-)?(?:180(?:\.0{7})|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:\.[0-9]{7}))$/;
+            /^(\+|-)?(?:180(?:(?:\.0*)?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]*)?))$/;
 
           return pattern.test(value) || this.devicelocationText;
         },
@@ -233,7 +237,7 @@ export default {
         this.$store.commit("addSensor", "Please, check for problems!");
       } else {
         let json = {
-          deviceid: this.deviceid.toLowerCase().replace(" ", ""),
+          deviceid: this.deviceid.toLowerCase(),
           devicename: this.devicename,
           location: {
             lat: this.latitude,
@@ -267,6 +271,16 @@ export default {
     deviceid() {
       this.$nextTick(() => {
         this.deviceid = this.deviceid.replace(/\s+/g, "");
+      });
+    },
+    long() {
+      this.$nextTick(() => {
+        this.longitude = Number(this.long).toFixed(7);
+      });
+    },
+    lat() {
+      this.$nextTick(() => {
+        this.latitude = Number(this.lat).toFixed(7);
       });
     },
   },
