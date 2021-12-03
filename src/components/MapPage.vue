@@ -5,6 +5,7 @@
 </template>
 
 <script>
+//import mapState from "vuex"
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { Icon } from 'leaflet';
@@ -18,6 +19,9 @@ export default {
       map: null,
     };
   },
+  created(){
+    this.$store.dispatch('getAllSensors');
+  },  
   methods: {
     setupLeafletMap () {
       this.map = L.map("mapContainer").setView(this.center, 14);
