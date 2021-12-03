@@ -42,8 +42,13 @@
         </div>
       </div>
     </div>
-    <div v-for="value in devicevalues" :key="value">
-      {{value}}: {{ devicevalues[value] }}
+    <!-- <p>{{devicevalues}} </p> -->
+    <div v-for="value in devicevalues.value" :key="value">
+      <div v-if="value.moisture=='level4' "> 
+      {{value._value}}
+      {{value.moisture}}
+      <p>------------------------------------------------</p>
+      </div>
     </div>
 
     <div>
@@ -98,6 +103,7 @@ export default {
     } else {
       this.loadingWS = false
     }
+    this.dataForChart()
   },
   computed:{
     devicevalues() {
@@ -113,6 +119,14 @@ export default {
   methods: {
     retryWsConnection() {
       this.$store.dispatch('tryWsConnection')
+    },
+    dataForChart() {
+
+      
+      let devicevalues = this.$store.getters.devicevalues
+      console.log("datatest")
+      console.log(devicevalues.value[0]._value)
+      
     }
   },
 }
