@@ -42,20 +42,25 @@
         </div>
       </div>
     </div>
-    <p>{{devicevaluep}} </p>
-    <div v-for="value in devicevalues.value" :key="value">
-      <div v-if="value.moisture=='level4' "> 
+    <!-- <p>{{devicevaluep}} </p> -->
+    <div v-for="value in level4Values" :key="value">
+      <!-- <div v-if="value.moisture=='level4' "> 
       {{value._value}}
       {{value.moisture}}
       <p>------------------------------------------------</p>
+      </div> -->
+      <div>
+        {{value}}
       </div>
     </div>
+    
 
     <div>
 
       <line-chart
       :v-if="loaded" 
-      :chartdata="chartdata" />
+      :dataset="level4Values"
+      :options="chartOptions" />
 
     </div>
 
@@ -65,7 +70,7 @@
 <script>
 import LiveData from '@/components/LiveData'
 import LineChart from '@/components/Chart.vue'
-import {mapGetters} from 'vuex';
+
 
 export default {
   name: "Sensor",
@@ -77,17 +82,11 @@ export default {
     return {
       loadingWS: true,
       deviceId: this.$route.params.deviceId,
-      chartdata:  {
-        labels: [1,2,3,4,5,6,7,8,9,10],
-        datasets: [
-          {
+      chartOptions:  {
             label: "temp",
-            data: [2, 10, 5, 9, 0, 6, 20],
             backgroundColor: "transparent",
             borderColor: "red",
             pointBackgroundColor: "black"
-          }
-        ]
       },
 
     }
@@ -115,22 +114,22 @@ export default {
       return this.$store.state.ws
     },
     level4Values() {
+      const level4 = this.devicevalues.value
+        .filter((element)=>{
+          return element.moisture === "level4"
+        })
 
-      return this.devicevalues
-      .filter((element)=>{
-        return element.moisture === "level4"
-      })
-      .map((element)=>{
-        return element._value
-      })
-      // console.log(foo)
-      // console.log("ééééééééééééééééééééééééééééééééééééé")
-      // return foo
+      return {
+        labels:  level4.map((element)=> {
+         return element._time
+        })
+        ,
+        values: level4.map((element)=>{
+          return element._value
+        })
+      }
 
     },
-    ...mapGetters({
-      devicevaluep:"devicevalues"
-    })
   },
   methods: {
     retryWsConnection() {
@@ -140,6 +139,17 @@ export default {
 
       
     },
+    reFormat() {
+
+    return this.devicevalues
+      .filter((element)=>{
+        return element.moisture === "level4"
+      })
+      .map((element)=>{
+        return element._value
+      })
+
+    }
   },
   watch: {
     
