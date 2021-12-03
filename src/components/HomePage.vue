@@ -36,44 +36,17 @@
       </v-carousel-item>
     </v-carousel>
     <br>
-    
-    <v-footer
-      dark
-      padless
-      
-    >
-      <v-card
-        flat
-        tile
-        class="indigo lighten-1 white--text text-center"
-        color="darkgrey"
-        width="100%"
-      >
-        <v-card-text>
-          <v-btn
-            v-for="icon in icons"
-            :key="icon"
-            class="mx-4 white--text"
-            icon
-            dark
-          >
-            <v-icon size="24px">
-              {{ icon }}
-            </v-icon>
-          </v-btn>
-        </v-card-text>
-
-        <v-card-text class="white--text pt-0">
-          vives.be
-        </v-card-text>
-
-        <v-divider></v-divider>
-
-        <v-card-text class="white--text">
-          {{ new Date().getFullYear() }} — <strong>Pulu</strong>
-        </v-card-text>
-      </v-card>
-    </v-footer>
+    <v-divider></v-divider>
+    <br>
+    <v-row>
+        <v-col>
+            <v-card
+                v-for="n in 3" :key="n"
+            >
+                Hello
+            </v-card>
+        </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -86,13 +59,11 @@ export default {
 
   components: {
     MapPage
-    //Footer upcomming!!
   },
 
   data() {
     return {
       activeColor: 'white',
-      logo_vives: require('@/img/logo_vives.png'),
       slides: [
         {
           src: require('../img/image_one.jpg'),
@@ -115,14 +86,8 @@ export default {
           title: "Created by Vives students"
         }
       ],
-      icons: [
-        'mdi-github',
-        'mdi-email',
-        'mdi-facebook',
-        'mdi-twitter'
-      ]
+      
     }
   }
-
 }
 </script>
