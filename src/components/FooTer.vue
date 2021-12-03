@@ -11,7 +11,7 @@
             <v-row class="py-1" justify="center" align="center">
                 <v-btn
                     v-for="icon in icons_one"
-                    :key="icon"
+                    :key="icon.id"
                     class="mx-4"
                     :href="icon.link"
                     icon
@@ -25,7 +25,7 @@
                 </a>
                 <v-btn
                     v-for="icon in icons_two"
-                    :key="icon"
+                    :key="icon.id"
                     class="mx-4"
                     :href="icon.link"
                     icon
@@ -56,10 +56,12 @@ export default {
             logo_vives: require('@/img/logo_vives.png'),
             icons_one: [
                 {
+                    id: 0,
                     image: 'mdi-github',
                     link: 'https://github.com/vives-projectwerk-2021'
                 },
                 {
+                    id: 1,
                     image: 'mdi-email',
                     link: ''
                 },
@@ -67,10 +69,12 @@ export default {
 
             icons_two: [
                 {
+                    id: 2,
                     image: 'mdi-facebook',
                     link: 'https://www.facebook.com/viveshogeschool'
                 },
                 {
+                    id:3,
                     image: 'mdi-twitter',
                     link: 'https://twitter.com/viveshogeschool'
                 }
