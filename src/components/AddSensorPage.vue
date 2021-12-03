@@ -216,7 +216,7 @@ export default {
             // /^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$/;
             /^(\+|-)?(?:90(?:(?:\.0*)?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]*)?))$/;
 
-          return pattern.test(value) || this.devicelocationText;
+          return pattern.test(value) || this.deviceLatText;
         },
         longValidator: (value) => {
           // -180.0000000 to 180.0000000 --> Match exactly 7 chars after .
@@ -224,7 +224,7 @@ export default {
           const pattern =
             /^(\+|-)?(?:180(?:(?:\.0*)?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]*)?))$/;
 
-          return pattern.test(value) || this.devicelocationText;
+          return pattern.test(value) || this.deviceLongText;
         },
       },
     };
@@ -263,8 +263,11 @@ export default {
     devicenameText() {
       return this.$store.state.devicenameText;
     },
-    devicelocationText() {
-      return this.$store.state.devicelocationText;
+    deviceLatText() {
+      return this.$store.state.deviceLatText;
+    },
+    deviceLongText() {
+      return this.$store.state.deviceLongText;
     },
   },
   watch: {
