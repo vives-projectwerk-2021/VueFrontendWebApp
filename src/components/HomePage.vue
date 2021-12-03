@@ -38,14 +38,18 @@
     <br>
     <v-divider></v-divider>
     <br>
-    <v-row>
-        <v-col>
+    <v-row class="d-flex justify-space-around pb-5">
+        
             <v-card
-                v-for="n in 3" :key="n"
+                v-for="card in cards" :key="card.id"
+                width="200px"
+                height="200px"
+                :style="{ background: activeColor2 }"
             >
-                Hello
+              <h2 class="ml-4 mt-4 font-weight-regular">{{ card.title }}</h2>
+              <p class="ml-5 mt-5 font-weight-black" :style="{ 'font-size': '30px' }" >{{ card.subtitle }}</p>
             </v-card>
-        </v-col>
+        
     </v-row>
   </div>
 </template>
@@ -64,6 +68,7 @@ export default {
   data() {
     return {
       activeColor: 'white',
+      activeColor2: '#edf2f7',
       slides: [
         {
           src: require('../img/image_one.jpg'),
@@ -86,6 +91,23 @@ export default {
           title: "Created by Vives students"
         }
       ],
+      cards: [
+        {
+          id: 0,
+          title: "Active sensors Flanders",
+          subtitle: "1"
+        },
+        {
+          id: 1,
+          title: "Countries",
+          subtitle: "1"
+        },
+        {
+          id: 3,
+          title: "Project developers",
+          subtitle: "..."
+        }
+      ]
       
     }
   }
