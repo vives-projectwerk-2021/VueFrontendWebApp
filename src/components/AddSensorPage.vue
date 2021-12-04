@@ -1,12 +1,9 @@
 <template>
   <v-container>
-    <v-card color="#A9C25D" elevation="5">
+    <v-card elevation="5">
       <v-row>
         <v-col>
           <p class="text-h2 text-center">Add a Sensor</p>
-          <p class="text-subtitle-1 text-center">
-            You can add your pulu sensor here!
-          </p>
         </v-col>
       </v-row>
       <v-divider />
@@ -25,7 +22,11 @@
               counter="24"
             ></v-text-field>
           </v-col>
-          <SerialConnect v-on:deviceId="updateDeviceId" class="my-auto" ></SerialConnect>
+
+          <SerialConnect
+            v-on:deviceId="updateDeviceId"
+            class="my-auto mr-3"
+          ></SerialConnect>
         </v-row>
 
         <v-row>
@@ -40,38 +41,6 @@
               ]"
               hide-details="auto"
               v-model="devicename"
-            ></v-text-field>
-          </v-col>
-        </v-row>
-
-        <v-row>
-          <v-col class="pt-0">
-            <v-text-field
-              label="Location (for now, will be removed later)"
-              :rules="[rules.required]"
-              hide-details="auto"
-              v-model="location"
-            ></v-text-field>
-          </v-col>
-        </v-row>
-
-        <v-row>
-          <v-col>
-            <v-text-field
-              class="pt-0"
-              label="First Name"
-              :rules="[rules.required, rules.counter, rules.nameValidator]"
-              hide-details="auto"
-              v-model="firstname"
-            ></v-text-field>
-          </v-col>
-          <v-col>
-            <v-text-field
-              class="pt-0"
-              label="Last Name"
-              :rules="[rules.required, rules.counter, rules.lastnameValidator]"
-              hide-details="auto"
-              v-model="lastname"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -93,9 +62,10 @@
               disabled
               dense
               hide-details="auto"
-              value="12345"
+              v-model="latitude"
               label="Latitude"
               prepend-inner-icon="mdi-map-marker"
+              :rules="[rules.required, rules.latValidator]"
             ></v-text-field>
           </v-col>
           <v-col>
@@ -106,17 +76,78 @@
               disabled
               dense
               hide-details="auto"
-              value="56789"
+              v-model="longitude"
               label="Longitude"
               prepend-inner-icon="mdi-map-marker"
+              :rules="[rules.required, rules.longValidator]"
             ></v-text-field>
           </v-col>
         </v-row>
 
         <v-row class="text-center mb-3">
           <v-col class="py-0">
-            <v-btn class="mx-2" @click="mapLocation">With QR</v-btn>
-            <v-btn class="mx-2" @click="qrLocation">With MAP</v-btn>
+            <v-expansion-panels>
+              <v-expansion-panel>
+                <v-expansion-panel-header disable-icon-rotate>
+                  With QR code
+                  <template v-slot:actions>
+                    <v-icon> mdi-qrcode-scan </v-icon>
+                  </template>
+                </v-expansion-panel-header>
+                <v-expansion-panel-content>
+                  QR-CODE-SCANNER (Coming soon!)
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+
+              <v-expansion-panel>
+                <v-expansion-panel-header disable-icon-rotate>
+                  With map
+                  <template v-slot:actions>
+                    <v-icon> mdi-map </v-icon>
+                  </template>
+                </v-expansion-panel-header>
+                <v-expansion-panel-content>
+                  MAP-COMPONENT (Coming soon!)
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+
+              <v-expansion-panel>
+                <v-expansion-panel-header disable-icon-rotate>
+                  Manual input
+                  <template v-slot:actions>
+                    <v-icon> mdi-pen </v-icon>
+                  </template>
+                </v-expansion-panel-header>
+                <v-expansion-panel-content>
+                  <v-row>
+                    <v-col>
+                      <v-text-field
+                        class="py-4"
+                        outlined
+                        dense
+                        hide-details="auto"
+                        v-model="lat"
+                        label="Latitude"
+                        prepend-inner-icon="mdi-map-marker"
+                        :rules="[rules.latValidator]"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col>
+                      <v-text-field
+                        class="py-4"
+                        outlined
+                        dense
+                        hide-details="auto"
+                        v-model="long"
+                        label="Longitude"
+                        prepend-inner-icon="mdi-map-marker"
+                        :rules="[rules.longValidator]"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+            </v-expansion-panels>
           </v-col>
         </v-row>
       </v-form>
@@ -144,20 +175,22 @@
 </template>
 
 <script>
-import SerialConnect from '@/components/SerialConnect.vue'
+import SerialConnect from "@/components/SerialConnect.vue";
 
 export default {
   name: "AddSensorPage",
   components: {
-    SerialConnect
+    SerialConnect,
   },
   data() {
     return {
       deviceid: "",
       devicename: "",
-      location: "",
-      firstname: "",
-      lastname: "",
+      longitude: "",
+      latitude: "",
+
+      long: "",
+      lat: "",
 
       valid: true,
       snackbar: false,
@@ -166,38 +199,32 @@ export default {
         required: (value) => !!value || "Required.",
         counter: (value) => value.length <= 20 || "Max 20 characters",
         devIdCounter: (value) => value.length == 24 || "Exactly 24 characters",
-        nameValidator: (value) => {
-          // First char can be a (non)capital letter, all other chars can only be non-capital letters!
-          const pattern = /^([a-zA-Z][a-z]+([ ]?[[a-zA-Z][a-z]+)*)$/;
-          return (
-            pattern.test(value) ||
-            "Invalid Name: Can only be 1 (non)capital letter + lowercase letters."
-          );
-        },
-        lastnameValidator: (value) => {
-          // First char can be a (non)capital letter, all other chars can only be non-capital letters, 1 or more names!
-          const pattern = /^([a-zA-Z][a-z]+([ ]?[a-z]?['-]?[a-zA-Z][a-z]+)*)$/;
-          return (
-            pattern.test(value) ||
-            "Invalid Name: Can only be 1 (non)capital letter + lowercase letters (- and ')."
-          );
-        },
         deviceidValidator: (value) => {
           // Can only be a hexadecimal value
           const pattern = /^[a-fA-F0-9]+$/;
-          return (
-            pattern.test(value) ||
-            "Invalid Device ID: Can only be a hexadecimal value. (Letters from a to f, and numbers)"
-          );
+          return pattern.test(value) || this.deviceidText;
         },
         devicenameValidator: (value) => {
           // Can only be lowercase letters, numbers, underscores or dashes (multiple words)
-          const pattern = /^([a-zA-Z-_]+([ ]?[a-z]?['-]?[a-zA-Z-_]+)*)$/;
+          const pattern = /^([a-zA-Z-_]+([a-z]?['-]?[a-zA-Z-_]+)*)$/;
 
-          return (
-            pattern.test(value) ||
-            "Invalid Device Name: Can only be letters, numbers, underscores or dashes."
-          );
+          return pattern.test(value) || this.devicenameText;
+        },
+        latValidator: (value) => {
+          const pattern =
+            // -90.0000000 to 90.0000000 --> Match exactly 7 chars after .
+            // /^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$/;
+            /^(\+|-)?(?:90(?:(?:\.0*)?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]*)?))$/;
+
+          return pattern.test(value) || this.deviceLatText;
+        },
+        longValidator: (value) => {
+          // -180.0000000 to 180.0000000 --> Match exactly 7 chars after .
+          // /^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$/;
+          const pattern =
+            /^(\+|-)?(?:180(?:(?:\.0*)?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]*)?))$/;
+
+          return pattern.test(value) || this.deviceLongText;
         },
       },
     };
@@ -210,36 +237,53 @@ export default {
         this.$store.commit("addSensor", "Please, check for problems!");
       } else {
         let json = {
-          deviceid: this.deviceid.toLowerCase().replace(" ", ""),
+          deviceid: this.deviceid.toLowerCase(),
           devicename: this.devicename,
-          location: this.location,
-          firstname: this.firstname,
-          lastname: this.lastname,
+          location: {
+            lat: this.latitude,
+            long: this.longitude,
+          },
         };
 
         this.$store.dispatch("addSensor", json);
       }
       this.snackbar = true;
     },
-    updateDeviceId(id){
-      this.deviceid = id
+    updateDeviceId(id) {
+      this.deviceid = id;
     },
-    mapLocation() {
-      console.log("Location map!")
-    },
-    qrLocation() {
-      console.log("Location QR!")
-    }
   },
   computed: {
     snackbarText() {
       return this.$store.state.snackbarText;
+    },
+    deviceidText() {
+      return this.$store.state.deviceidText;
+    },
+    devicenameText() {
+      return this.$store.state.devicenameText;
+    },
+    deviceLatText() {
+      return this.$store.state.deviceLatText;
+    },
+    deviceLongText() {
+      return this.$store.state.deviceLongText;
     },
   },
   watch: {
     deviceid() {
       this.$nextTick(() => {
         this.deviceid = this.deviceid.replace(/\s+/g, "");
+      });
+    },
+    long() {
+      this.$nextTick(() => {
+        this.longitude = Number(this.long).toFixed(7);
+      });
+    },
+    lat() {
+      this.$nextTick(() => {
+        this.latitude = Number(this.lat).toFixed(7);
       });
     },
   },
