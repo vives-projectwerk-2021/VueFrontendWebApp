@@ -15,8 +15,13 @@ export const store = new Vuex.Store({
     state: {
         devicelist: [],
         devicevalues: {},
+        activeDevice: "",
+
         snackbarText: "",
-        activeDevice: ""
+        deviceidText: "Invalid Device ID: Can only be a hexadecimal value.",
+        devicenameText: "Invalid Device Name: Can only be letters, numbers, underscores or dashes.",
+        deviceLatText: "Invalid Latitude! (-180 to 180)",
+        deviceLongText: "Invalid Longitude! (-90 to 90)",
     },
 
     getters: {
