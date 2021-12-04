@@ -6,11 +6,7 @@
       <v-container>
         <v-row>
           <v-col>
-            <v-sheet min-height="80vh" rounded="lg" class="mx-10">
-              <v-col>
-                <router-view/>
-              </v-col>
-            </v-sheet>
+            <router-view/>
           </v-col>
         </v-row>
       </v-container>
