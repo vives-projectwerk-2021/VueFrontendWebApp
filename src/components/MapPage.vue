@@ -49,15 +49,6 @@ export default {
           .bindPopup(`<b>${device.devicename}</b><br>${device.location.lat}, ${device.location.long}`)
         }
       })
-      // var loc = [51.2024949, 3.227196];
-      // var marker = L.marker(loc).addTo(this.map);
-      // marker.bindTooltip("Device Sensor 1");
-      // marker.bindPopup("<b>Device Sensor 1</b><br>Brugge Centrum<br>51.2024949, 3.227196");
-
-      // var loc2 = [51.21511504695216, 3.2265794559620704];
-      // var marker2 = L.marker(loc2).addTo(this.map);
-      // marker2.bindPopup("<b>Device Sensor 2</b><br>Sint-Gillis Kerk<br>51.21511504695216, 3.2265794559620704");
-      // marker2.bindTooltip("Device Sensor 2");
     },
   },
   mounted() {
