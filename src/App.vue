@@ -1,7 +1,6 @@
 <template>
   <v-app id="Pulu App">
-    
-    <nav-bar/>
+    <nav-bar />
 
     <v-main class="grey lighten-4">
       <v-container>
