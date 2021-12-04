@@ -20,9 +20,6 @@ export default {
       loaded: false
     };
   },
-  beforeCreate(){
-    this.$store.dispatch('getAllSensors')
-  },
   methods: {
     setupLeafletMap () {
       this.map = L.map("mapContainer").setView(this.center, 14);
@@ -41,15 +38,21 @@ export default {
         iconUrl: require('leaflet/dist/images/marker-icon.png'),
         shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
       });
-
-      this.$store.state.devicelist.forEach(device =>{
+      
+      this.addPoints()
+      
+    },
+    async addPoints(){
+      await this.$store.dispatch('getAllSensors')
+      this.$store.getters.devicelist.forEach(device =>{
         if(device.location.lat && device.location.long){
           L.marker([device.location.lat, device.location.long]).addTo(this.map)
           .bindTooltip(device.devicename)
           .bindPopup(`<b>${device.devicename}</b><br>${device.location.lat}, ${device.location.long}`)
         }
       })
-    },
+    
+    }
   },
   mounted() {
     this.setupLeafletMap()
