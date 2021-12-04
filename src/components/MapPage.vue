@@ -20,9 +20,6 @@ export default {
       loaded: false
     };
   },
-  beforeCreate(){
-    
-  },
   methods: {
     setupLeafletMap () {
       this.map = L.map("mapContainer").setView(this.center, 14);
