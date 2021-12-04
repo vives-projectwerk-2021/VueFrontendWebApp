@@ -24,6 +24,11 @@ export const store = new Vuex.Store({
 
         devicevalues(state) {
             return state.devicevalues;
+        },
+
+        devicelist(state)
+        {
+            return state.devicelist
         }
     },
 
@@ -90,6 +95,8 @@ export const store = new Vuex.Store({
                     devicelist: response.data
                 })
                 this.devicelist = response.data
+                
+
             })
             .catch((error) => console.log(error));
         },
