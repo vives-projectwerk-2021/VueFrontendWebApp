@@ -145,6 +145,9 @@
                       ></v-text-field>
                     </v-col>
                   </v-row>
+                  <v-row>
+                    <v-btn @click="UseGPS" class="mt-4 mx-4">Use GPS</v-btn>
+                  </v-row>
                 </v-expansion-panel-content>
               </v-expansion-panel>
             </v-expansion-panels>
@@ -251,6 +254,20 @@ export default {
     },
     updateDeviceId(id) {
       this.deviceid = id;
+    },
+    UseGPS(){
+      if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(this.showPosition)
+      }else{
+          console.log("error")
+      }
+
+            
+    },
+    showPosition(position) {
+      this.lat= position.coords.latitude
+      this.long= position.coords.longitude
+
     },
   },
   computed: {
