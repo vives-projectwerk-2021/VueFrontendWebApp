@@ -101,7 +101,9 @@
                   </template>
                 </v-expansion-panel-header>
                 <v-expansion-panel-content color="green lighten-5">
-                  QR-CODE-SCANNER (Coming soon!)
+                  <v-row>
+                    <v-col></v-col>
+                  </v-row>
                 </v-expansion-panel-content>
               </v-expansion-panel>
 
