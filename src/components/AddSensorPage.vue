@@ -119,7 +119,9 @@
                 </v-expansion-panel-header>
                 <v-expansion-panel-content color="green lighten-4">
                   <v-row>
-                    <v-col> </v-col>
+                    <v-col>
+                      <Chart />
+                    </v-col>
                   </v-row>
                 </v-expansion-panel-content>
               </v-expansion-panel>
@@ -195,12 +197,14 @@
 
 <script>
 import SerialConnect from "@/components/SerialConnect.vue";
+import Chart from "@/components/Chart.vue"
 import { Map } from "@/api/mapbox.js"
 
 export default {
   name: "AddSensorPage",
   components: {
     SerialConnect,
+    Chart
   },
   data() {
     return {
@@ -268,8 +272,8 @@ export default {
             deviceid: this.deviceid.toLowerCase(),
             devicename: this.devicename,
             location: {
-              lat: this.latitude,
-              long: this.longitude,
+              lat: parseFloat(this.latitude),
+              long: parseFloat(this.longitude),
               place_name: this.placeName
             },
           };
