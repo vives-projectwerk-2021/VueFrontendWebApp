@@ -28,6 +28,11 @@ export const store = new Vuex.Store({
 
         devicevalues(state) {
             return state.devicevalues;
+        },
+
+        devicelist(state)
+        {
+            return state.devicelist
         }
     },
 
@@ -50,14 +55,16 @@ export const store = new Vuex.Store({
     
     actions: {
         getAllSensors({commit} ){
-            Sensors.get_all_sensors()
+            return Sensors.get_all_sensors()
             .then((response) => {
-                console.log(response);
+                 console.log(response);
 
                 commit('changeDevices', {
                     devicelist: response.data
                 })
                 this.devicelist = response.data
+                
+
             })
             .catch((error) => console.log(error));
         },

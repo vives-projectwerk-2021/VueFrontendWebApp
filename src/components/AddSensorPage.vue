@@ -145,6 +145,9 @@
                       ></v-text-field>
                     </v-col>
                   </v-row>
+                  <v-row>
+                    <v-btn @click="UseGPS" class="mt-4 mx-4">Use GPS</v-btn>
+                  </v-row>
                 </v-expansion-panel-content>
               </v-expansion-panel>
             </v-expansion-panels>
@@ -177,6 +180,7 @@
 <script>
 import SerialConnect from '@/components/SerialConnect.vue'
 import { TTN } from "@/api/pulu.js"
+import { Map } from "@/api/mapbox.js"
 
 export default {
   name: "AddSensorPage",
@@ -192,6 +196,7 @@ export default {
 
       long: "",
       lat: "",
+      placeName: "",
 
       valid: true,
       snackbar: false,
@@ -237,22 +242,35 @@ export default {
     sendData() {
       this.$refs.form.validate();
 
-      if (this.valid == false) {
-        this.$store.commit("addSensor", "Please, check for problems!");
-      } else {
-        let json = {
-          deviceid: this.deviceid.toLowerCase(),
-          devicename: this.devicename,
-          location: {
-            lat: this.latitude,
-            long: this.longitude,
-          },
-        };
+      // get location place name "place_name"
+      
+      Map.reverse_geolocation(this.latitude, this.longitude)
+      .then((res) => {
+        if(res.data.features.length != 0) {
+          this.placeName = res.data.features[0].place_name
+        }
+        if (this.valid == false) {
+          this.$store.commit("addSensor", "Please, check for problems!");
+        } else {
+          let json = {
+            deviceid: this.deviceid.toLowerCase(),
+            devicename: this.devicename,
+            location: {
+              lat: this.latitude,
+              long: this.longitude,
+              place_name: this.placeName
+            },
+          };
 
-        this.$store.dispatch("addSensor", json);
-        this.getTTNInfo()
-      }
-      this.snackbar = true;
+          this.$store.dispatch("addSensor", json);
+          this.getTTNInfo()
+        }
+        this.snackbar = true;
+      })
+      .catch(() => {
+        console.log("could not get reverse geolocation")
+      })
+
     },
     updateDeviceId(id) {
       this.deviceid = id;
@@ -285,12 +303,18 @@ export default {
       await writer.write(encoder.encode(str));
       writer.releaseLock();
     },
-    mapLocation() {
-      console.log("Location map!")
+    UseGPS(){
+      if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(this.showPosition)
+      }else{
+          console.log("error")
+      }   
     },
-    qrLocation() {
-      console.log("Location QR!")
-    }
+    showPosition(position) {
+      this.lat= position.coords.latitude
+      this.long= position.coords.longitude
+
+    },
   },
   computed: {
     snackbarText() {

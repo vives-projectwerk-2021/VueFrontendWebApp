@@ -8,7 +8,7 @@
     <v-divider></v-divider>
     <br>
     <div>
-      <v-sheet align="center" border="">
+      <v-sheet align="center" border="" :style="{ background: activeColor3 }">
         <p class="text-h4">
           Pulu gives an overview of the current groundwater levels in Flanders.
         </p>
@@ -36,44 +36,19 @@
       </v-carousel-item>
     </v-carousel>
     <br>
-    
-    <v-footer
-      dark
-      padless
-      
-    >
+    <v-divider></v-divider>
+    <br>
+    <v-row class="d-flex justify-space-around pb-5">
       <v-card
-        flat
-        tile
-        class="indigo lighten-1 white--text text-center"
-        color="darkgrey"
-        width="100%"
-      >
-        <v-card-text>
-          <v-btn
-            v-for="icon in icons"
-            :key="icon"
-            class="mx-4 white--text"
-            icon
-            dark
-          >
-            <v-icon size="24px">
-              {{ icon }}
-            </v-icon>
-          </v-btn>
-        </v-card-text>
-
-        <v-card-text class="white--text pt-0">
-          vives.be
-        </v-card-text>
-
-        <v-divider></v-divider>
-
-        <v-card-text class="white--text">
-          {{ new Date().getFullYear() }} — <strong>Pulu</strong>
-        </v-card-text>
-      </v-card>
-    </v-footer>
+        v-for="card in cards" :key="card.id"
+        width="250px"
+        height="200px"
+        :style="{ background: activeColor2 }"
+      >  
+        <h2 class="mt-4 font-weight-regular" style="text-align:center">{{ card.title }}</h2>
+        <p class="mt-5 font-weight-black" :style="{ 'font-size': '50px' }" style="text-align:center" >{{ card.subtitle }}</p>
+      </v-card>  
+    </v-row>
   </div>
 </template>
 
@@ -86,13 +61,13 @@ export default {
 
   components: {
     MapPage
-    //Footer upcomming!!
   },
 
   data() {
     return {
       activeColor: 'white',
-      logo_vives: require('@/img/logo_vives.png'),
+      activeColor2: '#edf2f7',
+      activeColor3: '#f5f5f5',
       slides: [
         {
           src: require('../img/image_one.jpg'),
@@ -115,14 +90,25 @@ export default {
           title: "Created by Vives students"
         }
       ],
-      icons: [
-        'mdi-github',
-        'mdi-email',
-        'mdi-facebook',
-        'mdi-twitter'
+      cards: [
+        {
+          id: 0,
+          title: "Active sensors",
+          subtitle: "2"
+        },
+        {
+          id: 1,
+          title: "Countries",
+          subtitle: "1"
+        },
+        {
+          id: 3,
+          title: "Project developers",
+          subtitle: "24"
+        }
       ]
+      
     }
   }
-
 }
 </script>

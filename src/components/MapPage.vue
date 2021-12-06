@@ -5,6 +5,7 @@
 </template>
 
 <script>
+//import mapState from "vuex"
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { Icon } from 'leaflet';
@@ -16,6 +17,7 @@ export default {
       center: [51.209348, 3.2246995],
       data: [],
       map: null,
+      loaded: false
     };
   },
   methods: {
@@ -36,20 +38,57 @@ export default {
         iconUrl: require('leaflet/dist/images/marker-icon.png'),
         shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
       });
-      
-      var loc = [51.2024949, 3.227196];
-      var marker = L.marker(loc).addTo(this.map);
-      marker.bindTooltip("Device Sensor 1");
-      marker.bindPopup("<b>Device Sensor 1</b><br>Brugge Centrum<br>51.2024949, 3.227196");
 
-      var loc2 = [51.21511504695216, 3.2265794559620704];
-      var marker2 = L.marker(loc2).addTo(this.map);
-      marker2.bindPopup("<b>Device Sensor 2</b><br>Sint-Gillis Kerk<br>51.21511504695216, 3.2265794559620704");
-      marker2.bindTooltip("Device Sensor 2");
+      var LeafIcon = L.Icon.extend({
+        options: {
+          iconSize: [50, 50],
+        },
+      });
+
+      var manIcon = new LeafIcon({
+        iconUrl: "img/map-man-marker.png",
+      });
+
+      var liveMarker;
+      this.map
+        .locate({
+          setView: true,
+          maxZoom: 140,
+        })
+        .on("locationfound", (e) => {
+          if (!liveMarker) {
+            liveMarker = new L.marker(e.latlng, { icon: manIcon }).addTo(
+              this.map
+            );
+          } else {
+            liveMarker.setLatLng(e.latlng);
+          }
+          liveMarker.bindTooltip("You are here.");
+        });
+
+      
+      this.addPoints()
+      
     },
+    async addPoints(){
+      await this.$store.dispatch('getAllSensors')
+      var markerarray = []; 
+      this.$store.getters.devicelist.forEach(device =>{
+        if(device.location.lat && device.location.long){
+          const marker = (L.marker([device.location.lat, device.location.long]).addTo(this.map))
+                   .bindTooltip(device.devicename)
+                   .bindPopup(`<b>${device.devicename}</b><br><a href="${window.location.href}sensors/${device.deviceid}">See sensor data</a>`)
+          
+          markerarray.push(marker)
+
+        }
+      }) 
+      this.map.fitBounds(L.latLngBounds(markerarray.map(marker => marker.getLatLng())))
+    
+    }
   },
   mounted() {
-    this.setupLeafletMap();
+    this.setupLeafletMap()
   },
 };
 </script>
