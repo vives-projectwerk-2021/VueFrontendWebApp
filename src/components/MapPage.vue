@@ -54,7 +54,7 @@ export default {
           markerarray.push(marker)
 
         }
-      })
+      }) 
       this.map.fitBounds(L.latLngBounds(markerarray.map(marker => marker.getLatLng())))
     
     }
