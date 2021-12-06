@@ -44,13 +44,18 @@ export default {
     },
     async addPoints(){
       await this.$store.dispatch('getAllSensors')
+      var markerarray = []; 
       this.$store.getters.devicelist.forEach(device =>{
         if(device.location.lat && device.location.long){
-          L.marker([device.location.lat, device.location.long]).addTo(this.map)
-          .bindTooltip(device.devicename)
-          .bindPopup(`<b>${device.devicename}</b><br><a href="${window.location.href}sensors/${device.deviceid}">See sensor data</a>`)
+          const marker = (L.marker([device.location.lat, device.location.long]).addTo(this.map))
+                   .bindTooltip(device.devicename)
+                   .bindPopup(`<b>${device.devicename}</b><br><a href="${window.location.href}sensors/${device.deviceid}">See sensor data</a>`)
+          
+          markerarray.push(marker)
+
         }
       })
+      this.map.fitBounds(L.latLngBounds(markerarray.map(marker => marker.getLatLng())))
     
     }
   },
