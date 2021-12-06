@@ -116,7 +116,9 @@
                   </template>
                 </v-expansion-panel-header>
                 <v-expansion-panel-content color="green lighten-4">
-                  MAP-COMPONENT (Coming soon!)
+                  <v-row>
+                    <v-col> </v-col>
+                  </v-row>
                 </v-expansion-panel-content>
               </v-expansion-panel>
 
