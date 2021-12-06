@@ -39,17 +39,15 @@
     <v-divider></v-divider>
     <br>
     <v-row class="d-flex justify-space-around pb-5">
-        
-            <v-card
-                v-for="card in cards" :key="card.id"
-                width="200px"
-                height="200px"
-                :style="{ background: activeColor2 }"
-            >
-              <h2 class="ml-4 mt-4 font-weight-regular">{{ card.title }}</h2>
-              <p class="ml-5 mt-5 font-weight-black" :style="{ 'font-size': '30px' }" >{{ card.subtitle }}</p>
-            </v-card>
-        
+      <v-card
+        v-for="card in cards" :key="card.id"
+        width="250px"
+        height="200px"
+        :style="{ background: activeColor2 }"
+      >  
+        <h2 class="mt-4 font-weight-regular" style="text-align:center">{{ card.title }}</h2>
+        <p class="mt-5 font-weight-black" :style="{ 'font-size': '50px' }" style="text-align:center" >{{ card.subtitle }}</p>
+      </v-card>  
     </v-row>
   </div>
 </template>
@@ -95,8 +93,8 @@ export default {
       cards: [
         {
           id: 0,
-          title: "Active sensors Flanders",
-          subtitle: "1"
+          title: "Active sensors",
+          subtitle: "2"
         },
         {
           id: 1,
@@ -106,7 +104,7 @@ export default {
         {
           id: 3,
           title: "Project developers",
-          subtitle: "..."
+          subtitle: "24"
         }
       ]
       
