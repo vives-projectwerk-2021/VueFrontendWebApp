@@ -1,11 +1,8 @@
 <template>
   <div>
-    
-    <v-card class="mb-6" elevation="5" v-if="devicevalues.info" >
-      <v-card-title>Device name: {{ devicevalues.info.devicename }}</v-card-title>
-      <v-card-text>firstname:  {{ devicevalues.info.firstname }} </v-card-text>
-      <v-card-text>Lastname:  {{ devicevalues.info.lastname }} </v-card-text>
-      <v-card-text>📍 Location:  {{ devicevalues.info.location }} </v-card-text>
+    <v-card class="mb-6" elevation="5" v-if="devicevalues.id" >
+      <v-card-title>Device name: {{ devicevalues.name }}</v-card-title>
+      <v-card-text>📍 Location:  {{ devicevalues.location }} </v-card-text>
     </v-card>
     <div>
       <div v-if="loadingWS" >

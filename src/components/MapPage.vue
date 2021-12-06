@@ -1,11 +1,11 @@
 <template>
   <div id="container">
-    <h1>Map with sensor-devices.</h1>
-    <div id="mapContainer"></div>
+    <div id="mapContainer" class="mx-1"></div>
   </div>
 </template>
 
 <script>
+//import mapState from "vuex"
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { Icon } from 'leaflet';
@@ -17,6 +17,7 @@ export default {
       center: [51.209348, 3.2246995],
       data: [],
       map: null,
+      loaded: false
     };
   },
   methods: {
@@ -38,30 +39,34 @@ export default {
         shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
       });
       
-      var loc = [51.2024949, 3.227196];
-      var marker = L.marker(loc).addTo(this.map);
-      marker.bindTooltip("Device Sensor 1");
-      marker.bindPopup("<b>Device Sensor 1</b><br>Brugge Centrum<br>51.2024949, 3.227196");
-
-      var loc2 = [51.21511504695216, 3.2265794559620704];
-      var marker2 = L.marker(loc2).addTo(this.map);
-      marker2.bindPopup("<b>Device Sensor 2</b><br>Sint-Gillis Kerk<br>51.21511504695216, 3.2265794559620704");
-      marker2.bindTooltip("Device Sensor 2");
+      this.addPoints()
+      
     },
+    async addPoints(){
+      await this.$store.dispatch('getAllSensors')
+      var markerarray = []; 
+      this.$store.getters.devicelist.forEach(device =>{
+        if(device.location.lat && device.location.long){
+          const marker = (L.marker([device.location.lat, device.location.long]).addTo(this.map))
+                   .bindTooltip(device.devicename)
+                   .bindPopup(`<b>${device.devicename}</b><br><a href="${window.location.href}sensors/${device.deviceid}">See sensor data</a>`)
+          
+          markerarray.push(marker)
+
+        }
+      }) 
+      this.map.fitBounds(L.latLngBounds(markerarray.map(marker => marker.getLatLng())))
+    
+    }
   },
   mounted() {
-    this.setupLeafletMap();
+    this.setupLeafletMap()
   },
 };
 </script>
 
 <style>
-h1 {
-  text-align: center;
-  margin: 20px;
-}
 #mapContainer {
-  width: 100%;
-  height: 100vh;
+  height: 70vh;
 }
 </style>

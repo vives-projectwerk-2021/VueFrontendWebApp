@@ -11,14 +11,24 @@ export const store = new Vuex.Store({
         liveDeviceValues: {},
         devicelist: [],
         devicevalues: {},
+        activeDevice: "",
+
         snackbarText: "",
-        activeDevice: ""
+        deviceidText: "Invalid Device ID: Can only be a hexadecimal value.",
+        devicenameText: "Invalid Device Name: Can only be letters, numbers, underscores or dashes.",
+        deviceLatText: "Invalid Latitude! (-180 to 180)",
+        deviceLongText: "Invalid Longitude! (-90 to 90)",
     },
 
     getters: {
 
         devicevalues(state) {
             return state.devicevalues;
+        },
+
+        devicelist(state)
+        {
+            return state.devicelist
         }
     },
 
@@ -77,14 +87,16 @@ export const store = new Vuex.Store({
         },
 
         getAllSensors({commit} ){
-            Sensors.get_all_sensors()
+            return Sensors.get_all_sensors()
             .then((response) => {
-                console.log(response);
+                 console.log(response);
 
                 commit('changeDevices', {
                     devicelist: response.data
                 })
                 this.devicelist = response.data
+                
+
             })
             .catch((error) => console.log(error));
         },
