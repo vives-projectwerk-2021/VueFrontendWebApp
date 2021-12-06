@@ -107,7 +107,7 @@
                 </v-expansion-panel-content>
               </v-expansion-panel>
 
-              <v-expansion-panel class="expanel" @click="onExpansionPanelClick" color="green lighten-4">
+              <v-expansion-panel @click="onExpansionPanelClick" color="green lighten-4">
                 <v-expansion-panel-header disable-icon-rotate>
                   With map
                   <template v-slot:actions>
