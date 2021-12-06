@@ -48,7 +48,7 @@ export default {
         if(device.location.lat && device.location.long){
           L.marker([device.location.lat, device.location.long]).addTo(this.map)
           .bindTooltip(device.devicename)
-          .bindPopup(`<b>${device.devicename}</b><br>${device.location.lat}, ${device.location.long}`)
+          .bindPopup(`<b>${device.devicename}</b><br><a href="${window.location.href}sensors/${device.deviceid}">Visit Sensor</a>`)
         }
       })
     
