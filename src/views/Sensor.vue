@@ -1,12 +1,11 @@
 <template>
   <div>
-    
     <v-card class="mb-6" elevation="5" v-if="devicevalues.id" >
       <v-card-title>Device name: {{ devicevalues.name }}</v-card-title>
-      <v-card-text>📍 Location:  {{ devicevalues.location }} </v-card-text>
+      <v-card-text v-if="devicevalues.location.place_name">📍 Location:  {{ devicevalues.location.place_name }} </v-card-text>
+      <v-card-text v-else>📍 Location:  [{{ devicevalues.location.lat }}, {{ devicevalues.location.long }}] </v-card-text>
     </v-card>
     <div>
-      
       <div v-if="loadingWS" >
         <p>Waiting for websocket connection</p>
         <v-progress-linear
@@ -27,7 +26,7 @@
         </v-card>
 
         <div v-else-if="liveDeviceValues && liveDeviceValues.device_id == deviceId">
-          <v-card elevation="5">
+          <v-card>
             <LiveData :liveValues="liveDeviceValues" class="ma-4" />
           </v-card>
         </div>
@@ -40,23 +39,39 @@
           ></v-progress-linear>
         </div>
       </div>
-  </div>
-    
+    </div>   
+    <div>
+      <line-chart
+      v-if="devicevalues.value" 
+      :dataset="level4Values"
+      :options="chartOptions" />
+    </div>
+
   </div>
 </template>
 
 <script>
 import LiveData from '@/components/LiveData'
+import LineChart from '@/components/Chart.vue'
+
 
 export default {
   name: "Sensor",
   components: {
-    LiveData
+    LiveData,
+    LineChart
   },
   data() {
     return {
       loadingWS: true,
       deviceId: this.$route.params.deviceId,
+      chartOptions:  {
+            label: "Humidity",
+            backgroundColor: "transparent",
+            borderColor: "red",
+            pointBackgroundColor: "black"
+      },
+
     }
   },
   created(){
@@ -81,11 +96,36 @@ export default {
     ws() {
       return this.$store.state.ws
     },
+    level4Values() {
+      const level4 = this.devicevalues.value
+        .filter((element)=>{
+          return element.moisture === "level4"
+        })
+
+      return {
+        labels:  level4.map((element)=> {
+         return element._time
+        })
+        ,
+        values: level4.map((element)=>{
+          return element._value
+        })
+      }
+
+    },
   },
   methods: {
     retryWsConnection() {
       this.$store.dispatch('tryWsConnection')
-    }
+    },
+    dataForChart() {
+
+      
+    },
   },
+  watch: {
+    
+  }
+
 }
 </script>
