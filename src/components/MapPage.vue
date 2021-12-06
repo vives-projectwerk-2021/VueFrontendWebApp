@@ -38,6 +38,34 @@ export default {
         iconUrl: require('leaflet/dist/images/marker-icon.png'),
         shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
       });
+
+      var LeafIcon = L.Icon.extend({
+        options: {
+          iconSize: [50, 50],
+        },
+      });
+
+      var manIcon = new LeafIcon({
+        iconUrl: "img/map-man-marker.png",
+      });
+
+      var liveMarker;
+      this.map
+        .locate({
+          setView: true,
+          maxZoom: 140,
+        })
+        .on("locationfound", (e) => {
+          if (!liveMarker) {
+            liveMarker = new L.marker(e.latlng, { icon: manIcon }).addTo(
+              this.map
+            );
+          } else {
+            liveMarker.setLatLng(e.latlng);
+          }
+          liveMarker.bindTooltip("You are here.");
+        });
+
       
       this.addPoints()
       
