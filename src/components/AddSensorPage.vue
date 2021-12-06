@@ -1,11 +1,14 @@
 <template>
-  <v-container>
-    <v-card elevation="5" rounded="lg" color="green lighten-2">
-      <v-row>
-        <v-col>
-          <p class="text-h2 text-center">Add a Sensor</p>
-        </v-col>
-      </v-row>
+  <v-container class="d-flex justify-center">
+    <v-card
+      elevation="5"
+      rounded="lg"
+      color="green lighten-2"
+      max-width="700"
+      class="py-4"
+    >
+      <p class="px-2 text-h2 text-center">Add a Sensor</p>
+
       <v-divider />
       <v-form ref="form" v-model="valid" class="mx-4">
         <v-row>
@@ -56,7 +59,8 @@
         <v-row>
           <v-col>
             <v-text-field
-              class="py-4"
+              cols="12"
+              sm="6"
               outlined
               readonly
               disabled
@@ -68,9 +72,8 @@
               :rules="[rules.required, rules.latValidator]"
             ></v-text-field>
           </v-col>
-          <v-col>
+          <v-col cols="12" sm="6">
             <v-text-field
-              class="py-4"
               outlined
               readonly
               disabled
@@ -88,7 +91,10 @@
           <v-col class="py-0">
             <v-expansion-panels>
               <v-expansion-panel>
-                <v-expansion-panel-header disable-icon-rotate color="green lighten-5">
+                <v-expansion-panel-header
+                  disable-icon-rotate
+                  color="green lighten-5"
+                >
                   With QR code
                   <template v-slot:actions>
                     <v-icon> mdi-qrcode-scan </v-icon>
@@ -100,7 +106,10 @@
               </v-expansion-panel>
 
               <v-expansion-panel>
-                <v-expansion-panel-header disable-icon-rotate color="green lighten-4">
+                <v-expansion-panel-header
+                  disable-icon-rotate
+                  color="green lighten-4"
+                >
                   With map
                   <template v-slot:actions>
                     <v-icon> mdi-map </v-icon>
@@ -112,7 +121,10 @@
               </v-expansion-panel>
 
               <v-expansion-panel>
-                <v-expansion-panel-header disable-icon-rotate color="green lighten-5">
+                <v-expansion-panel-header
+                  disable-icon-rotate
+                  color="green lighten-5"
+                >
                   Manual input
                   <template v-slot:actions>
                     <v-icon> mdi-pen </v-icon>
@@ -120,9 +132,8 @@
                 </v-expansion-panel-header>
                 <v-expansion-panel-content color="green lighten-5">
                   <v-row>
-                    <v-col>
+                    <v-col cols="12" sm="6">
                       <v-text-field
-                        class="py-4"
                         outlined
                         dense
                         hide-details="auto"
@@ -132,9 +143,8 @@
                         :rules="[rules.latValidator]"
                       ></v-text-field>
                     </v-col>
-                    <v-col>
+                    <v-col cols="12" sm="6">
                       <v-text-field
-                        class="py-4"
                         outlined
                         dense
                         hide-details="auto"
@@ -146,7 +156,9 @@
                     </v-col>
                   </v-row>
                   <v-row>
-                    <v-btn @click="UseGPS" class="mt-4 mx-4">Use GPS</v-btn>
+                    <v-col>
+                      <v-btn @click="UseGPS">Use GPS</v-btn>
+                    </v-col>
                   </v-row>
                 </v-expansion-panel-content>
               </v-expansion-panel>
@@ -255,19 +267,16 @@ export default {
     updateDeviceId(id) {
       this.deviceid = id;
     },
-    UseGPS(){
+    UseGPS() {
       if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(this.showPosition)
-      }else{
-          console.log("error")
+        navigator.geolocation.getCurrentPosition(this.showPosition);
+      } else {
+        console.log("error");
       }
-
-            
     },
     showPosition(position) {
-      this.lat= position.coords.latitude
-      this.long= position.coords.longitude
-
+      this.lat = position.coords.latitude;
+      this.long = position.coords.longitude;
     },
   },
   computed: {
