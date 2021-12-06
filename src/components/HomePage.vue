@@ -39,23 +39,15 @@
     <v-divider></v-divider>
     <br>
     <v-row class="d-flex justify-space-around pb-5">
-            <v-card
-                v-for="card in cards" :key="card.id"
-                width="250px"
-                height="200px"
-                :style="{ background: activeColor2 }"
-            >
-            
-              <h2 class="mt-4 font-weight-regular" style="text-align:center">{{ card.title }}</h2>
-            
-            
-            
-              <p class="mt-5 font-weight-black" :style="{ 'font-size': '50px' }" style="text-align:center" >{{ card.subtitle }}</p>
-            
-            
-            
-            </v-card>
-        
+      <v-card
+        v-for="card in cards" :key="card.id"
+        width="250px"
+        height="200px"
+        :style="{ background: activeColor2 }"
+      >  
+        <h2 class="mt-4 font-weight-regular" style="text-align:center">{{ card.title }}</h2>
+        <p class="mt-5 font-weight-black" :style="{ 'font-size': '50px' }" style="text-align:center" >{{ card.subtitle }}</p>
+      </v-card>  
     </v-row>
   </div>
 </template>
