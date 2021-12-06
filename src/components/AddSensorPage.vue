@@ -176,7 +176,7 @@
 
 <script>
 import SerialConnect from '@/components/SerialConnect.vue'
-import { TTN } from "@/api/ttn.js"
+import { TTN } from "@/api/pulu.js"
 
 export default {
   name: "AddSensorPage",

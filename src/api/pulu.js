@@ -25,4 +25,12 @@ const Sensors = {
     }
 }
 
-export { api, Sensors}
+const TTN = {
+    resource: 'ttn-device-manager',
+
+    registerDevice(json){
+        return api.post(`/${this.resource}`, json);
+    }
+}
+
+export { api, Sensors, TTN}
