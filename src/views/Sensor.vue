@@ -41,7 +41,7 @@
     </div>   
     <div>
       <line-chart
-      :v-if="loaded" 
+      v-if="devicevalues.value" 
       :dataset="level4Values"
       :options="chartOptions" />
     </div>
