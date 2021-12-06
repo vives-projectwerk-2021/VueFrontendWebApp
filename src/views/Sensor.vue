@@ -1,7 +1,7 @@
 <template>
   <div>
     
-    <v-card class="mb-6" elevation="5" >
+    <v-card class="mb-6" elevation="5" v-if="devicevalues.info" >
       <v-card-title>Device name: {{ devicevalues.info.devicename }}</v-card-title>
       <v-card-text>📍 Location:  {{ devicevalues.info.location }} </v-card-text>
     </v-card>
