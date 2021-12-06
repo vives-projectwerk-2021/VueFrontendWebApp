@@ -8,7 +8,7 @@
     <v-divider></v-divider>
     <br>
     <div>
-      <v-sheet align="center" border="">
+      <v-sheet align="center" border="" :style="{ background: activeColor3 }">
         <p class="text-h4">
           Pulu gives an overview of the current groundwater levels in Flanders.
         </p>
@@ -69,6 +69,7 @@ export default {
     return {
       activeColor: 'white',
       activeColor2: '#edf2f7',
+      activeColor3: '#f5f5f5',
       slides: [
         {
           src: require('../img/image_one.jpg'),
