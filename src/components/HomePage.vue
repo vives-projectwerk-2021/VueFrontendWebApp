@@ -8,7 +8,7 @@
     <v-divider></v-divider>
     <br>
     <div>
-      <v-sheet align="center" border="">
+      <v-sheet align="center" border="" :style="{ background: activeColor3 }">
         <p class="text-h4">
           Pulu gives an overview of the current groundwater levels in Flanders.
         </p>
@@ -39,17 +39,15 @@
     <v-divider></v-divider>
     <br>
     <v-row class="d-flex justify-space-around pb-5">
-        
-            <v-card
-                v-for="card in cards" :key="card.id"
-                width="200px"
-                height="200px"
-                :style="{ background: activeColor2 }"
-            >
-              <h2 class="ml-4 mt-4 font-weight-regular">{{ card.title }}</h2>
-              <p class="ml-5 mt-5 font-weight-black" :style="{ 'font-size': '30px' }" >{{ card.subtitle }}</p>
-            </v-card>
-        
+      <v-card
+        v-for="card in cards" :key="card.id"
+        width="250px"
+        height="200px"
+        :style="{ background: activeColor2 }"
+      >  
+        <h2 class="mt-4 font-weight-regular" style="text-align:center">{{ card.title }}</h2>
+        <p class="mt-5 font-weight-black" :style="{ 'font-size': '50px' }" style="text-align:center" >{{ card.subtitle }}</p>
+      </v-card>  
     </v-row>
   </div>
 </template>
@@ -69,6 +67,7 @@ export default {
     return {
       activeColor: 'white',
       activeColor2: '#edf2f7',
+      activeColor3: '#f5f5f5',
       slides: [
         {
           src: require('../img/image_one.jpg'),
@@ -94,8 +93,8 @@ export default {
       cards: [
         {
           id: 0,
-          title: "Active sensors Flanders",
-          subtitle: "1"
+          title: "Active sensors",
+          subtitle: "2"
         },
         {
           id: 1,
@@ -105,7 +104,7 @@ export default {
         {
           id: 3,
           title: "Project developers",
-          subtitle: "..."
+          subtitle: "24"
         }
       ]
       
