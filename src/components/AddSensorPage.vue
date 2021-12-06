@@ -190,22 +190,14 @@
 
 <script>
 import SerialConnect from "@/components/SerialConnect.vue";
-<<<<<<< HEAD
-import Chart from "@/components/Chart.vue"
-=======
 import LocationByMap from '@/components/LocationByMap.vue';
->>>>>>> fae79f554e1cb65c037ee5450c0791e792f499c2
 import { Map } from "@/api/mapbox.js"
 
 export default {
   name: "AddSensorPage",
   components: {
     SerialConnect,
-<<<<<<< HEAD
-    Chart
-=======
     LocationByMap
->>>>>>> fae79f554e1cb65c037ee5450c0791e792f499c2
   },
   data() {
     
