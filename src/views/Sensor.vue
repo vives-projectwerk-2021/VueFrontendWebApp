@@ -3,7 +3,8 @@
     
     <v-card class="mb-6" elevation="5" v-if="devicevalues.id" >
       <v-card-title>Device name: {{ devicevalues.name }}</v-card-title>
-      <v-card-text>📍 Location:  {{ devicevalues.location }} </v-card-text>
+      <v-card-text v-if="devicevalues.location.place_name">📍 Location:  {{ devicevalues.location.place_name }} </v-card-text>
+      <v-card-text v-else>📍 Location:  [{{ devicevalues.location.lat }}, {{ devicevalues.location.long }}] </v-card-text>
     </v-card>
     <div>
       
