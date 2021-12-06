@@ -107,22 +107,15 @@
                 </v-expansion-panel-content>
               </v-expansion-panel>
 
-              <v-expansion-panel>
-                <v-expansion-panel-header
-                  disable-icon-rotate
-                  color="green lighten-4"
-                >
+              <v-expansion-panel class="expanel" @click="onExpansionPanelClick" color="green lighten-4">
+                <v-expansion-panel-header disable-icon-rotate>
                   With map
                   <template v-slot:actions>
                     <v-icon> mdi-map </v-icon>
                   </template>
                 </v-expansion-panel-header>
                 <v-expansion-panel-content color="green lighten-4">
-                  <v-row>
-                    <v-col>
-                      <Chart />
-                    </v-col>
-                  </v-row>
+                  <location-by-map v-if="mapOpen == true"></location-by-map>
                 </v-expansion-panel-content>
               </v-expansion-panel>
 
@@ -197,16 +190,25 @@
 
 <script>
 import SerialConnect from "@/components/SerialConnect.vue";
+<<<<<<< HEAD
 import Chart from "@/components/Chart.vue"
+=======
+import LocationByMap from '@/components/LocationByMap.vue';
+>>>>>>> fae79f554e1cb65c037ee5450c0791e792f499c2
 import { Map } from "@/api/mapbox.js"
 
 export default {
   name: "AddSensorPage",
   components: {
     SerialConnect,
+<<<<<<< HEAD
     Chart
+=======
+    LocationByMap
+>>>>>>> fae79f554e1cb65c037ee5450c0791e792f499c2
   },
   data() {
+    
     return {
       deviceid: "",
       devicename: "",
@@ -219,6 +221,7 @@ export default {
 
       valid: true,
       snackbar: false,
+      mapOpen: false,
 
       rules: {
         required: (value) => !!value || "Required.",
@@ -299,6 +302,14 @@ export default {
       this.lat = position.coords.latitude;
       this.long = position.coords.longitude;
     },
+    onExpansionPanelClick(event) {
+      if(event.target.classList.contains('v-expansion-panel-header--active')) {
+        this.mapOpen = false
+      } else {
+        setTimeout(() => {  this.mapOpen = true }, 100);
+        
+      }
+    }
   },
   computed: {
     snackbarText() {
@@ -333,6 +344,16 @@ export default {
         this.latitude = Number(this.lat).toFixed(7);
       });
     },
+     "$store.state.latlng": {
+      handler: function(nv) {
+        if(nv){
+          this.lat = String(nv.lat);
+          this.long = String(nv.lng);
+        }
+        
+      },
+      immediate: true // provides initial (not changed yet) state
+    }
   },
 };
 </script>
