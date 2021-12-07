@@ -99,7 +99,7 @@
                 </v-expansion-panel-content>
               </v-expansion-panel>
 
-              <v-expansion-panel>
+              <v-expansion-panel class="expanel" @click="onExpansionPanelClick">
                 <v-expansion-panel-header disable-icon-rotate>
                   With map
                   <template v-slot:actions>
@@ -107,7 +107,7 @@
                   </template>
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
-                  MAP-COMPONENT (Coming soon!)
+                  <location-by-map v-if="mapOpen == true"></location-by-map>
                 </v-expansion-panel-content>
               </v-expansion-panel>
 
@@ -179,6 +179,7 @@
 
 <script>
 import SerialConnect from '@/components/SerialConnect.vue'
+import LocationByMap from '@/components/LocationByMap.vue';
 import { TTN } from "@/api/pulu.js"
 import { Map } from "@/api/mapbox.js"
 
@@ -186,8 +187,10 @@ export default {
   name: "AddSensorPage",
   components: {
     SerialConnect,
+    LocationByMap
   },
   data() {
+    
     return {
       deviceid: "",
       devicename: "",
@@ -200,6 +203,7 @@ export default {
 
       valid: true,
       snackbar: false,
+      mapOpen: false,
 
       rules: {
         required: (value) => !!value || "Required.",
@@ -315,6 +319,14 @@ export default {
       this.long= position.coords.longitude
 
     },
+    onExpansionPanelClick(event) {
+      if(event.target.classList.contains('v-expansion-panel-header--active')) {
+        this.mapOpen = false
+      } else {
+        setTimeout(() => {  this.mapOpen = true }, 100);
+        
+      }
+    }
   },
   computed: {
     snackbarText() {
@@ -349,6 +361,16 @@ export default {
         this.latitude = Number(this.lat).toFixed(7);
       });
     },
+     "$store.state.latlng": {
+      handler: function(nv) {
+        if(nv){
+          this.lat = String(nv.lat);
+          this.long = String(nv.lng);
+        }
+        
+      },
+      immediate: true // provides initial (not changed yet) state
+    }
   },
 };
 </script>
