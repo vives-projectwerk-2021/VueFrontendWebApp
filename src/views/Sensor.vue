@@ -77,7 +77,7 @@ export default {
       return this.$store.getters.devicevalues
     },
     liveDeviceValues() {
-      return this.$store.state.liveDeviceValues
+      return this.$store.state.websocket.liveDeviceValues
     },
     ws() {
       return this.$store.state.websocket.ws

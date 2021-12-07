@@ -9,9 +9,7 @@ const websocket =  {
   },
   mutations: {
     updateDeviceValues: (state, message) => {
-      if (message.data && message.data.device_id == state.activeDevice) {
-        state.liveDeviceValues = message.data
-      }
+      state.liveDeviceValues = message.data
     },
     connectToWs: (state, connection) => {
       state.ws = connection
@@ -19,9 +17,9 @@ const websocket =  {
     },
   },
   actions: {
-    parseMessage: (store, message) => {
-      if(message.message == "sensor-data"){
-        store.commit('updateDeviceValues', message)
+    parseMessage: ({commit, rootState}, message) => {
+      if(message.message == "sensor-data" && message.data && message.data.device_id == rootState.activeDevice){
+        commit('updateDeviceValues', message)
       }
     },
     tryWsConnection: (store) => {
