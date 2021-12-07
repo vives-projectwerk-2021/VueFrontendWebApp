@@ -42,7 +42,7 @@
     </div>   
     <div>
       <line-chart
-      v-if="devicevalues.value" 
+      v-if="devicevalues.values" 
       :dataset="level4Values"
       :options="chartOptions" />
     </div>
@@ -88,7 +88,11 @@ export default {
   },
   computed:{
     devicevalues() {
-      return this.$store.getters.devicevalues
+      //return this.$store.getters.devicevalues
+
+      return { "id": "270918480", "name": "boer", "location": "westlekeboarigem","values": [{ "time": "1", "moisture": [{ "value": 123, "depth": -20 }],
+                "temperature": { "air": "2", "ground": "3" }, "light": "4", "battery_voltage": "5"},{"time": "2","moisture": [{ "value": 124, "depth": -20}],
+                "temperature": { "air": "10", "ground": "24" }, "light": "12","battery_voltage": "303"}] }
     },
     liveDeviceValues() {
       return this.$store.state.liveDeviceValues
@@ -97,21 +101,30 @@ export default {
       return this.$store.state.ws
     },
     level4Values() {
-      const level4 = this.devicevalues.value
-        .filter((element)=>{
-          return element.moisture === "level4"
-        })
+      let  values = this.devicevalues.values
 
-      return {
-        labels:  level4.map((element)=> {
-         return element._time
-        })
-        ,
-        values: level4.map((element)=>{
-          return element._value
-        })
-      }
+      let time = values.map((values)=>{
+        return values.time
+      })
+      
+      let moisture = values.map((values)=>{
+        return values.moisture
+      }).map((moisture)=>{
+        return moisture[0].value
+      })
 
+      let airTemperature = values.map((values)=>{
+        return values.temperature.air
+      })
+
+      let groundTemperature = values.map((values)=>{
+        return values.temperature.ground
+      })
+      console.log("nu mee bezig:")
+      console.log(time)
+      
+      void(moisture,airTemperature,groundTemperature,time)
+      return {labels:[1,2],values:[5,6]}
     },
   },
   methods: {
