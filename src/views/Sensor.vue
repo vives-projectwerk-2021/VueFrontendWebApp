@@ -43,7 +43,7 @@
     <div>
       <line-chart
       v-if="devicevalues.values" 
-      :dataset="level4Values"
+      :dataset="dataForChart"
       :options="chartOptions" />
     </div>
 
@@ -66,7 +66,6 @@ export default {
       loadingWS: true,
       deviceId: this.$route.params.deviceId,
       chartOptions:  {
-            label: "Humidity",
             backgroundColor: "transparent",
             borderColor: "red",
             pointBackgroundColor: "black"
@@ -100,7 +99,7 @@ export default {
     ws() {
       return this.$store.state.ws
     },
-    level4Values() {
+    dataForChart() {
       let  values = this.devicevalues.values
 
       let time = values.map((values)=>{
@@ -120,20 +119,14 @@ export default {
       let groundTemperature = values.map((values)=>{
         return values.temperature.ground
       })
-      console.log("nu mee bezig:")
-      console.log(time)
-      
+
       void(moisture,airTemperature,groundTemperature,time)
-      return {labels:[1,2],values:[5,6]}
+      return {label:["test","test2"],labels:[1,2],values:[[5,6],[5,3]]}
     },
   },
   methods: {
     retryWsConnection() {
       this.$store.dispatch('tryWsConnection')
-    },
-    dataForChart() {
-
-      
     },
   },
   watch: {

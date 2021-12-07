@@ -19,21 +19,19 @@ export default {
   },
   computed: {
     chartdata() {
-
-      return {
-
-        labels: this.dataset.labels,
-        datasets: [
-          {
-            label: this.options.label,
-            data: this.dataset.values,
-            backgroundColor: this.options.backgroundColor,
-            borderColor: this.options.borderColor,
-            pointBackgroundColor: this.options.pointBackgroundColor
-          }
-        ]
-      }
-    }
+      let labelIndex = -1
+      let datasets = this.dataset.values.map((values)=>{
+        labelIndex +=1
+        return {
+          label: this.dataset.label[labelIndex],
+          data: values,
+          backgroundColor: this.options.backgroundColor,
+          borderColor: this.options.borderColor,
+          pointBackgroundColor: this.options.pointBackgroundColor
+        }
+      })
+      return { labels: this.dataset.labels, datasets: datasets }
+    },
   }
 }
 
