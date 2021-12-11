@@ -14,8 +14,14 @@ export default {
       default: null
     }
   },
-  mounted () {
-    this.renderChart(this.chartdata, { responsive: true, maintainAspectRatio: false })
+  mounted() {
+    this.render(this.chartdata)
+  },
+  watch: {
+    chartdata(value){
+        this.render(value)
+    }
+
   },
   computed: {
     chartdata() {
@@ -26,13 +32,18 @@ export default {
           label: this.dataset.label[labelIndex],
           data: values,
           backgroundColor: this.options.backgroundColor,
-          borderColor: this.options.borderColor,
+          borderColor: `#${Math.floor(Math.random()*16777215).toString(16)}`,
           pointBackgroundColor: this.options.pointBackgroundColor
         }
       })
       return { labels: this.dataset.labels, datasets: datasets }
     },
-  }
+  },
+  methods: {
+        render(value){
+      this.renderChart(value, { responsive: true, maintainAspectRatio: false })
+    }
+  },
 }
 
 </script>
