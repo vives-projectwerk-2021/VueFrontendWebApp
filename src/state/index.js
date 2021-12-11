@@ -18,6 +18,8 @@ export const store = new Vuex.Store({
         devicenameText: "Invalid Device Name: Can only be letters, numbers, underscores or dashes.",
         deviceLatText: "Invalid Latitude! (-180 to 180)",
         deviceLongText: "Invalid Longitude! (-90 to 90)",
+
+        latlng: undefined,
     },
 
     getters: {
@@ -57,6 +59,9 @@ export const store = new Vuex.Store({
         },
         setDevice(state, device) {
             state.activeDevice = device
+        },
+        setLatLng(state, payload) {
+            state.latlng = payload
         }
 
     },
@@ -132,6 +137,9 @@ export const store = new Vuex.Store({
         },
         deviceListener(store, device) {
             this.commit('setDevice', device)
+        },
+        updatelatlng(store, payload) {
+            this.commit('setLatLng', payload)
         }
 
     }
