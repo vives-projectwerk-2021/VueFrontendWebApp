@@ -28,6 +28,7 @@ import { QrcodeStream } from 'vue-qrcode-reader';
         methods: {
             onDecode (result) {
                 this.result = result;
+                window.location.href = this.result;
                 
             },
 
