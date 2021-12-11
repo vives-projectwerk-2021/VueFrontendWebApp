@@ -116,6 +116,8 @@ export default {
       handler: function(nv) {
         if(nv){
           this.cards[0].subtitle = nv.length;
+          
+          this.getCountries(nv)
         }
         
       },
@@ -129,6 +131,26 @@ export default {
         this.cards[2].subtitle=members.data.length
       })
       
+    },
+    getCountries(arr){
+
+      let countries=[];
+
+      arr.forEach(sensor => {
+
+        let country=sensor.location.place_name.split(", ")
+        country=country[country.length-1]
+
+        if(countries.indexOf(country) < 0) {
+            countries.push(country) 
+        }
+
+      });
+
+      console.log(countries)
+
+      this.cards[1].subtitle=countries.length
+
     }
   },
   created(){
