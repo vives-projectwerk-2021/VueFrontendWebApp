@@ -94,7 +94,7 @@ export default {
         {
           id: 0,
           title: "Active sensors",
-          subtitle: "2"
+          subtitle: "loading"
         },
         {
           id: 1,
@@ -108,6 +108,17 @@ export default {
         }
       ]
       
+    }
+  },
+  watch: {
+    "$store.state.devicelist": {
+      handler: function(nv) {
+        if(nv){
+          this.cards[0].subtitle = nv.length;
+        }
+        
+      },
+      immediate: true // provides initial (not changed yet) state
     }
   }
 }

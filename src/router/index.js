@@ -6,8 +6,11 @@ import Sensors from '@/views/Sensors'
 import AddSensor from '@/views/AddSensor'
 import SensorPub from '@/views/SensorPub'
 import Sensor from '@/views/Sensor'
+<<<<<<< HEAD
 import Map from '@/views/Map'
 import QRScanner from '@/views/QR-scanner'
+=======
+>>>>>>> main
 
 
 Vue.use(VueRouter)
@@ -48,16 +51,10 @@ const routes = [
     component: Sensor
   },
   {
-    path: '/map',
-    name: 'Map',
-    component: Map
-  },
-  {
     path: '/qr-scanner',
     name: 'QR-scanner',
     component: QRScanner
   }
-
 ]
 
 const router = new VueRouter({
