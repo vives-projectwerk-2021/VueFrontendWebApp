@@ -46,7 +46,6 @@
       :dataset="level4Values"
       :options="chartOptions" />
     </div>
-
   </div>
 </template>
 
@@ -75,20 +74,31 @@ export default {
     }
   },
   created(){
-    this.$store.dispatch("getSensorById", this.deviceId)
-    this.$store.dispatch("deviceListener" , this.deviceId)
-    if (this.$store.state.wsReadyState != 1) {
-      setTimeout(() => {
-        this.retryWsConnection()
+    this.$store.dispatch("getAllSensors")
+    if(this.devicelist.find(x => x.deviceid === this.deviceId)) {
+      this.$store.dispatch("getSensorById", this.deviceId)
+      this.$store.dispatch("deviceListener" , this.deviceId)
+      if (this.$store.state.wsReadyState != 1) {
+        setTimeout(() => {
+          this.retryWsConnection()
+          this.loadingWS = false
+        }, 1000)
+      } else {
         this.loadingWS = false
-      }, 1000)
-    } else {
-      this.loadingWS = false
+      }
     }
+    else {
+      this.$store.dispatch("updateDeviceId", this.deviceId);
+      this.$router.push({ name: 'AddSensor'})
+    }
+    
   },
   computed:{
     devicevalues() {
       return this.$store.getters.devicevalues
+    },
+    devicelist() {
+      return this.$store.getters.devicelist
     },
     liveDeviceValues() {
       return this.$store.state.liveDeviceValues

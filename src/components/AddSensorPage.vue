@@ -191,7 +191,6 @@ export default {
   data() {
     
     return {
-      deviceid: "",
       devicename: "",
       longitude: "",
       latitude: "",
@@ -313,6 +312,9 @@ export default {
     deviceLongText() {
       return this.$store.state.deviceLongText;
     },
+    deviceid() {
+      return this.$store.getters.deviceid
+    },
   },
   watch: {
     deviceid() {
@@ -340,6 +342,6 @@ export default {
       },
       immediate: true // provides initial (not changed yet) state
     }
-  },
+  }
 };
 </script>

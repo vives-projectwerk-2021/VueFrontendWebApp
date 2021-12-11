@@ -11,6 +11,7 @@ export const store = new Vuex.Store({
         liveDeviceValues: {},
         devicelist: [],
         devicevalues: {},
+        deviceid: "",
         activeDevice: "",
 
         snackbarText: "",
@@ -31,6 +32,11 @@ export const store = new Vuex.Store({
         devicelist(state)
         {
             return state.devicelist
+        },
+        
+        deviceid(state) 
+        {
+            return state.deviceid
         }
     },
 
@@ -62,6 +68,9 @@ export const store = new Vuex.Store({
         },
         setLatLng(state, payload) {
             state.latlng = payload
+        },
+        setDeviceId(state, payload) {
+            state.deviceid = payload
         }
 
     },
@@ -140,6 +149,9 @@ export const store = new Vuex.Store({
         },
         updatelatlng(store, payload) {
             this.commit('setLatLng', payload)
+        },
+        updateDeviceId(store, payload) {
+            this.commit('setDeviceId', payload)
         }
 
     }
