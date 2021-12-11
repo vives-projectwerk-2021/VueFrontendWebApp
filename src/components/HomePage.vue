@@ -55,6 +55,7 @@
 <script>
 // @ is an alias to /src
 import MapPage from "@/components/MapPage.vue"
+import axios from "axios"
 
 export default {
   name: 'Home',
@@ -120,6 +121,18 @@ export default {
       },
       immediate: true // provides initial (not changed yet) state
     }
+  },
+  methods:{
+    getMembers(){
+      axios.get("https://api.github.com/orgs/vives-projectwerk-2021/members")
+      .then((members)=>{
+        this.cards[2].subtitle=members.data.length
+      })
+      
+    }
+  },
+  created(){
+    this.getMembers()
   }
 }
 </script>
