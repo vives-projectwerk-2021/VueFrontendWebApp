@@ -2,8 +2,8 @@
   <div>
     <v-container>
       <v-row justify="center">
-        <v-col cols="12" md="9">
-          <p class="text-h1">About us</p>
+        <v-col cols="12" md="9" >
+          <p class="text-h2">About us</p>
           <v-divider class="mb-6"></v-divider>
           <v-img
             src="../assets/rsz_img_20211206_174236.jpg"
@@ -12,24 +12,20 @@
           ></v-img>
         </v-col>
 
-        <v-col cols="10" md="9">
+        <v-col cols="12" md="9">
           
           
-          <p class="text-h5">
+          <p class="text-h5 pb-15">
             We are a team of 21 students, all in our last year, studying ICT at
             Vives in Bruges. We are going to use our expertise and what we've
             learned over the years in this all-round group project.
           </p>
-          <p class="text-h2">About the project</p>
+          <p class="text-h2 text-right pt-15">About the project</p>
           <v-divider></v-divider>
-          <p class="text-h5">
+          <p class="text-h5 pb-15" >
             Our goal is to build a functioning moist sensor network with easy
             implementation to add sensors on the go and by whoever wants or
             needs it.
-          </p>
-          <p class="text-h5">
-            We got split into 4 groups, being: DevOps,Hardware,Software and
-            Firmware.
           </p>
         </v-col>
         <v-col cols="8" md="4"> </v-col>
@@ -69,9 +65,12 @@
       </v-row>
 
       <v-row justify="center">
-        <v-col cols="12" md="9">
-          <p id="DevOps" class="text-h2 mt-12 mb-0">Hardware</p>
+        <v-col cols="8" md="2">
         </v-col>
+        <v-col cols="10" md="6">
+          <p id="DevOps" class="text-h2 mt-12 mb-0 text-center ml-n4">Hardware</p>
+        </v-col>
+
         <v-col cols="12" md="9">
           <v-divider></v-divider>
         </v-col>
@@ -135,8 +134,10 @@
       </v-row>
 
       <v-row justify="center" cols="8">
-        <v-col cols="12" md="9">
-          <p id="DevOps" class="text-h2 mt-12 mb-0">Firmware</p>
+        <v-col cols="8" md="2">
+        </v-col>
+        <v-col cols="12" md="6">
+          <p id="DevOps" class="text-h2 mt-12 mb-0 text-center ml-n4">Firmware</p>
         </v-col>
         <v-col cols="12" md="9">
           <v-divider></v-divider>
