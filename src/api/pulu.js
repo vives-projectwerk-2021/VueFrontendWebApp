@@ -28,6 +28,7 @@ const Sensors = {
     get_members(){
         console.log("Getting members");
         return api.get(`/members`)
+    }
 
     delete_sensor(id) {
         console.log("Delete sensor with id:" + id);
