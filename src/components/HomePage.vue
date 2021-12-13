@@ -55,7 +55,7 @@
 <script>
 // @ is an alias to /src
 import MapPage from "@/components/MapPage.vue"
-import axios from "axios"
+
 
 export default {
   name: 'Home',
@@ -105,7 +105,7 @@ export default {
         {
           id: 3,
           title: "Project developers",
-          subtitle: "24"
+          subtitle: "0"
         }
       ]
       
@@ -122,14 +122,22 @@ export default {
         
       },
       immediate: true // provides initial (not changed yet) state
+    },
+    "$store.state.members":{
+      handler:function(amount){
+        if(amount){
+          this.cards[2].subtitle=amount.members
+
+          console.log(amount.members)
+        }
+        
+      }
     }
   },
   methods:{
-    getMembers(){
-      axios.get("https://api.github.com/orgs/vives-projectwerk-2021/members")
-      .then((members)=>{
-        this.cards[2].subtitle=members.data.length
-      })
+    async getMembers(){
+      this.$store.dispatch('getMembers');
+      
       
     },
     getCountries(arr){

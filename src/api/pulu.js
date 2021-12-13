@@ -22,6 +22,11 @@ const Sensors = {
     add_sensor(json){
         console.log("Post new sensor");
         return api.post(`/${this.resource}`, json);
+    },
+
+    get_members(){
+        console.log("Getting members");
+        return api.get(`/members`)
     }
 }
 

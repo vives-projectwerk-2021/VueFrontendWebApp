@@ -13,6 +13,8 @@ export const store = new Vuex.Store({
         devicevalues: {},
         activeDevice: "",
 
+        members:22,
+
         snackbarText: "",
         deviceidText: "Invalid Device ID: Can only be a hexadecimal value.",
         devicenameText: "Invalid Device Name: Can only be letters, numbers, underscores or dashes.",
@@ -62,6 +64,9 @@ export const store = new Vuex.Store({
         },
         setLatLng(state, payload) {
             state.latlng = payload
+        },
+        changeMembers(state,payload){
+            state.members=payload
         }
 
     },
@@ -89,6 +94,18 @@ export const store = new Vuex.Store({
             } catch (err){
                 console.log(`Can't connect to WebSocket ${Vue.prototype.$VUE_APP_WS}`)
             }
+        },
+
+        getMembers({commit}){
+            return Sensors.get_members()
+            .then((response)=>{
+                
+
+                commit('changeMembers',{
+                    members:response.data
+                })
+                this.members=response.data
+            }).catch((error)=>console.log(error))
         },
 
         getAllSensors({commit} ){
