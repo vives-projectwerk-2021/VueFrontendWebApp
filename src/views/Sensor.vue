@@ -58,7 +58,6 @@
       <line-chart
         v-if="devicevalues.values"
         :dataset="dataForChart"
-        :options="chartOptions"
       />
       <p>{{dataForChart}}</p>
     </div>
@@ -80,11 +79,6 @@ export default {
       dropdownItems: ["moisture","airTemperature","groundTemperature",],
       loadingWS: true,
       deviceId: this.$route.params.deviceId,
-      chartOptions: {
-        backgroundColor: "transparent",
-        borderColor: "red",
-        pointBackgroundColor: "black",
-      },
     };
   },
   created() {
@@ -101,29 +95,7 @@ export default {
   },
   computed: {
     devicevalues() {
-      //return this.$store.getters.devicevalues
-
-      return {
-        id: "270918480",
-        name: "boer",
-        location: "westlekeboarigem",
-        values: [
-          {
-            time: "1",
-            moisture: [{ value: 123, depth: -20 }],
-            temperature: { air: "2", ground: "3" },
-            light: "4",
-            battery_voltage: "5",
-          },
-          {
-            time: "2",
-            moisture: [{ value: 124, depth: -20 }],
-            temperature: { air: "10", ground: "24" },
-            light: "12",
-            battery_voltage: "303",
-          },
-        ],
-      };
+      return this.$store.getters.devicevalues
     },
     liveDeviceValues() {
       return this.$store.state.liveDeviceValues;

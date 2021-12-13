@@ -31,9 +31,9 @@ export default {
         return {
           label: this.dataset.label[labelIndex],
           data: values,
-          backgroundColor: this.options.backgroundColor,
+          backgroundColor: "transparent",
           borderColor: `#${Math.floor(Math.random()*16777215).toString(16)}`,
-          pointBackgroundColor: this.options.pointBackgroundColor
+          pointBackgroundColor: "black"
         }
       })
       return { labels: this.dataset.labels, datasets: datasets }
