@@ -38,7 +38,7 @@
           <v-btn
             color="primary"
             text
-            @click="connectToSerial"
+            @click="getDeviceId"
           >
             Proceed
           </v-btn>
@@ -54,59 +54,29 @@ export default {
   data(){
     return {
       serialPort: undefined,
-      device_id: "",
       dialog: false
     }
   },
   methods: {
-    connectToSerial() {
+    async getDeviceId() {
       this.dialog = false
-      navigator.serial.requestPort()
-      .then(async (port) => {   // Open serial port
-        this.serialPort = port
-        if (!this.serialPort.readable){
-          await this.serialPort.open({ baudRate: 115200 });
-        }
-      })
-      .then( async () => {       // Write "aWQ=" to serial port
-        const encoder = new TextEncoder();
-        const writer = this.serialPort.writable.getWriter();
-        await writer.write(encoder.encode("aWQ="));
-        writer.releaseLock();
-      })
-      .then( async () => {      // Read and decode the response
-        const encodedId = await this.read()
-        const buffer = Buffer.from(encodedId, 'base64')
-        this.device_id = buffer.toString('hex');
-        console.log("Device-id: " + this.device_id)
-        this.$emit('deviceId', this.device_id)
+      await this.$store.dispatch("serial/openSerialPort")
+      .then( async () => {      // Read the response
+        this.serialWriter("aWQ=")
+        const device_Id = await this.$store.dispatch("serial/readSerialPort", 16)
+        console.log("Device-id: " + device_Id)
+        this.$emit('deviceId', device_Id)
       })
       .catch((error) => {
         console.log(error)
       });
     },
-    async read() {
-      let text = ""
-      while (text.length <= 16 && this.serialPort.readable) {
-        let reader = this.serialPort.readable.getReader();
-        try {
-          while (text.length <= 16) {
-            let { value, done } = await reader.read();
-            if (done) {
-              break;
-            }
-            const part = new TextDecoder().decode(value)
-            text += part
-          }
-        } catch (error) {
-          console.log(error)
-        } finally {
-          reader.releaseLock();
-        }
-      }
-      await this.serialPort.close();
-      return text
-    },
+    async serialWriter(str) {
+      const encoder = new TextEncoder();
+      const writer = this.$store.state.serial.serialPort.writable.getWriter();
+      await writer.write(encoder.encode(str));
+      writer.releaseLock();
+    }
   }
 }
 </script>
