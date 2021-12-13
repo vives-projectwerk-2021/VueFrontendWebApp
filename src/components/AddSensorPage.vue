@@ -6,6 +6,11 @@
           <p class="text-h2 text-center">Add a Sensor</p>
         </v-col>
       </v-row>
+      <v-row>
+        <v-col>
+          <p class="text-center">On this page you can add a Sensor</p>
+        </v-col>
+      </v-row>
       <v-divider />
       <v-form ref="form" v-model="valid" class="mx-4">
         <v-row>
@@ -45,112 +50,50 @@
           </v-col>
         </v-row>
 
-        <v-row class="mt-4">
-          <v-col class="pb-0">
-            <p class="text-subtitle-1 text-center my-0">
-              Add the location of the sensor
-            </p>
-          </v-col>
-        </v-row>
-
         <v-row>
           <v-col>
             <v-text-field
               class="py-4"
               outlined
-              readonly
-              disabled
               dense
               hide-details="auto"
-              v-model="latitude"
+              v-model="lat"
               label="Latitude"
               prepend-inner-icon="mdi-map-marker"
+              @keydown.enter="Locationedit"
+              @blur="Locationedit"
               :rules="[rules.required, rules.latValidator]"
             ></v-text-field>
           </v-col>
+
+
           <v-col>
             <v-text-field
               class="py-4"
               outlined
-              readonly
-              disabled
               dense
               hide-details="auto"
-              v-model="longitude"
+              v-model="long"
               label="Longitude"
               prepend-inner-icon="mdi-map-marker"
+              @blur="Locationedit"
+              @keydown.enter="Locationedit"
               :rules="[rules.required, rules.longValidator]"
             ></v-text-field>
           </v-col>
+          <v-col md="auto" class="d-flex align-center">
+            <v-btn @click="UseGPS"  class=" mx-auto">Use GPS</v-btn>
+          </v-col>
+
         </v-row>
+
+
+        <location-by-map></location-by-map>
+
 
         <v-row class="text-center mb-3">
           <v-col class="py-0">
-            <v-expansion-panels>
-              <v-expansion-panel>
-                <v-expansion-panel-header disable-icon-rotate>
-                  With QR code
-                  <template v-slot:actions>
-                    <v-icon> mdi-qrcode-scan </v-icon>
-                  </template>
-                </v-expansion-panel-header>
-                <v-expansion-panel-content>
-                  QR-CODE-SCANNER (Coming soon!)
-                </v-expansion-panel-content>
-              </v-expansion-panel>
-
-              <v-expansion-panel class="expanel" @click="onExpansionPanelClick">
-                <v-expansion-panel-header disable-icon-rotate>
-                  With map
-                  <template v-slot:actions>
-                    <v-icon> mdi-map </v-icon>
-                  </template>
-                </v-expansion-panel-header>
-                <v-expansion-panel-content>
-                  <location-by-map v-if="mapOpen == true"></location-by-map>
-                </v-expansion-panel-content>
-              </v-expansion-panel>
-
-              <v-expansion-panel>
-                <v-expansion-panel-header disable-icon-rotate>
-                  Manual input
-                  <template v-slot:actions>
-                    <v-icon> mdi-pen </v-icon>
-                  </template>
-                </v-expansion-panel-header>
-                <v-expansion-panel-content>
-                  <v-row>
-                    <v-col>
-                      <v-text-field
-                        class="py-4"
-                        outlined
-                        dense
-                        hide-details="auto"
-                        v-model="lat"
-                        label="Latitude"
-                        prepend-inner-icon="mdi-map-marker"
-                        :rules="[rules.latValidator]"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col>
-                      <v-text-field
-                        class="py-4"
-                        outlined
-                        dense
-                        hide-details="auto"
-                        v-model="long"
-                        label="Longitude"
-                        prepend-inner-icon="mdi-map-marker"
-                        :rules="[rules.longValidator]"
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-                  <v-row>
-                    <v-btn @click="UseGPS" class="mt-4 mx-4">Use GPS</v-btn>
-                  </v-row>
-                </v-expansion-panel-content>
-              </v-expansion-panel>
-            </v-expansion-panels>
+            
           </v-col>
         </v-row>
       </v-form>
@@ -193,8 +136,6 @@ export default {
     return {
       deviceid: "",
       devicename: "",
-      longitude: "",
-      latitude: "",
 
       long: "",
       lat: "",
@@ -202,7 +143,6 @@ export default {
 
       valid: true,
       snackbar: false,
-      mapOpen: false,
 
       rules: {
         required: (value) => !!value || "Required.",
@@ -244,7 +184,7 @@ export default {
 
       // get location place name "place_name"
       
-      Map.reverse_geolocation(this.latitude, this.longitude)
+      Map.reverse_geolocation(this.lat, this.long)
       .then((res) => {
         if(res.data.features.length != 0) {
           this.placeName = res.data.features[0].place_name
@@ -256,8 +196,8 @@ export default {
             deviceid: this.deviceid.toLowerCase(),
             devicename: this.devicename,
             location: {
-              lat: this.latitude,
-              long: this.longitude,
+              lat: this.lat,
+              long: this.long,
               place_name: this.placeName
             },
           };
@@ -286,18 +226,18 @@ export default {
     showPosition(position) {
       this.lat= position.coords.latitude
       this.long= position.coords.longitude
+      this.Locationedit()
 
     },
-    onExpansionPanelClick(event) {
-      if(event.target.classList.contains('v-expansion-panel-header--active')) {
-        this.mapOpen = false
-      } else {
-        setTimeout(() => {  this.mapOpen = true }, 100);
-        if(this.latitude && this.longitude){
-          this.$store.dispatch("updatelatlng",{lat: this.latitude ,lng: this.longitude} )
-        }
-      }
+    FormatLatLong(){
+      this.lat = Number(this.lat).toFixed(7);
+      this.long = Number(this.long).toFixed(7);
+    },
+    Locationedit() {
+      this.$store.dispatch("updatelatlng",{lat: this.lat ,lng: this.long} )
+      this.FormatLatLong()
     }
+    
   },
   computed: {
     snackbarText() {
@@ -322,21 +262,12 @@ export default {
         this.deviceid = this.deviceid.replace(/\s+/g, "");
       });
     },
-    long() {
-      this.$nextTick(() => {
-        this.longitude = Number(this.long).toFixed(7);
-      });
-    },
-    lat() {
-      this.$nextTick(() => {
-        this.latitude = Number(this.lat).toFixed(7);
-      });
-    },
      "$store.state.latlng": {
       handler: function(nv) {
         if(nv){
           this.lat = String(nv.lat);
           this.long = String(nv.lng);
+          this.FormatLatLong()
         }
         
       },
