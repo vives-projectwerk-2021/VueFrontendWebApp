@@ -32,6 +32,12 @@
         :value="liveValues.sensors.light.value"
         unit="Lumens">
       </SensorValueCard>
+      <SensorValueCard
+        class="ma-1"
+        sensor="🔋 Battery level"
+        :value="liveValues.sensors.voltage.battery.value"
+        unit="%">
+      </SensorValueCard>
     </div>
   </div>
 </template>
