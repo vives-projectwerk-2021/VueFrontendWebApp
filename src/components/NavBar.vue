@@ -9,7 +9,6 @@
       flat
       color="grey darken-3"
       elevate-on-scroll
-      style="z-index: 10000"
       dark
     >
       <v-row>
@@ -62,7 +61,6 @@
       flat
       class="hidden-xs-only"
       elevate-on-scroll
-      style="z-index: 10000"
       dark
     >
       <v-container class="py-0 fill-height">

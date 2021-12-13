@@ -3,7 +3,7 @@
     <v-container>
       <p class="mb-0">💧 Moisture</p>
       <p class="mb-0">{{level}}</p>
-      <div class="mx-auto d-flex justify-center">
+      <div class="mx-auto d-flex justify-center" v-if="percentage">
         <Progress
           :transitionDuration="0"
           :radius="50"
