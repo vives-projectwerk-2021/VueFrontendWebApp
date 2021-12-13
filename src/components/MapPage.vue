@@ -8,8 +8,8 @@
 //import mapState from "vuex"
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { Icon } from 'leaflet';
-import { config } from '@/config.js'
+import { Icon } from "leaflet";
+import { config } from "@/config.js";
 export default {
   name: "Map",
   data() {
@@ -17,11 +17,15 @@ export default {
       center: [51.209348, 3.2246995],
       data: [],
       map: null,
-      loaded: false
+      loaded: false,
+      icon: [],
+      anchor: [],
+      currentZoom: null,
+      manIcon: "",
     };
   },
   methods: {
-    setupLeafletMap () {
+    setupLeafletMap() {
       this.map = L.map("mapContainer").setView(this.center, 14);
       L.tileLayer(
         "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
@@ -34,21 +38,40 @@ export default {
 
       delete Icon.Default.prototype._getIconUrl;
       Icon.Default.mergeOptions({
-        iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-        iconUrl: require('leaflet/dist/images/marker-icon.png'),
-        shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+        iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+        iconUrl: require("leaflet/dist/images/marker-icon.png"),
+        shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
       });
+
+      if (this.currentZoom > 9) {
+        this.refreshLivemarker();
+        this.icon = [16, 26];
+        this.anchor = [8, 25];
+      } else {
+        this.refreshLivemarker();
+        this.icon = [30, 50];
+        this.anchor = [15, 49];
+      }
 
       var LeafIcon = L.Icon.extend({
         options: {
-          iconSize: [50, 50],
+          iconSize: this.icon,
+          iconAnchor: this.anchor,
         },
       });
 
-      var manIcon = new LeafIcon({
+      this.manIcon = new LeafIcon({
         iconUrl: "img/map-man-marker.png",
       });
 
+      this.map.on("zoomend", () => {
+        this.currentZoom = this.map.getZoom();
+        console.log(this.currentZoom);
+      });
+
+      this.addPoints();
+    },
+    refreshLivemarker() {
       var liveMarker;
       this.map
         .locate({
@@ -57,7 +80,7 @@ export default {
         })
         .on("locationfound", (e) => {
           if (!liveMarker) {
-            liveMarker = new L.marker(e.latlng, { icon: manIcon }).addTo(
+            liveMarker = new L.marker(e.latlng, { icon: this.manIcon }).addTo(
               this.map
             );
           } else {
@@ -65,30 +88,29 @@ export default {
           }
           liveMarker.bindTooltip("You are here.");
         });
-
-      
-      this.addPoints()
-      
     },
-    async addPoints(){
-      await this.$store.dispatch('getAllSensors')
-      var markerarray = []; 
-      this.$store.getters.devicelist.forEach(device =>{
-        if(device.location.lat && device.location.long){
-          const marker = (L.marker([device.location.lat, device.location.long]).addTo(this.map))
-                   .bindTooltip(device.devicename)
-                   .bindPopup(`<b>${device.devicename}</b><br><a href="${window.location.href}sensors/${device.deviceid}">See sensor data</a>`)
-          
-          markerarray.push(marker)
+    async addPoints() {
+      await this.$store.dispatch("getAllSensors");
+      var markerarray = [];
+      this.$store.getters.devicelist.forEach((device) => {
+        if (device.location.lat && device.location.long) {
+          const marker = L.marker([device.location.lat, device.location.long])
+            .addTo(this.map)
+            .bindTooltip(device.devicename)
+            .bindPopup(
+              `<b>${device.devicename}</b><br><a href="${window.location.href}sensors/${device.deviceid}">See sensor data</a>`
+            );
 
+          markerarray.push(marker);
         }
-      }) 
-      this.map.fitBounds(L.latLngBounds(markerarray.map(marker => marker.getLatLng())))
-    
-    }
+      });
+      this.map.fitBounds(
+        L.latLngBounds(markerarray.map((marker) => marker.getLatLng()))
+      );
+    },
   },
   mounted() {
-    this.setupLeafletMap()
+    this.setupLeafletMap();
   },
 };
 </script>
