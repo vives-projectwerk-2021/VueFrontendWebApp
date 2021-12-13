@@ -17,7 +17,7 @@
         <v-col cols="12" md="9">
           
           
-          <p class="text-h5 pb-15 text-justify">
+          <p class="text-h5 pb-15 text-justify" dark>
             We are a team of 21 students, all in our last year, studying ICT- at
             Vives in Bruges. We used our expertise and what we have
             learned over the years in this all-round group project.
