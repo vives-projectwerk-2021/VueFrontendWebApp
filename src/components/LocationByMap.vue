@@ -42,6 +42,7 @@ export default {
       });
       
       this.monitorClick()
+      
     },
     monitorClick(){
         this.map.on('click', (e)=> {
@@ -54,8 +55,17 @@ export default {
             }
             this.$store.dispatch("updatelatlng", e.latlng)
         });
-    }
+    },
+    monitorDrag(){
+      this.pin.on('dragend', (e)=> {
+        var marker = e.target;  // you could also simply access the marker through the closure
+        var result = marker.getLatLng(); 
+        this.$store.dispatch("updatelatlng", result)
+
+      });
+    },
   },
+  
   mounted() {
     this.setupLeafletMap()
   },
@@ -73,6 +83,7 @@ export default {
             this.pin.addTo(this.map);
           }
           this.map.panTo(nv)
+          this.monitorDrag()
 
         }
         
