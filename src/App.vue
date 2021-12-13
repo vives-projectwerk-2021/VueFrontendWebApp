@@ -2,7 +2,7 @@
   <v-app id="Pulu App">
     <nav-bar />
 
-    <v-main class="grey darken-4">
+    <v-main class="grey darken-3">
       <v-container>
         <v-row>
           <v-col>

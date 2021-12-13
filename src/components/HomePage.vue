@@ -8,7 +8,7 @@
     <v-divider dark></v-divider>
     <br>
     <div>
-      <v-sheet dark align="center" color="grey darken-4">
+      <v-sheet dark align="center" color="grey darken-3">
         <p class="text-h4">
           Pulu gives an overview of the current groundwater levels in Flanders.
         </p>
@@ -41,7 +41,8 @@
     <v-row class="d-flex justify-space-around pb-5">
       <v-card
         v-for="card in cards" :key="card.id"
-        color="green lighten-3"
+        color="green darken-3"
+        dark
         tile
         width="250px"
         height="200px"

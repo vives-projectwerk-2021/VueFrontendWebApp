@@ -7,13 +7,14 @@
       app
       class="pa-0 hidden-sm-and-up"
       flat
-      color="grey darken-4"
+      color="grey darken-3"
       elevate-on-scroll
       style="z-index: 10000"
+      dark
     >
       <v-row>
         <v-col class="px-0">
-          <v-card fill-height flat rounded="false" color="green lighten-2">
+          <v-card fill-height flat rounded="false" color="green darken-3">
             <v-card-title class="py-0">
               <v-btn :to="{ name: 'Home' }" class="text-h5" depressed plain
                 >Pulu</v-btn
@@ -57,11 +58,12 @@
 
     <v-app-bar
       app
-      color="green lighten-2"
+      color="green darken-3"
       flat
       class="hidden-xs-only"
       elevate-on-scroll
       style="z-index: 10000"
+      dark
     >
       <v-container class="py-0 fill-height">
         <v-btn
