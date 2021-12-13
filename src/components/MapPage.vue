@@ -66,6 +66,7 @@ export default {
           }
           liveMarker.bindTooltip("You are here.");
           this.markerarray.push(liveMarker)
+          this.map.fitBounds(L.latLngBounds(this.markerarray.map(marker => marker.getLatLng())))
         });
 
       
