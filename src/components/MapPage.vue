@@ -1,6 +1,6 @@
 <template>
   <div id="container">
-    <div id="mapContainer" class="mx-1"></div>
+    <div id="mapContainer" class="mx-1;"></div>
   </div>
 </template>
 
@@ -66,6 +66,7 @@ export default {
           }
           liveMarker.bindTooltip("You are here.");
           this.markerarray.push(liveMarker)
+          this.map.fitBounds(L.latLngBounds(this.markerarray.map(marker => marker.getLatLng())))
         });
 
       
@@ -97,5 +98,6 @@ export default {
 <style>
 #mapContainer {
   height: 70vh;
+  z-index: 0;
 }
 </style>

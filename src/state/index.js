@@ -1,5 +1,6 @@
 import Vuex from "vuex"
 import Vue from "vue"
+import router from '../router'
 import { Sensors } from "@/api/pulu"
 import serial from "./modules/serial/index"
 import websocket from "./modules/websocket/index"
@@ -98,6 +99,7 @@ export const store = new Vuex.Store({
                   this.commit('addSensor', `The device with deviceid: ${payload.deviceid} already exists`)
                 } else {
                   this.commit('addSensor', `The device: ${payload.devicename} have been created!`)
+                  router.push(`/sensors/${payload.deviceid}`)
                 }
               })
             .catch((err) => {

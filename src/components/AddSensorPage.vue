@@ -324,7 +324,9 @@ export default {
         this.mapOpen = false
       } else {
         setTimeout(() => {  this.mapOpen = true }, 100);
-        
+        if(this.latitude && this.longitude){
+          this.$store.dispatch("updatelatlng",{lat: this.latitude ,lng: this.longitude} )
+        }
       }
     }
   },
