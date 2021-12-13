@@ -5,7 +5,8 @@
             tile
             class="text-center"
             width="100%"
-            color="grey lighten-2"
+            color="grey darken-4"
+            dark
         >
         <v-card-text>
             <v-row class="py-1" justify="center" align="center">
@@ -40,7 +41,7 @@
         <v-divider></v-divider>
 
         <v-card-text>
-          {{ new Date().getFullYear() }} — <strong>Pulu</strong>
+          {{ new Date().getFullYear() }} — Pulu
         </v-card-text>
       </v-card>
     </v-footer>
