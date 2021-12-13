@@ -55,6 +55,7 @@
 <script>
 // @ is an alias to /src
 import MapPage from "@/components/MapPage.vue"
+import axios from "axios"
 
 export default {
   name: 'Home',
@@ -94,7 +95,7 @@ export default {
         {
           id: 0,
           title: "Active sensors",
-          subtitle: "2"
+          subtitle: "loading"
         },
         {
           id: 1,
@@ -109,6 +110,51 @@ export default {
       ]
       
     }
+  },
+  watch: {
+    "$store.state.devicelist": {
+      handler: function(nv) {
+        if(nv){
+          this.cards[0].subtitle = nv.length;
+          
+          this.getCountries(nv)
+        }
+        
+      },
+      immediate: true // provides initial (not changed yet) state
+    }
+  },
+  methods:{
+    getMembers(){
+      axios.get("https://api.github.com/orgs/vives-projectwerk-2021/members")
+      .then((members)=>{
+        this.cards[2].subtitle=members.data.length
+      })
+      
+    },
+    getCountries(arr){
+
+      let countries=[];
+
+      arr.forEach(sensor => {
+
+        let country=sensor.location.place_name.split(", ")
+        country=country[country.length-1]
+
+        if(countries.indexOf(country) < 0) {
+            countries.push(country) 
+        }
+
+      });
+
+      console.log(countries)
+
+      this.cards[1].subtitle=countries.length
+
+    }
+  },
+  created(){
+    this.getMembers()
   }
 }
 </script>
