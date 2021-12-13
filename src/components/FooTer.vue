@@ -3,9 +3,10 @@
         <v-card
             flat
             tile
+            dark
+            color="black"
             class="text-center"
             width="100%"
-            color="grey lighten-2"
         >
         <v-card-text>
             <v-row class="py-1" justify="center" align="center">

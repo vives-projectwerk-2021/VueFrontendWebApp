@@ -85,40 +85,24 @@
 
             <v-row class="text-center mb-3">
               <v-col class="py-0">
-                <v-expansion-panels flat>
+                <v-expansion-panels flat dark>
                   <v-expansion-panel>
                     <v-expansion-panel-header
                       disable-icon-rotate
-                      color="green lighten-5"
+                      color="grey darken-4"
                     >
                       With QR code
                       <template v-slot:actions>
                         <v-icon> mdi-qrcode-scan </v-icon>
                       </template>
                     </v-expansion-panel-header>
-                    <v-expansion-panel-content color="green lighten-5">
+                    <v-expansion-panel-content color="grey darken-4">
                       <v-row>
                         <v-col></v-col>
                       </v-row>
                     </v-expansion-panel-content>
                   </v-expansion-panel>
 
-<<<<<<< HEAD
-                  <v-expansion-panel
-                    @click="onExpansionPanelClick"
-                    color="green lighten-4"
-                  >
-                    <v-expansion-panel-header disable-icon-rotate>
-                      With map
-                      <template v-slot:actions>
-                        <v-icon> mdi-map </v-icon>
-                      </template>
-                    </v-expansion-panel-header>
-                    <v-expansion-panel-content color="green lighten-4">
-                      <location-by-map v-if="mapOpen == true"></location-by-map>
-                    </v-expansion-panel-content>
-                  </v-expansion-panel>
-=======
               <v-expansion-panel class="expanel" @click="onExpansionPanelClick">
                 <v-expansion-panel-header
                   disable-icon-rotate
@@ -133,19 +117,18 @@
                   <location-by-map v-if="mapOpen == true"></location-by-map>
                 </v-expansion-panel-content>
               </v-expansion-panel>
->>>>>>> 933dd71c8d03ed7f9190a03ff7a9759ad9a2debc
 
                   <v-expansion-panel>
                     <v-expansion-panel-header
                       disable-icon-rotate
-                      color="green lighten-5"
+                      color="grey darken-4"
                     >
                       Manual input
                       <template v-slot:actions>
                         <v-icon> mdi-pen </v-icon>
                       </template>
                     </v-expansion-panel-header>
-                    <v-expansion-panel-content color="green lighten-5">
+                    <v-expansion-panel-content color="grey darken-4">
                       <v-row>
                         <v-col cols="12" sm="6">
                           <v-text-field
@@ -172,7 +155,7 @@
                       </v-row>
                       <v-row>
                         <v-col>
-                          <v-btn @click="UseGPS">Use GPS</v-btn>
+                          <v-btn @click="UseGPS" color="green lighten-2">Use GPS</v-btn>
                         </v-col>
                       </v-row>
                     </v-expansion-panel-content>

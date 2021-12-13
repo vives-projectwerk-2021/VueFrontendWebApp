@@ -7,21 +7,21 @@
       app
       class="pa-0 hidden-sm-and-up"
       flat
-      color="white"
+      color="grey darken-4"
       elevate-on-scroll
       style="z-index: 10000"
     >
       <v-row>
         <v-col class="px-0">
-          <v-card fill-height flat rounded="false">
+          <v-card fill-height flat rounded="false" color="green lighten-2">
             <v-card-title class="py-0">
               <v-btn :to="{ name: 'Home' }" class="text-h5" depressed plain
                 >Pulu</v-btn
               >
               <v-spacer></v-spacer>
               <v-img
-                max-height="60"
-                max-width="60"
+                max-height="45"
+                max-width="45"
                 src="../assets/pulu.png"
               ></v-img>
 
@@ -57,7 +57,7 @@
 
     <v-app-bar
       app
-      color="white"
+      color="green lighten-2"
       flat
       class="hidden-xs-only"
       elevate-on-scroll
@@ -70,14 +70,19 @@
           :key="link"
           :to="{ name: link }"
           text
+          large
+          tile
+          outlined
+          class="ml-2"
         >
           {{ link }}
         </v-btn>
         <v-spacer></v-spacer>
       </v-container>
       <v-img
-        max-height="60"
-        max-width="60"
+
+        max-height="50"
+        max-width="50"
         justify="end"
         src="../assets/pulu.png"
       ></v-img>
