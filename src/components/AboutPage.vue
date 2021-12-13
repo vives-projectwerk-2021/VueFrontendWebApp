@@ -5,11 +5,13 @@
         <v-col cols="12" md="9" >
           <p class="text-h2">About us</p>
           <v-divider class="mb-6"></v-divider>
+           <v-card elevation="2" shaped>
           <v-img
             src="../assets/rsz_img_20211206_174236.jpg"
-            width="1300"
-            class="pa-4 secondary text-no-wrap rounded-xl"
+            height="350"
           ></v-img>
+            </v-card>
+
         </v-col>
 
         <v-col cols="12" md="9">
@@ -17,23 +19,34 @@
           
           <p class="text-h5 pb-15">
             We are a team of 21 students, all in our last year, studying ICT at
-            Vives in Bruges. We are going to use our expertise and what we've
+            Vives in Bruges. We used our expertise and what we have
             learned over the years in this all-round group project.
           </p>
           <p class="text-h2 text-right pt-15">About the project</p>
           <v-divider></v-divider>
+          <div class="text-center pb-2 pt-5">
+            <v-card elevation="2" shaped>
+              <v-img
+                src="../assets/20211213_154907.jpg"
+                height="350"
+              ></v-img>
+              <!-- All picture are under the creative common license -->
+            </v-card>
+          </div>
           <p class="text-h5 pb-15" >
-            Our goal is to build a functioning moist sensor network with easy
-            implementation to add sensors on the go and by whoever wants or
-            needs it.
+            We build an application, some prototypes and the firmware going with it. So everything that would be needed to scale this project up.
+            The idea is that everyone who needs a soil moisture sensor can use our opensource schematics to make their own hardware.
+            Then add a device to our user-friendly website, and you should be good to go. Data flows from your device directly to our site where you can see
+            all data that comes from your device. Even placed in interactive graphs and everything!
           </p>
+          
         </v-col>
         <v-col cols="8" md="4"> </v-col>
       </v-row>
 
       <v-row justify="center" class="flex-wrap">
         <v-col cols="12" md="9">
-          <p id="DevOps" class="text-h2 mt-12 mb-0">DevOps</p>
+          <p id="DevOps" class="text-h3 mt-12 mb-0">DevOps</p>
         </v-col>
         <v-col cols="12" md="9">
           <v-divider></v-divider>
@@ -68,7 +81,7 @@
         <v-col cols="8" md="2">
         </v-col>
         <v-col cols="10" md="6">
-          <p id="DevOps" class="text-h2 mt-12 mb-0 text-center ml-n4">Hardware</p>
+          <p id="DevOps" class="text-h3 mt-12 mb-0 text-right">Hardware</p>
         </v-col>
 
         <v-col cols="12" md="9">
@@ -102,7 +115,7 @@
 
       <v-row justify="center">
         <v-col cols="12" md="9">
-          <p class="text-h2 mt-12 mb-0">Software</p>
+          <p class="text-h3 mt-12 mb-0">Software</p>
         </v-col>
         <v-col cols="12" md="9">
           <v-divider></v-divider>
@@ -137,7 +150,7 @@
         <v-col cols="8" md="2">
         </v-col>
         <v-col cols="12" md="6">
-          <p id="DevOps" class="text-h2 mt-12 mb-0 text-center ml-n4">Firmware</p>
+          <p id="DevOps" class="text-h3 mt-12 mb-0 text-right">Firmware</p>
         </v-col>
         <v-col cols="12" md="9">
           <v-divider></v-divider>
