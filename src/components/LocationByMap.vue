@@ -59,6 +59,19 @@ export default {
   mounted() {
     this.setupLeafletMap()
   },
+  watch: {
+    "$store.state.latlng": {
+      handler: function(nv) {
+        if(nv){
+          this.pin.setLatLng(nv)
+          this.map.panTo(nv);        
+
+        }
+        
+      },
+      immediate: true // provides initial (not changed yet) state
+    }
+  },
 };
 </script>
 
