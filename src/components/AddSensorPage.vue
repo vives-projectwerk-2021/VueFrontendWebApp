@@ -178,8 +178,9 @@
 </template>
 
 <script>
-import SerialConnect from "@/components/SerialConnect.vue";
+import SerialConnect from '@/components/SerialConnect.vue'
 import LocationByMap from '@/components/LocationByMap.vue';
+import { TTN } from "@/api/pulu.js"
 import { Map } from "@/api/mapbox.js"
 
 export default {
@@ -236,6 +237,9 @@ export default {
           return pattern.test(value) || this.deviceLongText;
         },
       },
+
+      ttnInfo: {}
+
     };
   },
   methods: {
@@ -263,6 +267,7 @@ export default {
           };
 
           this.$store.dispatch("addSensor", json);
+          this.getTTNInfo()
         }
         this.snackbar = true;
       })
@@ -274,14 +279,40 @@ export default {
     updateDeviceId(id) {
       this.deviceid = id;
     },
+
+    getTTNInfo() {
+      TTN.registerDevice({
+        device_id: this.deviceid,
+        name: this.devicename
+      })
+      .then(async (res) => {
+        console.log(res.data)
+        const bytes =  res.data.ids.dev_eui + res.data.ids.join_eui 
+        + res.data.root_keys.app_key.key + "001E"
+        const buffer = Uint8Array.from(bytes.match(/(..)/g).map((b)=>'0x'+b))
+        const payload = Buffer.from(String.fromCharCode(...buffer), 'binary').toString('base64')
+        if(this.$store.state.serial.serialPort) {
+          this.serialWriter(payload)
+        } else {
+          console.log(payload)
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
+    async serialWriter(str) {
+      const encoder = new TextEncoder();
+      const writer = this.$store.state.serial.serialPort.writable.getWriter();
+      await writer.write(encoder.encode(str));
+      writer.releaseLock();
+    },
     UseGPS(){
       if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(this.showPosition)
       }else{
           console.log("error")
-      }
-
-            
+      }   
     },
     showPosition(position) {
       this.lat= position.coords.latitude
