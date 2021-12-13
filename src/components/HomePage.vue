@@ -5,10 +5,10 @@
     <MapPage/>
 
     <br>
-    <v-divider></v-divider>
+    <v-divider dark></v-divider>
     <br>
     <div>
-      <v-sheet align="center" border="" :style="{ background: activeColor3 }">
+      <v-sheet align="center" color="grey darken-3" dark :style="{ background: activeColor3 }">
         <p class="text-h4">
           Pulu gives an overview of the current groundwater levels in Flanders.
         </p>
@@ -19,7 +19,7 @@
     </div>
 
     <br>
-    <v-divider></v-divider>
+    <v-divider dark></v-divider>
     <br>
 
     <v-carousel cycle height="300px" hide-delimiter-background  :show-arrows="false" class="rounded-xl">
@@ -40,6 +40,8 @@
     <br>
     <v-row class="d-flex justify-space-around pb-5">
       <v-card
+        color="green darken-3"
+        dark
         v-for="card in cards" :key="card.id"
         width="250px"
         height="200px"
