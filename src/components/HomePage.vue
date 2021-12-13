@@ -39,17 +39,15 @@
     <v-divider></v-divider>
     <br>
     <v-row class="d-flex justify-space-around pb-5">
-        
-            <v-card
-                v-for="card in cards" :key="card.id"
-                width="200px"
-                height="200px"
-                :style="{ background: activeColor2 }"
-            >
-              <h2 class="ml-4 mt-4 font-weight-regular">{{ card.title }}</h2>
-              <p class="ml-5 mt-5 font-weight-black" :style="{ 'font-size': '30px' }" >{{ card.subtitle }}</p>
-            </v-card>
-        
+      <v-card
+        v-for="card in cards" :key="card.id"
+        width="250px"
+        height="200px"
+        :style="{ background: activeColor2 }"
+      >  
+        <h2 class="mt-4 font-weight-regular" style="text-align:center">{{ card.title }}</h2>
+        <p class="mt-5 font-weight-black" :style="{ 'font-size': '50px' }" style="text-align:center" >{{ card.subtitle }}</p>
+      </v-card>  
     </v-row>
   </div>
 </template>
@@ -57,6 +55,7 @@
 <script>
 // @ is an alias to /src
 import MapPage from "@/components/MapPage.vue"
+import axios from "axios"
 
 export default {
   name: 'Home',
@@ -95,8 +94,8 @@ export default {
       cards: [
         {
           id: 0,
-          title: "Active sensors Flanders",
-          subtitle: "1"
+          title: "Active sensors",
+          subtitle: "loading"
         },
         {
           id: 1,
@@ -106,11 +105,56 @@ export default {
         {
           id: 3,
           title: "Project developers",
-          subtitle: "..."
+          subtitle: "24"
         }
       ]
       
     }
+  },
+  watch: {
+    "$store.state.devicelist": {
+      handler: function(nv) {
+        if(nv){
+          this.cards[0].subtitle = nv.length;
+          
+          this.getCountries(nv)
+        }
+        
+      },
+      immediate: true // provides initial (not changed yet) state
+    }
+  },
+  methods:{
+    getMembers(){
+      axios.get("https://api.github.com/orgs/vives-projectwerk-2021/members")
+      .then((members)=>{
+        this.cards[2].subtitle=members.data.length
+      })
+      
+    },
+    getCountries(arr){
+
+      let countries=[];
+
+      arr.forEach(sensor => {
+
+        let country=sensor.location.place_name.split(", ")
+        country=country[country.length-1]
+
+        if(countries.indexOf(country) < 0) {
+            countries.push(country) 
+        }
+
+      });
+
+      console.log(countries)
+
+      this.cards[1].subtitle=countries.length
+
+    }
+  },
+  created(){
+    this.getMembers()
   }
 }
 </script>

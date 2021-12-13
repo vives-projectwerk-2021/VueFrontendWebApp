@@ -1,6 +1,6 @@
 <template>
   <div id="container">
-    <div id="mapContainer" class="mx-1"></div>
+    <div id="mapContainer" class="mx-1;"></div>
   </div>
 </template>
 
@@ -17,7 +17,8 @@ export default {
       center: [51.209348, 3.2246995],
       data: [],
       map: null,
-      loaded: false
+      loaded: false,
+      markerarray: [],
     };
   },
   methods: {
@@ -38,24 +39,53 @@ export default {
         iconUrl: require('leaflet/dist/images/marker-icon.png'),
         shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
       });
+
+      var LeafIcon = L.Icon.extend({
+        options: {
+          iconSize: [50, 50],
+        },
+      });
+
+      var manIcon = new LeafIcon({
+        iconUrl: "img/map-man-marker.png",
+      });
+
+      var liveMarker;
+      this.map
+        .locate({
+          setView: true,
+          maxZoom: 140,
+        })
+        .on("locationfound", (e) => {
+          if (!liveMarker) {
+            liveMarker = new L.marker(e.latlng, { icon: manIcon }).addTo(
+              this.map
+            );
+          } else {
+            liveMarker.setLatLng(e.latlng);
+          }
+          liveMarker.bindTooltip("You are here.");
+          this.markerarray.push(liveMarker)
+          this.map.fitBounds(L.latLngBounds(this.markerarray.map(marker => marker.getLatLng())))
+        });
+
       
       this.addPoints()
       
     },
     async addPoints(){
       await this.$store.dispatch('getAllSensors')
-      var markerarray = []; 
       this.$store.getters.devicelist.forEach(device =>{
         if(device.location.lat && device.location.long){
           const marker = (L.marker([device.location.lat, device.location.long]).addTo(this.map))
                    .bindTooltip(device.devicename)
-                   .bindPopup(`<b>${device.devicename}</b><br><a href="${window.location.href}sensors/${device.deviceid}">See sensor data</a>`)
+                   .bindPopup(`<b>${device.devicename}</b><br>${device.location.place_name}</b><br><a href="${window.location.href}sensors/${device.deviceid}">See sensor data</a>`)
           
-          markerarray.push(marker)
+          this.markerarray.push(marker)
 
         }
       }) 
-      this.map.fitBounds(L.latLngBounds(markerarray.map(marker => marker.getLatLng())))
+      this.map.fitBounds(L.latLngBounds(this.markerarray.map(marker => marker.getLatLng())))
     
     }
   },
@@ -68,5 +98,6 @@ export default {
 <style>
 #mapContainer {
   height: 70vh;
+  z-index: 0;
 }
 </style>
