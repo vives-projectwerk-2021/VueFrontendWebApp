@@ -56,7 +56,6 @@
       >
       </v-select>
       <line-chart v-if="devicevalues.values" :dataset="dataForChart" />
-      <p>{{ dataForChart }}</p>
     </div>
   </div>
 </template>
