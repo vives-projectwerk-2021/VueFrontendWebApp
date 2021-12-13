@@ -49,17 +49,14 @@
     </div>
     <div>
       <v-select
-      label="Choose Data"
-      :items="dropdownItems"
-      multiple
-      @change="dropdownSelect($event)"
+        label="Choose Data"
+        :items="dropdownItems"
+        multiple
+        @change="dropdownSelect($event)"
       >
       </v-select>
-      <line-chart
-        v-if="devicevalues.values"
-        :dataset="dataForChart"
-      />
-      <p>{{dataForChart}}</p>
+      <line-chart v-if="devicevalues.values" :dataset="dataForChart" />
+      <p>{{ dataForChart }}</p>
     </div>
   </div>
 </template>
@@ -76,7 +73,7 @@ export default {
   data() {
     return {
       selectedItems: [],
-      dropdownItems: ["moisture","airTemperature","groundTemperature",],
+      dropdownItems: ["moisture", "airTemperature", "groundTemperature"],
       loadingWS: true,
       deviceId: this.$route.params.deviceId,
     };
@@ -95,7 +92,7 @@ export default {
   },
   computed: {
     devicevalues() {
-      return this.$store.getters.devicevalues
+      return this.$store.getters.devicevalues;
     },
     liveDeviceValues() {
       return this.$store.state.liveDeviceValues;
@@ -105,11 +102,13 @@ export default {
     },
     dataForChart() {
       let values = this.devicevalues.values;
-
       let time,
         moisture,
         airTemperature,
         groundTemperature = 0;
+      if (values == undefined) {
+        return 0;
+      }
       time = values.map((values) => {
         return values.time;
       });
@@ -121,7 +120,6 @@ export default {
         .map((moisture) => {
           return moisture[0].value;
         });
-
       airTemperature = values.map((values) => {
         return values.temperature.air;
       });
@@ -129,44 +127,42 @@ export default {
       groundTemperature = values.map((values) => {
         return values.temperature.ground;
       });
-      
-      let yvalues = []
-      let xlabels = []
-      this.selectedItems.forEach((item)=> {
-        switch(item) {
+
+      let yvalues = [];
+      let xlabels = [];
+      this.selectedItems.forEach((item) => {
+        switch (item) {
           case "moisture":
-            yvalues.push(moisture)
-            xlabels.push(item)
-            break
+            yvalues.push(moisture);
+            xlabels.push(item);
+            break;
           case "airTemperature":
-            yvalues.push(airTemperature)
-            xlabels.push(item)
-            break
+            yvalues.push(airTemperature);
+            xlabels.push(item);
+            break;
           case "groundTemperature":
-            yvalues.push(groundTemperature)
-            xlabels.push(item)
-            break
+            yvalues.push(groundTemperature);
+            xlabels.push(item);
+            break;
         }
-        
-      })
+      });
 
       void (moisture, airTemperature, groundTemperature, time);
-      console.log(xlabels)
+      console.log(xlabels);
       return {
         label: xlabels,
         labels: time,
         values: yvalues,
       };
     },
-
   },
   methods: {
     retryWsConnection() {
       this.$store.dispatch("tryWsConnection");
     },
     dropdownSelect(event) {
-      this.selectedItems = event
-    }
+      this.selectedItems = event;
+    },
   },
 };
 </script>
