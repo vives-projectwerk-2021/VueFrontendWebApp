@@ -9,7 +9,6 @@
       flat
       color="white"
       elevate-on-scroll
-      style="z-index: 10000"
     >
       <v-row>
         <v-col class="px-0">
@@ -61,7 +60,6 @@
       flat
       class="hidden-xs-only"
       elevate-on-scroll
-      style="z-index: 10000"
     >
       <v-container class="py-0 fill-height">
         <v-btn
