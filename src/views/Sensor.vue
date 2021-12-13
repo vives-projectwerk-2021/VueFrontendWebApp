@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card class="my-3" elevation="5" v-if="devicevalues.id" >
+    <v-card class="my-3" elevation="5" v-if="devicevalues.id">
       <v-row>
         <v-col cols="9" class="py-0">
           <v-card-title>Device name: {{ devicevalues.name }}</v-card-title>

@@ -2,7 +2,7 @@
   <v-container>
     <v-row justify="center">
       <v-col sm="8" lg="6">
-        <v-card elevation="5" rounded="lg" color="green lighten-2" class="py-4">
+        <v-card elevation="5" rounded="lg" color="green darken-3" class="py-4" dark>
           <p class="px-2 text-h2 text-center">Add a Sensor</p>
 
           <v-divider />
@@ -106,14 +106,14 @@
               <v-expansion-panel class="expanel" @click="onExpansionPanelClick">
                 <v-expansion-panel-header
                   disable-icon-rotate
-                  color="green lighten-4"
+                  color="grey darken-3"
                 >
                   With map
                   <template v-slot:actions>
                     <v-icon> mdi-map </v-icon>
                   </template>
                 </v-expansion-panel-header>
-                <v-expansion-panel-content color="green lighten-4">
+                <v-expansion-panel-content color="grey darken-3">
                   <location-by-map v-if="mapOpen == true"></location-by-map>
                 </v-expansion-panel-content>
               </v-expansion-panel>

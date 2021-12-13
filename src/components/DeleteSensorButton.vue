@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn @click="showDialog" color="error" plain>Delete</v-btn>
+    <v-btn @click="showDialog" color="error" dark plain>Delete</v-btn>
     <v-dialog v-model="dialog" width="500">
       <v-card>
         <v-card-title>

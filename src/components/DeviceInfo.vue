@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-card class="mb-6" v-for="device in devicelist" :key="device.id" elevation="5" >
+        <v-card class="mb-6" v-for="device in devicelist" :key="device.id" elevation="5" color="green darken-3" dark>
             <v-card-title>{{ device.devicename }}</v-card-title>
             <v-card-text>device id: {{ device.deviceid }} </v-card-text>
             <v-card-text v-if="device.location.place_name">Location: {{ device.location.place_name }}</v-card-text>
@@ -10,7 +10,7 @@
                     See data
                 </v-btn>
                 <v-spacer />
-                <delete-sensor-button :sensorid="device.deviceid"/>
+                <delete-sensor-button :sensorid="device.deviceid" />
             </v-card-actions>
         </v-card>
     </div>
