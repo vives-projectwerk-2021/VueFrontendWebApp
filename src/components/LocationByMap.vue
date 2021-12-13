@@ -62,14 +62,21 @@ export default {
   watch: {
     "$store.state.latlng": {
       handler: function(nv) {
+        setTimeout(() =>  100);
         if(nv){
-          this.pin.setLatLng(nv)
-          this.map.panTo(nv);        
+          if(this.pin){
+            this.pin.setLatLng(nv)          
+          }
+          else{
+            this.pin = L.marker(nv,{ riseOnHover:true,draggable:true })
+            this.pin.setLatLng(nv)          
+            this.pin.addTo(this.map);
+          }
+          this.map.panTo(nv)
 
         }
         
       },
-      immediate: true // provides initial (not changed yet) state
     }
   },
 };
