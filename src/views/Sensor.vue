@@ -27,91 +27,120 @@
         </div>
     </div>   
     <div>
-      <line-chart
-      v-if="devicevalues.value" 
-      :dataset="level4Values"
-      :options="chartOptions" />
+      <v-select
+        label="Choose Data"
+        :items="dropdownItems"
+        multiple
+        @change="dropdownSelect($event)"
+      >
+      </v-select>
+      <line-chart v-if="devicevalues.values" :dataset="dataForChart" />
     </div>
-
   </div>
 </template>
 
 <script>
-import LiveData from '@/components/LiveData'
-import LineChart from '@/components/Chart.vue'
-
-
+import LiveData from "@/components/LiveData";
+import LineChart from "@/components/Chart.vue";
 export default {
   name: "Sensor",
   components: {
     LiveData,
-    LineChart
+    LineChart,
   },
   data() {
     return {
+      selectedItems: [],
+      dropdownItems: ["moisture", "airTemperature", "groundTemperature"],
       loadingWS: true,
       deviceId: this.$route.params.deviceId,
-      chartOptions:  {
-            label: "Humidity",
-            backgroundColor: "transparent",
-            borderColor: "red",
-            pointBackgroundColor: "black"
-      },
-
-    }
+    };
   },
-  created(){
-    this.$store.dispatch("getSensorById", this.deviceId)
-    this.$store.dispatch("deviceListener" , this.deviceId)
+  created() {
+    this.$store.dispatch("getSensorById", this.deviceId);
+    this.$store.dispatch("deviceListener", this.deviceId);
     if (this.$store.state.wsReadyState != 1) {
       setTimeout(() => {
-        this.retryWsConnection()
-        this.loadingWS = false
-      }, 1000)
+        this.retryWsConnection();
+        this.loadingWS = false;
+      }, 1000);
     } else {
-      this.loadingWS = false
+      this.loadingWS = false;
     }
   },
-  computed:{
+  computed: {
     devicevalues() {
-      return this.$store.getters.devicevalues
+      return this.$store.getters.devicevalues;
     },
     liveDeviceValues() {
-      return this.$store.state.liveDeviceValues
+      return this.$store.state.liveDeviceValues;
     },
     ws() {
-      return this.$store.state.ws
+      return this.$store.state.ws;
     },
-    level4Values() {
-      const level4 = this.devicevalues.value
-        .filter((element)=>{
-          return element.moisture === "level4"
-        })
-
-      return {
-        labels:  level4.map((element)=> {
-         return element._time
-        })
-        ,
-        values: level4.map((element)=>{
-          return element._value
-        })
+    dataForChart() {
+      let values = this.devicevalues.values;
+      let time,
+        moisture,
+        airTemperature,
+        groundTemperature = 0;
+      if (values == undefined) {
+        return 0;
       }
+      time = values.map((values) => {
+        return values.time;
+      });
 
+      moisture = values
+        .map((values) => {
+          return values.moisture;
+        })
+        .map((moisture) => {
+          return moisture[0].value;
+        });
+      airTemperature = values.map((values) => {
+        return values.temperature.air;
+      });
+
+      groundTemperature = values.map((values) => {
+        return values.temperature.ground;
+      });
+
+      let yvalues = [];
+      let xlabels = [];
+      this.selectedItems.forEach((item) => {
+        switch (item) {
+          case "moisture":
+            yvalues.push(moisture);
+            xlabels.push(item);
+            break;
+          case "airTemperature":
+            yvalues.push(airTemperature);
+            xlabels.push(item);
+            break;
+          case "groundTemperature":
+            yvalues.push(groundTemperature);
+            xlabels.push(item);
+            break;
+        }
+      });
+
+      void (moisture, airTemperature, groundTemperature, time);
+      console.log(xlabels);
+      return {
+        label: xlabels,
+        labels: time,
+        values: yvalues,
+      };
     },
   },
   methods: {
     retryWsConnection() {
-      this.$store.dispatch('tryWsConnection')
+      this.$store.dispatch("tryWsConnection");
     },
-    dataForChart() {
-
-      
+    dropdownSelect(event) {
+      this.selectedItems = event;
     },
   },
-  watch: {
-    
-  }
-
-}
+};
 </script>
