@@ -50,12 +50,21 @@
     <div>
       <v-select
         label="Choose Data"
-        :items="dropdownItems"
+        :items="dropdownMoistureItems"
         multiple
-        @change="dropdownSelect($event)"
-      >
-      </v-select>
-      <line-chart v-if="devicevalues.values" :dataset="dataForChart" />
+        @change="dropdownMoistureSelect($event)"
+      />
+      <line-chart v-if="devicevalues.values" :dataset="dataForMoistureChart" />
+      <v-select
+        label="Choose Data"
+        :items="dropdownTemperatureItems"
+        multiple
+        @change="dropdownTemperatureSelect($event)"
+      />
+      <line-chart
+        v-if="devicevalues.values"
+        :dataset="dataForTemperatureChart"
+      />
     </div>
   </div>
 </template>
@@ -63,6 +72,8 @@
 <script>
 import LiveData from "@/components/LiveData";
 import LineChart from "@/components/Chart.vue";
+import MoistureHelper from "@/helpers/moistureHelper.js";
+
 export default {
   name: "Sensor",
   components: {
@@ -71,8 +82,15 @@ export default {
   },
   data() {
     return {
-      selectedItems: [],
-      dropdownItems: ["moisture", "airTemperature", "groundTemperature"],
+      selectedMoistureItems: [],
+      selectedTemperatureItems: [],
+      dropdownMoistureItems: [
+        "moisture0",
+        "moisture1",
+        "moisture2",
+        "moisture3",
+      ],
+      dropdownTemperatureItems: ["airTemperature", "groundTemperature"],
       loadingWS: true,
       deviceId: this.$route.params.deviceId,
     };
@@ -99,10 +117,48 @@ export default {
     ws() {
       return this.$store.state.ws;
     },
-    dataForChart() {
+    dataForMoistureChart() {
+      let values = this.devicevalues.values;
+      if (values == undefined) {
+        return 0;
+      }
+      let time = values.map((values) => {
+        return values.time;
+      });
+      let allMoisture = values.map((values) => {
+        return values.moisture;
+      });
+      let yvalues = [];
+      let xlabels = [];
+      this.selectedMoistureItems.forEach((item) => {
+        switch (item) {
+          case "moisture0":
+            yvalues.push(MoistureHelper.get_level_values(allMoisture, 0));
+            xlabels.push(item);
+            break;
+          case "moisture1":
+            yvalues.push(MoistureHelper.get_level_values(allMoisture, 1));
+            xlabels.push(item);
+            break;
+          case "moisture2":
+            yvalues.push(MoistureHelper.get_level_values(allMoisture, 2));
+            xlabels.push(item);
+            break;
+          case "moisture3":
+            yvalues.push(MoistureHelper.get_level_values(allMoisture, 3));
+            xlabels.push(item);
+            break;
+        }
+      });
+      return {
+        label: xlabels,
+        labels: time,
+        values: yvalues,
+      };
+    },
+    dataForTemperatureChart() {
       let values = this.devicevalues.values;
       let time,
-        moisture,
         airTemperature,
         groundTemperature = 0;
       if (values == undefined) {
@@ -112,13 +168,10 @@ export default {
         return values.time;
       });
 
-      moisture = values
-        .map((values) => {
-          return values.moisture;
-        })
-        .map((moisture) => {
-          return moisture[0].value;
-        });
+      let allMoisture = values.map((values) => {
+        return values.moisture;
+      });
+      console.log(MoistureHelper.get_level_values(allMoisture, 0));
       airTemperature = values.map((values) => {
         return values.temperature.air;
       });
@@ -126,15 +179,10 @@ export default {
       groundTemperature = values.map((values) => {
         return values.temperature.ground;
       });
-
       let yvalues = [];
       let xlabels = [];
-      this.selectedItems.forEach((item) => {
+      this.selectedTemperatureItems.forEach((item) => {
         switch (item) {
-          case "moisture":
-            yvalues.push(moisture);
-            xlabels.push(item);
-            break;
           case "airTemperature":
             yvalues.push(airTemperature);
             xlabels.push(item);
@@ -146,8 +194,7 @@ export default {
         }
       });
 
-      void (moisture, airTemperature, groundTemperature, time);
-      console.log(xlabels);
+      void (airTemperature, groundTemperature, time);
       return {
         label: xlabels,
         labels: time,
@@ -159,8 +206,11 @@ export default {
     retryWsConnection() {
       this.$store.dispatch("tryWsConnection");
     },
-    dropdownSelect(event) {
-      this.selectedItems = event;
+    dropdownMoistureSelect(event) {
+      this.selectedMoistureItems = event;
+    },
+    dropdownTemperatureSelect(event) {
+      this.selectedTemperatureItems = event;
     },
   },
 };
