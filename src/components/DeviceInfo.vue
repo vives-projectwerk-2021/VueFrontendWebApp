@@ -34,7 +34,6 @@
       absolute
       bottom
       right
-
       ><v-icon>mdi-plus</v-icon></v-btn
     >
   </div>
@@ -45,7 +44,9 @@ import { mapState } from "vuex";
 
 export default {
   name: "DeviceInfo",
-
+  components: {
+    DeleteSensorButton,
+  },
   created() {
     this.$store.dispatch("getAllSensors");
   },
