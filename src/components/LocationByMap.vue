@@ -42,6 +42,7 @@ export default {
       });
       
       this.monitorClick()
+      
     },
     monitorClick(){
         this.map.on('click', (e)=> {
@@ -54,22 +55,39 @@ export default {
             }
             this.$store.dispatch("updatelatlng", e.latlng)
         });
-    }
+    },
+    monitorDrag(){
+      this.pin.on('dragend', (e)=> {
+        var marker = e.target;  // you could also simply access the marker through the closure
+        var result = marker.getLatLng(); 
+        this.$store.dispatch("updatelatlng", result)
+
+      });
+    },
   },
+  
   mounted() {
     this.setupLeafletMap()
   },
   watch: {
     "$store.state.latlng": {
       handler: function(nv) {
+        setTimeout(() =>  100);
         if(nv){
-          this.pin.setLatLng(nv)
-          this.map.panTo(nv);        
+          if(this.pin){
+            this.pin.setLatLng(nv)          
+          }
+          else{
+            this.pin = L.marker(nv,{ riseOnHover:true,draggable:true })
+            this.pin.setLatLng(nv)          
+            this.pin.addTo(this.map);
+          }
+          this.map.panTo(nv)
+          this.monitorDrag()
 
         }
         
       },
-      immediate: true // provides initial (not changed yet) state
     }
   },
 };
