@@ -22,6 +22,8 @@
         >
           See data
         </v-btn>
+        <v-spacer />
+        <delete-sensor-button :sensorid="device.deviceid" />
       </v-card-actions>
     </v-card>
     <v-btn
@@ -41,6 +43,7 @@
 
 <script>
 import { mapState } from "vuex";
+import DeleteSensorButton from "@/components/DeleteSensorButton.vue";
 
 export default {
   name: "DeviceInfo",
