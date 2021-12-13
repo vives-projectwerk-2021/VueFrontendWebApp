@@ -297,9 +297,16 @@ export default {
       if (event.target.classList.contains("v-expansion-panel-header--active")) {
         this.mapOpen = false;
       } else {
+<<<<<<< HEAD
         setTimeout(() => {
           this.mapOpen = true;
         }, 100);
+=======
+        setTimeout(() => {  this.mapOpen = true }, 100);
+        if(this.latitude && this.longitude){
+          this.$store.dispatch("updatelatlng",{lat: this.latitude ,lng: this.longitude} )
+        }
+>>>>>>> 1edd37aac91053bcdbff177feb7f74b63e0b84c4
       }
     },
   },
