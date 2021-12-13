@@ -9,6 +9,8 @@
                 <v-btn :to="{ name: 'Sensor', params: {deviceId: device.deviceid} }" text>
                     See data
                 </v-btn>
+                <v-spacer />
+                <delete-sensor-button :sensorid="device.deviceid"/>
             </v-card-actions>
         </v-card>
     </div>
@@ -17,12 +19,13 @@
 <script>
 
 import { mapState} from 'vuex';
-
+import DeleteSensorButton from '@/components/DeleteSensorButton.vue'
 
 export default {
     name: "DeviceInfo",
-
-
+    components: {
+        DeleteSensorButton
+    },
     created(){
         this.$store.dispatch('getAllSensors');
     },
@@ -32,8 +35,5 @@ export default {
             'devicelist'
         ]),
     }
-
-
-    
 }
 </script>
