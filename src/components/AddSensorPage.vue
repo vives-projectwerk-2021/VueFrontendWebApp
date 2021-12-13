@@ -1,181 +1,182 @@
 <template>
-  <v-container class="d-flex justify-center">
-    <v-card
-      elevation="5"
-      rounded="lg"
-      color="green lighten-2"
-      max-width="700"
-      class="py-4"
-    >
-      <p class="px-2 text-h2 text-center">Add a Sensor</p>
+  <v-container>
+    <v-row justify="center">
+      <v-col sm="8" lg="6">
+        <v-card elevation="5" rounded="lg" color="green lighten-2" class="py-4">
+          <p class="px-2 text-h2 text-center">Add a Sensor</p>
 
-      <v-divider />
-      <v-form ref="form" v-model="valid" class="mx-4">
-        <v-row>
-          <v-col class="pb-0">
-            <v-text-field
-              label="Device ID"
-              :rules="[
-                rules.required,
-                rules.deviceidValidator,
-                rules.devIdCounter,
-              ]"
-              hide-details="auto"
-              v-model="deviceid"
-              counter="24"
-            ></v-text-field>
-          </v-col>
-
-          <SerialConnect
-            v-on:deviceId="updateDeviceId"
-            class="my-auto mr-3"
-          ></SerialConnect>
-        </v-row>
-
-        <v-row>
-          <v-col class="pt-0">
-            <v-text-field
-              class="pt-0"
-              label="Device Name"
-              :rules="[
-                rules.required,
-                rules.counter,
-                rules.devicenameValidator,
-              ]"
-              hide-details="auto"
-              v-model="devicename"
-            ></v-text-field>
-          </v-col>
-        </v-row>
-
-        <v-row class="mt-4">
-          <v-col class="pb-0">
-            <p class="text-subtitle-1 text-center my-0">
-              Add the location of the sensor
-            </p>
-          </v-col>
-        </v-row>
-
-        <v-row>
-          <v-col>
-            <v-text-field
-              cols="12"
-              sm="6"
-              outlined
-              readonly
-              disabled
-              dense
-              hide-details="auto"
-              v-model="latitude"
-              label="Latitude"
-              prepend-inner-icon="mdi-map-marker"
-              :rules="[rules.required, rules.latValidator]"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12" sm="6">
-            <v-text-field
-              outlined
-              readonly
-              disabled
-              dense
-              hide-details="auto"
-              v-model="longitude"
-              label="Longitude"
-              prepend-inner-icon="mdi-map-marker"
-              :rules="[rules.required, rules.longValidator]"
-            ></v-text-field>
-          </v-col>
-        </v-row>
-
-        <v-row class="text-center mb-3">
-          <v-col class="py-0">
-            <v-expansion-panels>
-              <v-expansion-panel>
-                <v-expansion-panel-header
-                  disable-icon-rotate
-                  color="green lighten-5"
-                >
-                  With QR code
-                  <template v-slot:actions>
-                    <v-icon> mdi-qrcode-scan </v-icon>
-                  </template>
-                </v-expansion-panel-header>
-                <v-expansion-panel-content color="green lighten-5">
-                  <v-row>
-                    <v-col></v-col>
-                  </v-row>
-                </v-expansion-panel-content>
-              </v-expansion-panel>
-
-              <v-expansion-panel @click="onExpansionPanelClick" color="green lighten-4">
-                <v-expansion-panel-header disable-icon-rotate>
-                  With map
-                  <template v-slot:actions>
-                    <v-icon> mdi-map </v-icon>
-                  </template>
-                </v-expansion-panel-header>
-                <v-expansion-panel-content color="green lighten-4">
-                  <location-by-map v-if="mapOpen == true"></location-by-map>
-                </v-expansion-panel-content>
-              </v-expansion-panel>
-
-              <v-expansion-panel>
-                <v-expansion-panel-header
-                  disable-icon-rotate
-                  color="green lighten-5"
-                >
-                  Manual input
-                  <template v-slot:actions>
-                    <v-icon> mdi-pen </v-icon>
-                  </template>
-                </v-expansion-panel-header>
-                <v-expansion-panel-content color="green lighten-5">
-                  <v-row>
-                    <v-col cols="12" sm="6">
-                      <v-text-field
-                        outlined
-                        dense
-                        hide-details="auto"
-                        v-model="lat"
-                        label="Latitude"
-                        prepend-inner-icon="mdi-map-marker"
-                        :rules="[rules.latValidator]"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6">
-                      <v-text-field
-                        outlined
-                        dense
-                        hide-details="auto"
-                        v-model="long"
-                        label="Longitude"
-                        prepend-inner-icon="mdi-map-marker"
-                        :rules="[rules.longValidator]"
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-                  <v-row>
-                    <v-col>
-                      <v-btn @click="UseGPS">Use GPS</v-btn>
-                    </v-col>
-                  </v-row>
-                </v-expansion-panel-content>
-              </v-expansion-panel>
-            </v-expansion-panels>
-          </v-col>
-        </v-row>
-      </v-form>
-
-      <v-row>
-        <v-col class="text-center">
           <v-divider />
-          <v-btn @click="sendData" large class="mt-3">
-            <v-icon> mdi-plus </v-icon>
-            Add Sensor
-          </v-btn>
-        </v-col>
-      </v-row>
-    </v-card>
+          <v-form ref="form" v-model="valid" class="mx-4">
+            <v-row>
+              <v-col class="pb-0">
+                <v-text-field
+                  label="Device ID"
+                  :rules="[
+                    rules.required,
+                    rules.deviceidValidator,
+                    rules.devIdCounter,
+                  ]"
+                  hide-details="auto"
+                  v-model="deviceid"
+                  counter="24"
+                ></v-text-field>
+              </v-col>
+
+              <SerialConnect
+                v-on:deviceId="updateDeviceId"
+                class="my-auto mr-3"
+              ></SerialConnect>
+            </v-row>
+
+            <v-row>
+              <v-col class="pt-0">
+                <v-text-field
+                  class="pt-0"
+                  label="Device Name"
+                  :rules="[
+                    rules.required,
+                    rules.counter,
+                    rules.devicenameValidator,
+                  ]"
+                  hide-details="auto"
+                  v-model="devicename"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+
+            <v-row class="mt-4">
+              <v-col class="pb-0">
+                <p class="text-subtitle-1 text-center my-0">
+                  Add the location of the sensor
+                </p>
+              </v-col>
+            </v-row>
+
+            <v-row>
+              <v-col>
+                <v-text-field
+                  cols="12"
+                  sm="6"
+                  outlined
+                  readonly
+                  disabled
+                  dense
+                  hide-details="auto"
+                  v-model="latitude"
+                  label="Latitude"
+                  prepend-inner-icon="mdi-map-marker"
+                  :rules="[rules.required, rules.latValidator]"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6">
+                <v-text-field
+                  outlined
+                  readonly
+                  disabled
+                  dense
+                  hide-details="auto"
+                  v-model="longitude"
+                  label="Longitude"
+                  prepend-inner-icon="mdi-map-marker"
+                  :rules="[rules.required, rules.longValidator]"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+
+            <v-row class="text-center mb-3">
+              <v-col class="py-0">
+                <v-expansion-panels flat>
+                  <v-expansion-panel>
+                    <v-expansion-panel-header
+                      disable-icon-rotate
+                      color="green lighten-5"
+                    >
+                      With QR code
+                      <template v-slot:actions>
+                        <v-icon> mdi-qrcode-scan </v-icon>
+                      </template>
+                    </v-expansion-panel-header>
+                    <v-expansion-panel-content color="green lighten-5">
+                      <v-row>
+                        <v-col></v-col>
+                      </v-row>
+                    </v-expansion-panel-content>
+                  </v-expansion-panel>
+
+                  <v-expansion-panel
+                    @click="onExpansionPanelClick"
+                    color="green lighten-4"
+                  >
+                    <v-expansion-panel-header disable-icon-rotate>
+                      With map
+                      <template v-slot:actions>
+                        <v-icon> mdi-map </v-icon>
+                      </template>
+                    </v-expansion-panel-header>
+                    <v-expansion-panel-content color="green lighten-4">
+                      <location-by-map v-if="mapOpen == true"></location-by-map>
+                    </v-expansion-panel-content>
+                  </v-expansion-panel>
+
+                  <v-expansion-panel>
+                    <v-expansion-panel-header
+                      disable-icon-rotate
+                      color="green lighten-5"
+                    >
+                      Manual input
+                      <template v-slot:actions>
+                        <v-icon> mdi-pen </v-icon>
+                      </template>
+                    </v-expansion-panel-header>
+                    <v-expansion-panel-content color="green lighten-5">
+                      <v-row>
+                        <v-col cols="12" sm="6">
+                          <v-text-field
+                            outlined
+                            dense
+                            hide-details="auto"
+                            v-model="lat"
+                            label="Latitude"
+                            prepend-inner-icon="mdi-map-marker"
+                            :rules="[rules.latValidator]"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6">
+                          <v-text-field
+                            outlined
+                            dense
+                            hide-details="auto"
+                            v-model="long"
+                            label="Longitude"
+                            prepend-inner-icon="mdi-map-marker"
+                            :rules="[rules.longValidator]"
+                          ></v-text-field>
+                        </v-col>
+                      </v-row>
+                      <v-row>
+                        <v-col>
+                          <v-btn @click="UseGPS">Use GPS</v-btn>
+                        </v-col>
+                      </v-row>
+                    </v-expansion-panel-content>
+                  </v-expansion-panel>
+                </v-expansion-panels>
+              </v-col>
+            </v-row>
+          </v-form>
+
+          <v-row>
+            <v-col class="text-center">
+              <v-divider />
+              <v-btn @click="sendData" large class="mt-3">
+                <v-icon> mdi-plus </v-icon>
+                Add Sensor
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-col>
+    </v-row>
 
     <v-snackbar v-model="snackbar">
       {{ snackbarText }}
@@ -190,17 +191,16 @@
 
 <script>
 import SerialConnect from "@/components/SerialConnect.vue";
-import LocationByMap from '@/components/LocationByMap.vue';
-import { Map } from "@/api/mapbox.js"
+import LocationByMap from "@/components/LocationByMap.vue";
+import { Map } from "@/api/mapbox.js";
 
 export default {
   name: "AddSensorPage",
   components: {
     SerialConnect,
-    LocationByMap
+    LocationByMap,
   },
   data() {
-    
     return {
       deviceid: "",
       devicename: "",
@@ -252,33 +252,32 @@ export default {
       this.$refs.form.validate();
 
       // get location place name "place_name"
-      
+
       Map.reverse_geolocation(this.latitude, this.longitude)
-      .then((res) => {
-        if(res.data.features.length != 0) {
-          this.placeName = res.data.features[0].place_name
-        }
-        if (this.valid == false) {
-          this.$store.commit("addSensor", "Please, check for problems!");
-        } else {
-          let json = {
-            deviceid: this.deviceid.toLowerCase(),
-            devicename: this.devicename,
-            location: {
-              lat: parseFloat(this.latitude),
-              long: parseFloat(this.longitude),
-              place_name: this.placeName
-            },
-          };
+        .then((res) => {
+          if (res.data.features.length != 0) {
+            this.placeName = res.data.features[0].place_name;
+          }
+          if (this.valid == false) {
+            this.$store.commit("addSensor", "Please, check for problems!");
+          } else {
+            let json = {
+              deviceid: this.deviceid.toLowerCase(),
+              devicename: this.devicename,
+              location: {
+                lat: parseFloat(this.latitude),
+                long: parseFloat(this.longitude),
+                place_name: this.placeName,
+              },
+            };
 
-          this.$store.dispatch("addSensor", json);
-        }
-        this.snackbar = true;
-      })
-      .catch(() => {
-        console.log("could not get reverse geolocation")
-      })
-
+            this.$store.dispatch("addSensor", json);
+          }
+          this.snackbar = true;
+        })
+        .catch(() => {
+          console.log("could not get reverse geolocation");
+        });
     },
     updateDeviceId(id) {
       this.deviceid = id;
@@ -295,13 +294,14 @@ export default {
       this.long = position.coords.longitude;
     },
     onExpansionPanelClick(event) {
-      if(event.target.classList.contains('v-expansion-panel-header--active')) {
-        this.mapOpen = false
+      if (event.target.classList.contains("v-expansion-panel-header--active")) {
+        this.mapOpen = false;
       } else {
-        setTimeout(() => {  this.mapOpen = true }, 100);
-        
+        setTimeout(() => {
+          this.mapOpen = true;
+        }, 100);
       }
-    }
+    },
   },
   computed: {
     snackbarText() {
@@ -336,16 +336,15 @@ export default {
         this.latitude = Number(this.lat).toFixed(7);
       });
     },
-     "$store.state.latlng": {
-      handler: function(nv) {
-        if(nv){
+    "$store.state.latlng": {
+      handler: function (nv) {
+        if (nv) {
           this.lat = String(nv.lat);
           this.long = String(nv.lng);
         }
-        
       },
-      immediate: true // provides initial (not changed yet) state
-    }
+      immediate: true, // provides initial (not changed yet) state
+    },
   },
 };
 </script>
