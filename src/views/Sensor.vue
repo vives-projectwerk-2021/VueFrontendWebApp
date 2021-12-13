@@ -56,10 +56,12 @@ export default {
       deviceId: this.$route.params.deviceId,
     };
   },
-  created() {
-    this.$store.dispatch("getSensorById", this.deviceId);
-    this.$store.dispatch("deviceListener", this.deviceId);
-    if (this.$store.state.wsReadyState != 1) {
+
+  created(){
+    this.$store.dispatch("getSensorById", this.deviceId)
+    this.$store.dispatch("deviceListener" , this.deviceId)
+    if (this.$store.state.websocket.wsReadyState != 1) {
+
       setTimeout(() => {
         this.retryWsConnection();
         this.loadingWS = false;
@@ -73,10 +75,10 @@ export default {
       return this.$store.getters.devicevalues;
     },
     liveDeviceValues() {
-      return this.$store.state.liveDeviceValues;
+      return this.$store.state.websocket.liveDeviceValues
     },
     ws() {
-      return this.$store.state.ws;
+      return this.$store.state.websocket.ws
     },
     dataForChart() {
       let values = this.devicevalues.values;
@@ -136,7 +138,7 @@ export default {
   },
   methods: {
     retryWsConnection() {
-      this.$store.dispatch("tryWsConnection");
+      this.$store.dispatch('websocket/tryWsConnection')
     },
     dropdownSelect(event) {
       this.selectedItems = event;
