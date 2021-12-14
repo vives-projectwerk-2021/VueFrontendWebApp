@@ -26,6 +26,17 @@
                  </v-col>
             </v-row>
         </v-container>
+        <v-btn
+          elevation="2"
+          color="green"
+          :to="{ name: 'AddSensor' }"
+          fab
+          dark
+          large
+          absolute
+          bottom
+          right
+        ><v-icon>mdi-plus</v-icon></v-btn>
     </div>
 </template>
 
@@ -45,10 +56,8 @@ export default {
         this.$store.dispatch('getAllSensors');
     },
 
-    computed:{
-        ...mapState([
-            'devicelist'
-        ]),
-    }
-}
+  computed: {
+    ...mapState(["devicelist"]),
+  },
+};
 </script>

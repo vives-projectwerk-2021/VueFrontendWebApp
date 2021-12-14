@@ -18,6 +18,8 @@ export const store = new Vuex.Store({
         devicevalues: {},
         activeDevice: "",
 
+        members:22,
+
         snackbarText: "",
         deviceidText: "Invalid Device ID: Can only be a hexadecimal value.",
         deviceLatText: "Invalid Latitude! (-180 to 180)",
@@ -60,11 +62,52 @@ export const store = new Vuex.Store({
         },
         setLatLng(state, payload) {
             state.latlng = payload
+        },
+        changeMembers(state,payload){
+            state.members=payload
         }
 
     },
     
     actions: {
+
+        parseMessage: (store, message) => {
+            if(message.message == "sensor-data"){
+                store.commit('updateDeviceValues', message)
+            }
+        },
+        tryWsConnection: (store) => {
+            let wsConnection = undefined
+            let isValidConnection = false
+            try {
+                wsConnection =  new WebSocket(Vue.prototype.$VUE_APP_WS)
+                wsConnection.addEventListener('message', (message) => {
+                    message = JSON.parse(message.data)
+                    if(isValidConnection){
+                        store.dispatch('parseMessage', message)
+                    } else if (message.message == "welcome") {
+                        isValidConnection = true
+                        store.commit('connectToWs', wsConnection)
+                    }
+                })
+            } catch (err){
+                console.log(`Can't connect to WebSocket ${Vue.prototype.$VUE_APP_WS}`)
+            }
+        },
+
+        getMembers({commit}){
+            return Sensors.get_members()
+            .then((response)=>{
+                
+
+                commit('changeMembers',{
+                    members:response.data
+                })
+                this.members=response.data
+            }).catch((error)=>console.log(error))
+        },
+
+
         getAllSensors({commit} ){
             return Sensors.get_all_sensors()
             .then((response) => {

@@ -7,7 +7,7 @@
           <v-card-text v-if="devicevalues.location.place_name">📍 Location:  {{ devicevalues.location.place_name }} </v-card-text>
           <v-card-text v-else>📍 Location:  [{{ devicevalues.location.lat }}, {{ devicevalues.location.long }}] </v-card-text>
         </v-col>
-        <v-col v-if="this.$store.state.wsReadyState != 1 || !liveDeviceValues || liveDeviceValues.device_id != deviceId" cols="3" class="py-0">
+        <v-col v-if="this.$store.state.websocket.wsReadyState != 1 || !liveDeviceValues || liveDeviceValues.device_id != deviceId" cols="3" class="py-0">
           <div align="center" class="mt-5" justify="end">
             <v-progress-circular
               class="mx-auto"
