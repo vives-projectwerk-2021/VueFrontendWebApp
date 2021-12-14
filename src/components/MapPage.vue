@@ -49,8 +49,8 @@ export default {
         this.anchor = [8, 25];
       } else {
         this.refreshLivemarker();
-        this.icon = [30, 50];
-        this.anchor = [15, 49];
+        this.icon = [40, 50];
+        this.anchor = [20, 49];
       }
 
       var LeafIcon = L.Icon.extend({
