@@ -5,7 +5,7 @@
             tile
             class="text-center"
             width="100%"
-            color="grey darken-4"
+            :color="this.$store.state.black"
             dark
         >
         <v-card-text>
@@ -21,7 +21,7 @@
                     {{ icon.image }}
                 </v-icon>
                 </v-btn>
-                <a href="https://www.vives.be" color="grey lighten-2" class="mx-5">
+                <a href="https://www.vives.be" class="mx-5">
                     <v-img :src="logo_vives" max-height="28px" max-width="24px"></v-img>
                 </a>
                 <v-btn
