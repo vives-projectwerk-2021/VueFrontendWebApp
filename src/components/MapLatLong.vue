@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     setupLeafletMap () {
-      this.map = L.map(`map${this.device}`).setView([this.lat, this.long], 16);
+      this.map = L.map(`map${this.device}`, {dragging: false, scrollWheelZoom: "center",}).setView([this.lat, this.long], 16);
       L.tileLayer(
         "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
         {
