@@ -22,7 +22,20 @@ const Sensors = {
     add_sensor(json){
         console.log("Post new sensor");
         return api.post(`/${this.resource}`, json);
+    },
+
+    delete_sensor(id) {
+        console.log("Delete sensor with id:" + id);
+        return api.delete(`/${this.resource}/${id}`)
     }
 }
 
-export { api, Sensors}
+const TTN = {
+    resource: 'ttn-device-manager',
+
+    registerDevice(json){
+        return api.post(`/${this.resource}`, json);
+    }
+}
+
+export { api, Sensors, TTN}

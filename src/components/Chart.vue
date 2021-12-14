@@ -14,27 +14,36 @@ export default {
       default: null
     }
   },
-  mounted () {
-    this.renderChart(this.chartdata, { responsive: true, maintainAspectRatio: false })
+  mounted() {
+    this.render(this.chartdata)
+  },
+  watch: {
+    chartdata(value){
+        this.render(value)
+    }
+
   },
   computed: {
     chartdata() {
-
-      return {
-
-        labels: this.dataset.labels,
-        datasets: [
-          {
-            label: this.options.label,
-            data: this.dataset.values,
-            backgroundColor: this.options.backgroundColor,
-            borderColor: this.options.borderColor,
-            pointBackgroundColor: this.options.pointBackgroundColor
-          }
-        ]
-      }
+      let labelIndex = -1
+      let datasets = this.dataset.values.map((values)=>{
+        labelIndex +=1
+        return {
+          label: this.dataset.label[labelIndex],
+          data: values,
+          backgroundColor: "transparent",
+          borderColor: `#${Math.floor(Math.random()*16777215).toString(16)}`,
+          pointBackgroundColor: "transparent"
+        }
+      })
+      return { labels: this.dataset.labels, datasets: datasets }
+    },
+  },
+  methods: {
+        render(value){
+      this.renderChart(value, { responsive: true, maintainAspectRatio: false })
     }
-  }
+  },
 }
 
 </script>
