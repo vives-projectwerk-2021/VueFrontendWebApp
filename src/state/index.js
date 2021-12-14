@@ -1,23 +1,29 @@
 import Vuex from "vuex"
 import Vue from "vue"
+import router from '../router'
 import { Sensors } from "@/api/pulu"
+import serial from "./modules/serial/index"
+import websocket from "./modules/websocket/index"
+
 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
+    modules: {
+        serial,
+        websocket
+    },
     state: {
-        ws: undefined,
-        wsReadyState: undefined,
-        liveDeviceValues: {},
         devicelist: [],
         devicevalues: {},
         activeDevice: "",
 
         snackbarText: "",
         deviceidText: "Invalid Device ID: Can only be a hexadecimal value.",
-        devicenameText: "Invalid Device Name: Can only be letters, numbers, underscores or dashes.",
         deviceLatText: "Invalid Latitude! (-180 to 180)",
         deviceLongText: "Invalid Longitude! (-90 to 90)",
+
+        latlng: undefined,
     },
 
     getters: {
@@ -33,17 +39,6 @@ export const store = new Vuex.Store({
     },
 
     mutations: {
-        updateDeviceValues: (state, message) => {
-            if (message.data && message.data.device_id == state.activeDevice) {
-                state.liveDeviceValues = message.data
-            }
-        },
-
-        connectToWs: (state, connection) => {
-            state.ws = connection
-            state.wsReadyState = connection.readyState
-        },
-
         changeDevices(state,payload) {
             state.devicelist = payload.devicelist;
         },
@@ -57,35 +52,14 @@ export const store = new Vuex.Store({
         },
         setDevice(state, device) {
             state.activeDevice = device
+        },
+        setLatLng(state, payload) {
+            state.latlng = payload
         }
 
     },
     
     actions: {
-        parseMessage: (store, message) => {
-            if(message.message == "sensor-data"){
-                store.commit('updateDeviceValues', message)
-            }
-        },
-        tryWsConnection: (store) => {
-            let wsConnection = undefined
-            let isValidConnection = false
-            try {
-                wsConnection =  new WebSocket(Vue.prototype.$VUE_APP_WS)
-                wsConnection.addEventListener('message', (message) => {
-                    message = JSON.parse(message.data)
-                    if(isValidConnection){
-                        store.dispatch('parseMessage', message)
-                    } else if (message.message == "welcome") {
-                        isValidConnection = true
-                        store.commit('connectToWs', wsConnection)
-                    }
-                })
-            } catch (err){
-                console.log(`Can't connect to WebSocket ${Vue.prototype.$VUE_APP_WS}`)
-            }
-        },
-
         getAllSensors({commit} ){
             return Sensors.get_all_sensors()
             .then((response) => {
@@ -124,6 +98,7 @@ export const store = new Vuex.Store({
                   this.commit('addSensor', `The device with deviceid: ${payload.deviceid} already exists`)
                 } else {
                   this.commit('addSensor', `The device: ${payload.devicename} have been created!`)
+                  router.push(`/sensors/${payload.deviceid}`)
                 }
               })
             .catch((err) => {
@@ -132,6 +107,9 @@ export const store = new Vuex.Store({
         },
         deviceListener(store, device) {
             this.commit('setDevice', device)
+        },
+        updatelatlng(store, payload) {
+            this.commit('setLatLng', payload)
         }
 
     }
