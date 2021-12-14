@@ -24,6 +24,12 @@ const Sensors = {
         return api.post(`/${this.resource}`, json);
     },
 
+
+    get_members(){
+        console.log("Getting members");
+        return api.get(`/members`)
+    },
+
     delete_sensor(id) {
         console.log("Delete sensor with id:" + id);
         return api.delete(`/${this.resource}/${id}`)
@@ -35,6 +41,7 @@ const TTN = {
 
     registerDevice(json){
         return api.post(`/${this.resource}`, json);
+
     }
 }
 
