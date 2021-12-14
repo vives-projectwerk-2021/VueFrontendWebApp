@@ -25,9 +25,10 @@ export const store = new Vuex.Store({
 
         latlng: undefined,
 
-        grey: "grey darken-3",
-        green: "green darken-3",
-        black: "grey darken-4",
+        backgroundColor: "grey darken-3",
+        navBarColor: "green darken-3",
+        footerColor: "grey darken-4",
+        accentColorA: "green darken-3"
     },
 
     getters: {

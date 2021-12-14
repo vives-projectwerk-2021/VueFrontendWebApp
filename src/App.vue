@@ -2,7 +2,7 @@
   <v-app id="Pulu App">
     <nav-bar />
 
-    <v-main :class="this.$store.state.grey">
+    <v-main :class="this.$store.state.backgroundColor">
       <v-container>
         <v-row>
           <v-col>

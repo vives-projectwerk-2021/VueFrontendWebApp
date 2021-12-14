@@ -5,7 +5,7 @@
             tile
             class="text-center"
             width="100%"
-            :color="this.$store.state.black"
+            :color="this.$store.state.footerColor"
             dark
         >
         <v-card-text>

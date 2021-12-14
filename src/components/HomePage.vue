@@ -8,7 +8,7 @@
     <v-divider dark></v-divider>
     <br>
     <div>
-      <v-sheet align="center" :color="this.$store.state.grey" dark :style="{ background: activeColor3 }">
+      <v-sheet align="center" :color="this.$store.state.backgroundColor" dark :style="{ background: activeColor3 }">
         <p class="text-h4">
           Pulu gives an overview of the current groundwater levels in Flanders.
         </p>
@@ -40,7 +40,7 @@
     <br>
     <v-row class="d-flex justify-space-around pb-5">
       <v-card
-        :color="this.$store.state.green"
+        :color="this.$store.state.accentColorA"
         dark
         v-for="card in cards" :key="card.id"
         width="250px"

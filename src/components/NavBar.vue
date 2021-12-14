@@ -7,13 +7,13 @@
       app
       class="pa-0 hidden-sm-and-up"
       flat
-      :color="this.$store.state.grey"
+      :color="this.$store.state.backgroundColor"
       elevate-on-scroll
       dark
     >
       <v-row>
         <v-col class="px-0">
-          <v-card fill-height flat rounded="false" :class="this.$store.state.green">
+          <v-card fill-height flat rounded="false" :color="this.$store.state.navBarColor">
             <v-card-title class="py-0">
               <v-btn :to="{ name: 'Home' }" class="text-h5" depressed plain
                 >Pulu</v-btn
@@ -57,7 +57,7 @@
 
     <v-app-bar
       app
-      :color="this.$store.state.green"
+      :color="this.$store.state.navBarColor"
       flat
       class="hidden-xs-only"
       elevate-on-scroll
