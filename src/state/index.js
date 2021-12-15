@@ -26,6 +26,11 @@ export const store = new Vuex.Store({
         deviceLongText: "Invalid Longitude! (-90 to 90)",
 
         latlng: undefined,
+
+        backgroundColor: "grey darken-3",
+        navBarColor: "green darken-3",
+        footerColor: "grey darken-4",
+        accentColorA: "green darken-3"
     },
 
     getters: {
