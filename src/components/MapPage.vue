@@ -23,6 +23,12 @@ export default {
       anchor: [],
       currentZoom: null,
       manIcon: "",
+      maxBounds: [
+        //south west
+        [-90, -180],
+        //north east
+        [90, 180],
+      ],
     };
   },
   methods: {
@@ -39,7 +45,8 @@ export default {
           projection: "naturalEarth",
         }
       ).addTo(this.map);
-      this.map.setMaxBounds(this.map.getBounds());
+
+      this.map.setMaxBounds(this.maxBounds);
       delete Icon.Default.prototype._getIconUrl;
       Icon.Default.mergeOptions({
         iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
