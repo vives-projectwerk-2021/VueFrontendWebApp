@@ -10,6 +10,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { Icon } from "leaflet";
 import { config } from "@/config.js";
+
 export default {
   name: "Map",
   data() {
@@ -26,16 +27,19 @@ export default {
   },
   methods: {
     setupLeafletMap() {
-      this.map = L.map("mapContainer").setView(this.center, 14);
+      this.map = L.map("mapContainer", { center: this.center, zoom: 14 });
       L.tileLayer(
-        "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+        "https://api.mapbox.com/styles/v1/{username}/{style_id}/tiles/256/{z}/{x}/{y}@2x?access_token={access_token}",
         {
+          minZoom: 2,
           maxZoom: 18,
-          id: "mapbox/streets-v11",
-          accessToken: config.VUE_APP_MAPBOX_TOKEN,
+          username: "arthur2",
+          style_id: "ckx7nsvn57sck14mja93t6zs4",
+          access_token: config.VUE_APP_MAPBOX_TOKEN,
+          projection: "naturalEarth",
         }
       ).addTo(this.map);
-
+      this.map.setMaxBounds(this.map.getBounds());
       delete Icon.Default.prototype._getIconUrl;
       Icon.Default.mergeOptions({
         iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
@@ -66,7 +70,6 @@ export default {
 
       this.map.on("zoomend", () => {
         this.currentZoom = this.map.getZoom();
-        console.log(this.currentZoom);
       });
 
       this.addPoints();
@@ -76,7 +79,6 @@ export default {
       this.map
         .locate({
           setView: true,
-          maxZoom: 140,
         })
         .on("locationfound", (e) => {
           if (!liveMarker) {
@@ -87,8 +89,10 @@ export default {
             liveMarker.setLatLng(e.latlng);
           }
           liveMarker.bindTooltip("You are here.");
-          this.markerarray.push(liveMarker)
-          this.map.fitBounds(L.latLngBounds(this.markerarray.map(marker => marker.getLatLng())))
+          this.markerarray.push(liveMarker);
+          this.map.fitBounds(
+            L.latLngBounds(this.markerarray.map((marker) => marker.getLatLng()))
+          );
         });
     },
     async addPoints() {
