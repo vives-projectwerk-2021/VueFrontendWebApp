@@ -46,7 +46,7 @@
     <v-row class="d-flex justify-space-around pb-5">
       <v-card
         dark
-        :color="this.$store.state.accentColorA"
+        color="green darken-3"
         v-for="card in cards"
         :key="card.id"
         width="250px"
