@@ -33,7 +33,7 @@ export default {
           data: values,
           backgroundColor: "transparent",
           borderColor: `#${Math.floor(Math.random()*16777215).toString(16)}`,
-          pointBackgroundColor: "black"
+          pointBackgroundColor: "transparent"
         }
       })
       return { labels: this.dataset.labels, datasets: datasets }

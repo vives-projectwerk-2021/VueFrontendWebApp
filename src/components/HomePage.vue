@@ -5,10 +5,10 @@
     <MapPage/>
 
     <br>
-    <v-divider></v-divider>
+    <v-divider dark></v-divider>
     <br>
     <div>
-      <v-sheet align="center" border="" :style="{ background: activeColor3 }">
+      <v-sheet align="center" color="grey darken-3" dark :style="{ background: activeColor3 }">
         <p class="text-h4">
           Pulu gives an overview of the current groundwater levels in Flanders.
         </p>
@@ -19,7 +19,7 @@
     </div>
 
     <br>
-    <v-divider></v-divider>
+    <v-divider dark></v-divider>
     <br>
 
     <v-carousel cycle height="300px" hide-delimiter-background  :show-arrows="false" class="rounded-xl">
@@ -40,6 +40,8 @@
     <br>
     <v-row class="d-flex justify-space-around pb-5">
       <v-card
+        color="green darken-3"
+        dark
         v-for="card in cards" :key="card.id"
         width="250px"
         height="200px"
@@ -55,7 +57,7 @@
 <script>
 // @ is an alias to /src
 import MapPage from "@/components/MapPage.vue"
-import axios from "axios"
+
 
 export default {
   name: 'Home',
@@ -105,7 +107,7 @@ export default {
         {
           id: 3,
           title: "Project developers",
-          subtitle: "24"
+          subtitle: "0"
         }
       ]
       
@@ -122,14 +124,22 @@ export default {
         
       },
       immediate: true // provides initial (not changed yet) state
+    },
+    "$store.state.members":{
+      handler:function(amount){
+        if(amount){
+          this.cards[2].subtitle=amount.members
+
+          console.log(amount.members)
+        }
+        
+      }
     }
   },
   methods:{
-    getMembers(){
-      axios.get("https://api.github.com/orgs/vives-projectwerk-2021/members")
-      .then((members)=>{
-        this.cards[2].subtitle=members.data.length
-      })
+    async getMembers(){
+      this.$store.dispatch('getMembers');
+      
       
     },
     getCountries(arr){
