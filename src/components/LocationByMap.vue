@@ -19,7 +19,13 @@ export default {
       map: null,
       loaded: false,
       markerlocation: null,
-      pin: null
+      pin: null,
+      maxBounds: [
+        //south west
+        [-90, -180],
+        //north east
+        [90, 180],
+      ],
     };
   },
   methods: {
@@ -28,11 +34,13 @@ export default {
       L.tileLayer(
         "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
         {
+          minZoom: 2,
           maxZoom: 18,
           id: "mapbox/streets-v11",
           accessToken: config.VUE_APP_MAPBOX_TOKEN,
         }
       ).addTo(this.map);
+      this.map.setMaxBounds(this.maxBounds);
 
       delete Icon.Default.prototype._getIconUrl;
       Icon.Default.mergeOptions({
