@@ -6,6 +6,7 @@ import Sensors from '@/views/Sensors'
 import AddSensor from '@/views/AddSensor'
 import SensorPub from '@/views/SensorPub'
 import Sensor from '@/views/Sensor'
+import QRScanner from '@/views/QR-scanner'
 
 
 Vue.use(VueRouter)
@@ -44,6 +45,11 @@ const routes = [
     path: '/sensors/:deviceId',
     name: 'Sensor',
     component: Sensor
+  },
+  {
+    path: '/qr-scanner',
+    name: 'QR-scanner',
+    component: QRScanner
   }
 
 ]
