@@ -120,7 +120,6 @@ export default {
   },
   data() {
     return {
-      //deviceid: "",
       devicename: "",
 
       long: "",
