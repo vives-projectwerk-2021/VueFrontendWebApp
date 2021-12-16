@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card elevation="5">
+    <v-card elevation="5" :color="this.$store.state.accentColorA" dark>
       <v-row>
         <v-col>
           <p class="text-h2 text-center">Add a Sensor</p>
@@ -82,10 +82,6 @@
         </v-row>
 
         <location-by-map></location-by-map>
-
-        <v-row class="text-center mb-3">
-          <v-col class="py-0"> </v-col>
-        </v-row>
       </v-form>
 
       <v-row>

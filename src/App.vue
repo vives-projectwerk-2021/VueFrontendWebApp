@@ -2,7 +2,7 @@
   <v-app id="Pulu App">
     <nav-bar />
 
-    <v-main class="grey darken-3">
+    <v-main :class="this.$store.state.backgroundColor">
       <v-container>
         <v-row>
           <v-col>
@@ -19,6 +19,7 @@
 <script>
 import NavBar from '@/components/NavBar';
 import FooTer from '@/components/FooTer'
+
 export default {
   components: {
     NavBar,
