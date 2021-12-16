@@ -120,7 +120,7 @@ export default {
   },
   data() {
     return {
-      deviceid: "",
+      //deviceid: "",
       devicename: "",
 
       long: "",
@@ -265,6 +265,9 @@ export default {
     deviceLongText() {
       return this.$store.state.deviceLongText;
     },
+    deviceid() {
+      return this.$store.state.deviceid;
+    }
   },
   watch: {
     deviceid() {

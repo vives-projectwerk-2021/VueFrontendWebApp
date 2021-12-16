@@ -95,7 +95,7 @@ export default {
   name: "NavBar",
   data() {
     return {
-      links: ["Home", "AddSensor", "Sensors", "About"],
+      links: ["Home", "AddSensor", "Sensors", "About", "QR-scanner"],
     };
   },
 };
