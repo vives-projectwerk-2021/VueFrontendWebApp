@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     setupLeafletMap () {
-      this.map = L.map(`map${this.device}`, {dragging: false, scrollWheelZoom: "center",}).setView([this.lat, this.long], 16);
+      this.map = L.map(`map${this.device}`, {dragging: false, scrollWheelZoom: "center",}).setView([this.lat, this.long], 14);
       L.tileLayer(
         "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
         {
@@ -43,7 +43,10 @@ export default {
 
         this.pin = L.marker([this.lat, this.long])
         this.pin.addTo(this.map);
-      
+
+        this.map._handlers.forEach(function(handler) {
+        handler.disable();
+        });     
     },
   },
   mounted() {
