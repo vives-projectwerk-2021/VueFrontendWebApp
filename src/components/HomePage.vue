@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <br />
+  <div class="pa-5">
+    <v-card class="pa-3" outlined>
+      <MapPage />
+    </v-card>
 
-    <MapPage />
-
     <br />
-    <v-divider dark></v-divider>
+    <v-divider></v-divider>
     <br />
     <div>
       <p class="text-h4">
@@ -27,12 +27,14 @@
       :show-arrows="false"
       class="rounded-xl"
     >
-      <v-carousel-item v-for="(slide, i) in slides" :key="i" :src="slide.src">
+      <v-carousel-item
+        v-for="(slide, i) in slides"
+        :key="i"
+        :src="slide.src"
+        gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
+      >
         <v-row class="title fill-height" align="center" justify="center">
-          <div
-            :style="{ background: activeColor }"
-            class="pa-2 w-50 text-no-wrap rounded-lg"
-          >
+          <div style="color: white" class="pa-2 w-50 text-no-wrap rounded-lg">
             <h5>{{ slide.title }}</h5>
           </div>
         </v-row>
@@ -41,27 +43,33 @@
     <br />
     <v-divider></v-divider>
     <br />
-    <v-row class="d-flex justify-space-around pb-5">
-      <v-card
-        dark
-        color="green darken-3"
-        v-for="card in cards"
-        :key="card.id"
-        width="250px"
-        height="200px"
-      >
-        <h2 class="mt-4 font-weight-regular" style="text-align: center">
-          {{ card.title }}
-        </h2>
-        <p
-          class="mt-5 font-weight-black"
-          :style="{ 'font-size': '50px' }"
-          style="text-align: center"
-        >
-          {{ card.subtitle }}
-        </p>
-      </v-card>
-    </v-row>
+    <v-container fluid>
+      <v-row dense justify="center">
+        <v-col cols="6" sm="4" v-for="card in cards" :key="card.id">
+          <v-card dark color="green darken-3" height="180 " class="ma-1 pa-1">
+            <h2
+              class="mt-4 font-weight-regular hidden-xs-only"
+              style="text-align: center"
+            >
+              {{ card.title }}
+            </h2>
+            <h4
+              class="mt-4 font-weight-regular hidden-sm-and-up"
+              style="text-align: center"
+            >
+              {{ card.title }}
+            </h4>
+            <p
+              class="mt-5 font-weight-black"
+              :style="{ 'font-size': '50px' }"
+              style="text-align: center"
+            >
+              {{ card.subtitle }}
+            </p>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
@@ -169,3 +177,12 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+p.text-h4 {
+  font-size: 2rem !important;
+  font-weight: lighter;
+  line-height: 2rem;
+  text-align: center;
+}
+</style>
