@@ -48,23 +48,35 @@
       </div>
     </div>
     <div>
-      <v-select
-        label="Choose Data"
-        :items="dropdownMoistureItems"
-        multiple
-        @change="dropdownMoistureSelect($event)"
-      />
-      <line-chart v-if="devicevalues.values" :dataset="dataForMoistureChart" />
-      <v-select
-        label="Choose Data"
-        :items="dropdownTemperatureItems"
-        multiple
-        @change="dropdownTemperatureSelect($event)"
-      />
-      <line-chart
-        v-if="devicevalues.values"
-        :dataset="dataForTemperatureChart"
-      />
+
+      <v-card class="mt-6" elevation="5" v-if="devicevalues.values">
+        <v-card-title>Moisture</v-card-title>
+          <line-chart 
+            v-if="devicevalues.values"
+            :dataset="dataForMoistureChart" />
+      </v-card>
+
+      <v-card class="mt-6" elevation="5" v-if="devicevalues.values">
+        <v-card-title>Temperature</v-card-title>
+        <line-chart
+          v-if="devicevalues.values"
+          :dataset="dataForTemperatureChart"
+        />
+      </v-card>
+      <v-card class="mt-6" elevation="5" v-if="devicevalues.values">
+        <v-card-title>Battery</v-card-title>
+        <line-chart
+          v-if="devicevalues.values"
+          :dataset="dataForBatteryChart"
+        />
+      </v-card>
+      <v-card class="mt-6" elevation="5" v-if="devicevalues.values">
+        <v-card-title>Light</v-card-title>
+        <line-chart
+          v-if="devicevalues.values"
+          :dataset="dataForlightChart"
+        />
+      </v-card>
     </div>
   </div>
 </template>
@@ -82,15 +94,6 @@ export default {
   },
   data() {
     return {
-      selectedMoistureItems: [],
-      selectedTemperatureItems: [],
-      dropdownMoistureItems: [
-        "moisture0",
-        "moisture1",
-        "moisture2",
-        "moisture3",
-      ],
-      dropdownTemperatureItems: ["airTemperature", "groundTemperature"],
       loadingWS: true,
       deviceId: this.$route.params.deviceId,
     };
@@ -128,28 +131,14 @@ export default {
       let allMoisture = values.map((values) => {
         return values.moisture;
       });
-      let yvalues = [];
-      let xlabels = [];
-      this.selectedMoistureItems.forEach((item) => {
-        switch (item) {
-          case "moisture0":
-            yvalues.push(MoistureHelper.get_level_values(allMoisture, 0));
-            xlabels.push(item);
-            break;
-          case "moisture1":
-            yvalues.push(MoistureHelper.get_level_values(allMoisture, 1));
-            xlabels.push(item);
-            break;
-          case "moisture2":
-            yvalues.push(MoistureHelper.get_level_values(allMoisture, 2));
-            xlabels.push(item);
-            break;
-          case "moisture3":
-            yvalues.push(MoistureHelper.get_level_values(allMoisture, 3));
-            xlabels.push(item);
-            break;
-        }
-      });
+      let yvalues = [
+        MoistureHelper.get_level_values(allMoisture, 0),
+        MoistureHelper.get_level_values(allMoisture, 1),
+        MoistureHelper.get_level_values(allMoisture, 2),
+        MoistureHelper.get_level_values(allMoisture, 3)
+      ];
+      let xlabels = ["level 1", "level 2", "level 3", "level 4"];
+
       return {
         label: xlabels,
         labels: time,
@@ -168,10 +157,6 @@ export default {
         return values.time;
       });
 
-      let allMoisture = values.map((values) => {
-        return values.moisture;
-      });
-      console.log(MoistureHelper.get_level_values(allMoisture, 0));
       airTemperature = values.map((values) => {
         return values.temperature.air;
       });
@@ -179,38 +164,57 @@ export default {
       groundTemperature = values.map((values) => {
         return values.temperature.ground;
       });
-      let yvalues = [];
-      let xlabels = [];
-      this.selectedTemperatureItems.forEach((item) => {
-        switch (item) {
-          case "airTemperature":
-            yvalues.push(airTemperature);
-            xlabels.push(item);
-            break;
-          case "groundTemperature":
-            yvalues.push(groundTemperature);
-            xlabels.push(item);
-            break;
-        }
-      });
+      let yvalues = [groundTemperature,airTemperature];
+      let xlabels = ["groundTemperature","airTemperature"];
 
-      void (airTemperature, groundTemperature, time);
       return {
         label: xlabels,
         labels: time,
         values: yvalues,
       };
     },
+    dataForBatteryChart() {
+      let values = this.devicevalues.values;
+      if (values == undefined) {
+        return 0;
+      }
+      let time = values.map((values) => {
+        return values.time;
+      });
+
+     let battery = values.map((values) => {
+        return values.battery_voltage;
+      });
+
+      return {
+        label: ["battery"],
+        labels: time,
+        values: [battery],
+      };
+    },
+    dataForlightChart() {
+      let values = this.devicevalues.values;
+      if (values == undefined) {
+        return 0;
+      }
+      let time = values.map((values) => {
+        return values.time;
+      });
+
+     let light = values.map((values) => {
+        return values.light;
+      });
+
+      return {
+        label: ["light"],
+        labels: time,
+        values: [light],
+      };
+    },
   },
   methods: {
     retryWsConnection() {
       this.$store.dispatch("tryWsConnection");
-    },
-    dropdownMoistureSelect(event) {
-      this.selectedMoistureItems = event;
-    },
-    dropdownTemperatureSelect(event) {
-      this.selectedTemperatureItems = event;
     },
   },
 };

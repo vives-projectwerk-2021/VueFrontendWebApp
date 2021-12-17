@@ -26,14 +26,16 @@ export default {
   computed: {
     chartdata() {
       let labelIndex = -1
+      let colors = ['green', 'black','red','blue']
       let datasets = this.dataset.values.map((values)=>{
         labelIndex +=1
         return {
           label: this.dataset.label[labelIndex],
           data: values,
           backgroundColor: "transparent",
-          borderColor: `#${Math.floor(Math.random()*16777215).toString(16)}`,
-          pointBackgroundColor: "transparent"
+          borderColor: colors[labelIndex],
+          pointBackgroundColor: "transparent",
+          
         }
       })
       return { labels: this.dataset.labels, datasets: datasets }
@@ -41,7 +43,7 @@ export default {
   },
   methods: {
         render(value){
-      this.renderChart(value, { responsive: true, maintainAspectRatio: false })
+      this.renderChart(value, { responsive: true, maintainAspectRatio: false,})
     }
   },
 }
