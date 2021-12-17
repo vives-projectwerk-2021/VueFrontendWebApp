@@ -121,7 +121,6 @@ export default {
   data() {
     return {
       devicename: "",
-      deviceid: "",
 
       long: "",
       lat: "",
