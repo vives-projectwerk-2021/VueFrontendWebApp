@@ -1,13 +1,17 @@
 <template>
   <v-container>
-    <v-card elevation="5">
-      <v-card-title class="pd-0"> <h1>Add a Sensor</h1> </v-card-title>
-      <v-card-text> On this page you can add a Sensor </v-card-text>
+    <v-card elevation="5" class="pa-5">
+      <v-card-title> <h1>Add a Sensor</h1> </v-card-title>
+      <v-card-text>
+        On this page you can add a Sensor. You can enter the device ID manually
+        or use the auto detect feature by pluggin your device into your computer.
+        
+      </v-card-text>
       <v-divider />
-      <v-container class="px-6">
+      <v-container>
         <v-form ref="form" v-model="valid" class="mb-4">
-          <v-row style="align-items: center;">
-            <v-col class="pb-0" cols="12" sm="8" md="9">
+          <v-row>
+            <v-col class="pb-0" cols="12" sm="8" md="9" lg="10">
               <v-text-field
                 label="Device ID"
                 :rules="[
@@ -16,14 +20,14 @@
                   rules.devIdCounter,
                 ]"
                 hide-details="auto"
+                dense
+                outlined
                 v-model="deviceid"
                 counter="24"
               ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="4" md="3">
-              <SerialConnect
-                v-on:deviceId="updateDeviceId"
-              ></SerialConnect>
+            <v-col cols="12" sm="4" md="3" lg="2">
+              <SerialConnect v-on:deviceId="updateDeviceId"></SerialConnect>
             </v-col>
           </v-row>
 
@@ -34,6 +38,8 @@
                 :rules="[rules.required, rules.devNameCounter]"
                 hide-details="auto"
                 v-model="devicename"
+                dense
+                outlined
               ></v-text-field>
             </v-col>
           </v-row>
@@ -67,19 +73,20 @@
               ></v-text-field>
             </v-col>
             <v-col cols="12" sm="4" md="2" class="d-flex align-center">
-              <v-btn @click="UseGPS" block>Use GPS</v-btn>
+              <v-btn @click="UseGPS" block dark color="green darken-1">Use GPS</v-btn>
             </v-col>
             <v-col cols="12">
               <location-by-map></location-by-map>
             </v-col>
           </v-row>
         </v-form>
-        <v-divider></v-divider>
         <v-card-actions>
-          <v-btn @click="sendData" large color="success">
+          <v-spacer></v-spacer>
+          <v-btn @click="sendData" large dark color="green darken-1">
             <v-icon> mdi-plus </v-icon>
             Add Sensor
           </v-btn>
+          <v-spacer></v-spacer>
         </v-card-actions>
       </v-container>
     </v-card>

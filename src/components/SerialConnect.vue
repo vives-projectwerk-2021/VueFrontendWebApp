@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" width="500">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn v-bind="attrs" v-on="on" block> Auto detect </v-btn>
+      <v-btn v-bind="attrs" v-on="on" block dark color="green darken-1"> Auto detect </v-btn>
     </template>
 
     <v-card>
