@@ -1,7 +1,5 @@
 <template>
-  <v-container>
-    <add-sensor-page />
-  </v-container>
+  <add-sensor-page />
 </template>
 
 <script>

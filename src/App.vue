@@ -2,28 +2,24 @@
   <v-app id="Pulu App">
     <nav-bar />
 
-    <v-main :class="this.$store.state.backgroundColor">
+    <v-main class="grey lighten-3">
       <v-container>
-        <v-row>
-          <v-col>
-            <router-view/>
-          </v-col>
-        </v-row>
+        <router-view />
       </v-container>
     </v-main>
 
-    <FooTer/>
+    <FooTer />
   </v-app>
 </template>
 
 <script>
-import NavBar from '@/components/NavBar';
-import FooTer from '@/components/FooTer'
+import NavBar from "@/components/NavBar";
+import FooTer from "@/components/FooTer";
 
 export default {
   components: {
     NavBar,
-    FooTer
-  }
+    FooTer,
+  },
 };
 </script>

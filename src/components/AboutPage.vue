@@ -1,5 +1,5 @@
 <template>
-  <v-sheet dark :color="this.$store.state.backgroundColor">
+  <v-sheet>
 
   
     <v-container>

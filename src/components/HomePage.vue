@@ -8,14 +8,12 @@
     <v-divider dark></v-divider>
     <br />
     <div>
-      <v-sheet align="center" :color="this.$store.state.backgroundColor" dark>
-        <p class="text-h4">
-          Pulu gives an overview of the current groundwater levels in Flanders.
-        </p>
-        <p class="text-h4">
-          Our mission of this platform is to map these groundwater levels.
-        </p>
-      </v-sheet>
+      <p class="text-h4">
+        Pulu gives an overview of the current groundwater levels in Flanders.
+      </p>
+      <p class="text-h4">
+        Our mission of this platform is to map these groundwater levels.
+      </p>
     </div>
 
     <br />
@@ -69,7 +67,7 @@
 
 <script>
 // @ is an alias to /src
-import MapPage from "@/components/MapPage.vue"
+import MapPage from "@/components/MapPage.vue";
 
 export default {
   name: "Home",
@@ -119,11 +117,10 @@ export default {
         {
           id: 3,
           title: "Project developers",
-          subtitle: "0"
-        }
-      ]
-      
-    }
+          subtitle: "0",
+        },
+      ],
+    };
   },
   watch: {
     "$store.state.devicelist": {
@@ -134,24 +131,21 @@ export default {
           this.getCountries(nv);
         }
       },
-      immediate: true // provides initial (not changed yet) state
+      immediate: true, // provides initial (not changed yet) state
     },
-    "$store.state.members":{
-      handler:function(amount){
-        if(amount){
-          this.cards[2].subtitle=amount.members
+    "$store.state.members": {
+      handler: function (amount) {
+        if (amount) {
+          this.cards[2].subtitle = amount.members;
 
-          console.log(amount.members)
+          console.log(amount.members);
         }
-        
-      }
-    }
+      },
+    },
   },
-  methods:{
-    async getMembers(){
-      this.$store.dispatch('getMembers');
-      
-      
+  methods: {
+    async getMembers() {
+      this.$store.dispatch("getMembers");
     },
     getCountries(arr) {
       let countries = [];

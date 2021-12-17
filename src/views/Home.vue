@@ -1,17 +1,19 @@
 <template>
-  <HomePage/>
+  <v-container>
+    <HomePage />
+  </v-container>
 </template>
 
 <script>
 // @ is an alias to /src
 
-import HomePage from '@/components/HomePage'
+import HomePage from "@/components/HomePage";
 
 export default {
-  name: 'Home',
+  name: "Home",
 
   components: {
-    HomePage
+    HomePage,
   },
-}
+};
 </script>

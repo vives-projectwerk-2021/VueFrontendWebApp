@@ -1,98 +1,87 @@
 <template>
   <v-container>
-    <v-card elevation="5" :color="this.$store.state.accentColorA" dark>
-      <v-row>
-        <v-col>
-          <p class="text-h2 text-center">Add a Sensor</p>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <p class="text-center">On this page you can add a Sensor</p>
-        </v-col>
-      </v-row>
+    <v-card elevation="5">
+      <v-card-title class="pd-0"> <h1>Add a Sensor</h1> </v-card-title>
+      <v-card-text> On this page you can add a Sensor </v-card-text>
       <v-divider />
-      <v-form ref="form" v-model="valid" class="mx-4">
-        <v-row>
-          <v-col class="pb-0">
-            <v-text-field
-              label="Device ID"
-              :rules="[
-                rules.required,
-                rules.deviceidValidator,
-                rules.devIdCounter,
-              ]"
-              hide-details="auto"
-              v-model="deviceid"
-              counter="24"
-            ></v-text-field>
-          </v-col>
+      <v-container class="px-6">
+        <v-form ref="form" v-model="valid" class="mb-4">
+          <v-row style="align-items: center;">
+            <v-col class="pb-0" cols="12" sm="8" md="9">
+              <v-text-field
+                label="Device ID"
+                :rules="[
+                  rules.required,
+                  rules.deviceidValidator,
+                  rules.devIdCounter,
+                ]"
+                hide-details="auto"
+                v-model="deviceid"
+                counter="24"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="4" md="3">
+              <SerialConnect
+                v-on:deviceId="updateDeviceId"
+              ></SerialConnect>
+            </v-col>
+          </v-row>
 
-          <SerialConnect
-            v-on:deviceId="updateDeviceId"
-            class="my-auto mr-3"
-          ></SerialConnect>
-        </v-row>
+          <v-row>
+            <v-col>
+              <v-text-field
+                label="Device Name"
+                :rules="[rules.required, rules.devNameCounter]"
+                hide-details="auto"
+                v-model="devicename"
+              ></v-text-field>
+            </v-col>
+          </v-row>
 
-        <v-row>
-          <v-col class="pt-0">
-            <v-text-field
-              class="pt-0"
-              label="Device Name"
-              :rules="[rules.required, rules.devNameCounter]"
-              hide-details="auto"
-              v-model="devicename"
-            ></v-text-field>
-          </v-col>
-        </v-row>
+          <v-row>
+            <v-col cols="12" sm="4" md="5">
+              <v-text-field
+                outlined
+                dense
+                hide-details="auto"
+                v-model="lat"
+                label="Latitude"
+                prepend-inner-icon="mdi-map-marker"
+                @keydown.enter="Locationedit"
+                @blur="Locationedit"
+                :rules="[rules.required, rules.latValidator]"
+              ></v-text-field>
+            </v-col>
 
-        <v-row>
-          <v-col>
-            <v-text-field
-              class="py-4"
-              outlined
-              dense
-              hide-details="auto"
-              v-model="lat"
-              label="Latitude"
-              prepend-inner-icon="mdi-map-marker"
-              @keydown.enter="Locationedit"
-              @blur="Locationedit"
-              :rules="[rules.required, rules.latValidator]"
-            ></v-text-field>
-          </v-col>
-
-          <v-col>
-            <v-text-field
-              class="py-4"
-              outlined
-              dense
-              hide-details="auto"
-              v-model="long"
-              label="Longitude"
-              prepend-inner-icon="mdi-map-marker"
-              @blur="Locationedit"
-              @keydown.enter="Locationedit"
-              :rules="[rules.required, rules.longValidator]"
-            ></v-text-field>
-          </v-col>
-          <v-col md="auto" class="d-flex align-center">
-            <v-btn @click="UseGPS" class="mx-auto">Use GPS</v-btn>
-          </v-col>
-        </v-row>
-
-        <location-by-map></location-by-map>
-      </v-form>
-
-      <v-row>
-        <v-col class="text-center">
-          <v-divider />
-          <v-btn @click="sendData" large class="mt-3">
+            <v-col cols="12" sm="4" md="5">
+              <v-text-field
+                outlined
+                dense
+                hide-details="auto"
+                v-model="long"
+                label="Longitude"
+                prepend-inner-icon="mdi-map-marker"
+                @blur="Locationedit"
+                @keydown.enter="Locationedit"
+                :rules="[rules.required, rules.longValidator]"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="4" md="2" class="d-flex align-center">
+              <v-btn @click="UseGPS" block>Use GPS</v-btn>
+            </v-col>
+            <v-col cols="12">
+              <location-by-map></location-by-map>
+            </v-col>
+          </v-row>
+        </v-form>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn @click="sendData" large color="success">
             <v-icon> mdi-plus </v-icon>
             Add Sensor
           </v-btn>
-        </v-col>
-      </v-row>
+        </v-card-actions>
+      </v-container>
     </v-card>
 
     <v-snackbar v-model="snackbar">
@@ -266,7 +255,7 @@ export default {
     },
     deviceid() {
       return this.$store.state.deviceid;
-    }
+    },
   },
   watch: {
     deviceid() {
