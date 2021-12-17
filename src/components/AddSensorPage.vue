@@ -22,12 +22,13 @@
                 hide-details="auto"
                 dense
                 outlined
-                v-model="deviceid"
                 counter="24"
+                v-model="deviceid"
+                @change="changedeviceid"
               ></v-text-field>
             </v-col>
             <v-col cols="12" sm="4" md="3" lg="2">
-              <SerialConnect v-on:deviceId="updateDeviceId"></SerialConnect>
+              <SerialConnect v-on:deviceId="updateDeviceId" />
             </v-col>
           </v-row>
 
@@ -116,6 +117,7 @@ export default {
   },
   data() {
     return {
+      deviceid: "",
       devicename: "",
 
       long: "",
@@ -179,7 +181,7 @@ export default {
             };
 
             this.$store.dispatch("addSensor", json);
-            this.getTTNInfo();
+            this.getTTNInfo();  
           }
           this.snackbar = true;
         })
@@ -189,6 +191,10 @@ export default {
     },
     updateDeviceId(id) {
       this.deviceid = id;
+    },
+
+    changedeviceid() {
+      this.$store.commit('changedeviceiddevice', this.deviceid)
     },
 
     getTTNInfo() {
@@ -260,15 +266,30 @@ export default {
     deviceLongText() {
       return this.$store.state.deviceLongText;
     },
-    deviceid() {
-      return this.$store.state.deviceid;
-    },
+    deviceiddevice() {
+      return this.$store.state.deviceiddevice;
+    }
   },
+
+  created() {
+    if (this.deviceiddevice != "") {
+      this.deviceid = this.deviceiddevice;
+    }
+  },
+
   watch: {
     deviceid() {
       this.$nextTick(() => {
         this.deviceid = this.deviceid.replace(/\s+/g, "");
       });
+    },
+    deviceiddevice(val) {
+      if (val == "") {
+        console.log("empty");
+      } else {
+        console.log(val)
+        //this.deviceid == val;
+      }
     },
     "$store.state.latlng": {
       handler: function (nv) {
