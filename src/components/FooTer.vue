@@ -5,7 +5,8 @@
             tile
             class="text-center"
             width="100%"
-            color="grey lighten-2"
+            :color="this.$store.state.footerColor"
+            dark
         >
         <v-card-text>
             <v-row class="py-1" justify="center" align="center">
@@ -20,7 +21,7 @@
                     {{ icon.image }}
                 </v-icon>
                 </v-btn>
-                <a href="https://www.vives.be" color="grey lighten-2" class="mx-5">
+                <a href="https://www.vives.be" class="mx-5">
                     <v-img :src="logo_vives" max-height="28px" max-width="24px"></v-img>
                 </a>
                 <v-btn
@@ -40,7 +41,7 @@
         <v-divider></v-divider>
 
         <v-card-text>
-          {{ new Date().getFullYear() }} — <strong>Pulu</strong>
+          {{ new Date().getFullYear() }} — Pulu
         </v-card-text>
       </v-card>
     </v-footer>

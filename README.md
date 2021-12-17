@@ -45,3 +45,11 @@ Run the project by running:
 ```zsh
 npm run serve
 ```
+
+## QR codes
+
+Our devices make use of QR codes. This QR codes are mounted on the device and give the possibility to be used in two ways. You can scan the qr code with your mobile phone (Camera app or in Google Chrome camera) or you can use the online website which has a tab "qr-scanner".
+
+When you scan a device that is already registered on our website, you will see the sensor details of the device. When the scanned device is not registered, you will be send to the "addsensor" page. Here you can register your device and the device id is already filled in.
+
+The QR codes are added in the img folder.

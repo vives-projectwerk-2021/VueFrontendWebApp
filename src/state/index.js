@@ -1,25 +1,37 @@
 import Vuex from "vuex"
 import Vue from "vue"
+import router from '../router'
 import { Sensors } from "@/api/pulu"
+import serial from "./modules/serial/index"
+import websocket from "./modules/websocket/index"
+
 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
+    modules: {
+        serial,
+        websocket
+    },
     state: {
-        ws: undefined,
-        wsReadyState: undefined,
-        liveDeviceValues: {},
         devicelist: [],
         devicevalues: {},
         activeDevice: "",
+        deviceid: "",
+
+        members:22,
 
         snackbarText: "",
         deviceidText: "Invalid Device ID: Can only be a hexadecimal value.",
-        devicenameText: "Invalid Device Name: Can only be letters, numbers, underscores or dashes.",
         deviceLatText: "Invalid Latitude! (-180 to 180)",
         deviceLongText: "Invalid Longitude! (-90 to 90)",
 
         latlng: undefined,
+
+        backgroundColor: "grey darken-3",
+        navBarColor: "green darken-3",
+        footerColor: "grey darken-4",
+        accentColorA: "green darken-3"
     },
 
     getters: {
@@ -35,17 +47,6 @@ export const store = new Vuex.Store({
     },
 
     mutations: {
-        updateDeviceValues: (state, message) => {
-            if (message.data && message.data.device_id == state.activeDevice) {
-                state.liveDeviceValues = message.data
-            }
-        },
-
-        connectToWs: (state, connection) => {
-            state.ws = connection
-            state.wsReadyState = connection.readyState
-        },
-
         changeDevices(state,payload) {
             state.devicelist = payload.devicelist;
         },
@@ -62,11 +63,17 @@ export const store = new Vuex.Store({
         },
         setLatLng(state, payload) {
             state.latlng = payload
+        },
+        changeMembers(state,payload){
+            state.members=payload
+        },
+        changedeviceid(state, payload) {
+            state.deviceid = payload;
         }
-
     },
     
     actions: {
+
         parseMessage: (store, message) => {
             if(message.message == "sensor-data"){
                 store.commit('updateDeviceValues', message)
@@ -90,6 +97,19 @@ export const store = new Vuex.Store({
                 console.log(`Can't connect to WebSocket ${Vue.prototype.$VUE_APP_WS}`)
             }
         },
+
+        getMembers({commit}){
+            return Sensors.get_members()
+            .then((response)=>{
+                
+
+                commit('changeMembers',{
+                    members:response.data
+                })
+                this.members=response.data
+            }).catch((error)=>console.log(error))
+        },
+
 
         getAllSensors({commit} ){
             return Sensors.get_all_sensors()
@@ -129,6 +149,7 @@ export const store = new Vuex.Store({
                   this.commit('addSensor', `The device with deviceid: ${payload.deviceid} already exists`)
                 } else {
                   this.commit('addSensor', `The device: ${payload.devicename} have been created!`)
+                  router.push(`/sensors/${payload.deviceid}`)
                 }
               })
             .catch((err) => {

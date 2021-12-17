@@ -7,20 +7,21 @@
       app
       class="pa-0 hidden-sm-and-up"
       flat
-      color="white"
+      :color="this.$store.state.backgroundColor"
       elevate-on-scroll
+      dark
     >
       <v-row>
         <v-col class="px-0">
-          <v-card fill-height flat rounded="false">
+          <v-card fill-height flat rounded="false" :color="this.$store.state.navBarColor">
             <v-card-title class="py-0">
               <v-btn :to="{ name: 'Home' }" class="text-h5" depressed plain
                 >Pulu</v-btn
               >
               <v-spacer></v-spacer>
               <v-img
-                max-height="60"
-                max-width="60"
+                max-height="45"
+                max-width="45"
                 src="../assets/pulu.png"
               ></v-img>
 
@@ -56,10 +57,11 @@
 
     <v-app-bar
       app
-      color="white"
+      :color="this.$store.state.navBarColor"
       flat
       class="hidden-xs-only"
       elevate-on-scroll
+      dark
     >
       <v-container class="py-0 fill-height">
         <v-btn
@@ -68,14 +70,19 @@
           :key="link"
           :to="{ name: link }"
           text
+          large
+          tile
+          outlined
+          class="ml-2"
         >
           {{ link }}
         </v-btn>
         <v-spacer></v-spacer>
       </v-container>
       <v-img
-        max-height="60"
-        max-width="60"
+
+        max-height="50"
+        max-width="50"
         justify="end"
         src="../assets/pulu.png"
       ></v-img>
@@ -88,7 +95,7 @@ export default {
   name: "NavBar",
   data() {
     return {
-      links: ["Home", "AddSensor", "Sensors", "About"],
+      links: ["Home", "AddSensor", "Sensors", "About", "QR-scanner"],
     };
   },
 };
