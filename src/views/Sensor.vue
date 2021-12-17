@@ -82,19 +82,21 @@ export default {
     this.$store.dispatch("getSensorById", this.deviceId)
     this.$store.dispatch("deviceListener" , this.deviceId)
 
+    setTimeout(() => {
+        if (this.devicevalues.id == this.deviceId) {
+          //console.log("this is the device id", this.devicevalues.id);
+        } else {
+          //console.log("no device");
+          this.$store.commit('changedeviceiddevice', this.$route.params.deviceId);
+          this.$router.push({ name: 'AddSensor'});
+        }
+      }, 1000)
+
     if (this.$store.state.websocket.wsReadyState != 1) {
 
       setTimeout(() => {
-        console.log(this.devicevalues);
         this.retryWsConnection();
         this.loadingWS = false;
-        if (this.devicevalues.id == this.deviceId) {
-          console.log(this.devicevalues.id);
-        } else {
-          console.log("no device");
-          this.$store.commit('changedeviceid', this.deviceId);
-          this.$router.push({ name: 'AddSensor'});
-        }
       }, 1000);
     } else {
       this.loadingWS = false;

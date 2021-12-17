@@ -17,7 +17,7 @@ export const store = new Vuex.Store({
         devicelist: [],
         devicevalues: {},
         activeDevice: "",
-        deviceid: "",
+        deviceiddevice: "",
 
         members:22,
 
@@ -52,7 +52,7 @@ export const store = new Vuex.Store({
         },
 
         changeDeviceInfo(state,payload){
-            state.devicevalues = payload.devicevalues
+            state.devicevalues = payload.devicevalues;
           
         },
         addSensor(state, payload) {
@@ -67,9 +67,9 @@ export const store = new Vuex.Store({
         changeMembers(state,payload){
             state.members=payload
         },
-        changedeviceid(state, payload) {
-            state.deviceid = payload;
-        }
+        changedeviceiddevice(state, payload) {
+            state.deviceiddevice = payload;
+        },
     },
     
     actions: {
