@@ -98,42 +98,46 @@ export default {
       return this.$store.getters.devicevalues;
     },
     latestDeviceValue() {
-      return {
-        'device_id': this.deviceId,
-        'time': this.$store.getters.latestDeviceValue.time,
-        'sensors': {
-          'light': {
-            'value': this.$store.getters.latestDeviceValue.light
-          },
-          'moisture': {
-            'level1': {
-              'value': this.$store.getters.latestDeviceValue.moisture[0].value
+      let values = this.$store.getters.latestDeviceValue
+      if (values) {
+        return {
+          'device_id': this.deviceId,
+          'time': values.time,
+          'sensors': {
+            'light': {
+              'value': values.light
             },
-            'level2': {
-              'value': this.$store.getters.latestDeviceValue.moisture[1].value
+            'moisture': {
+              'level1': {
+                'value': values.moisture[0].value
+              },
+              'level2': {
+                'value': values.moisture[1].value
+              },
+              'level3': {
+                'value': values.moisture[2].value
+              },
+              'level4': {
+                'value': values.moisture[3].value
+              }
             },
-            'level3': {
-              'value': this.$store.getters.latestDeviceValue.moisture[2].value
+            'temperature': {
+              'air': {
+                'value': values.temperature.air
+              },
+              'ground': {
+                'value': values.temperature.ground
+              }
             },
-            'level4': {
-              'value': this.$store.getters.latestDeviceValue.moisture[3].value
+            'voltage': {
+              'battery':  {
+                'value': values.battery_voltage
+              }
             }
           },
-          'temperature': {
-            'air': {
-              'value': this.$store.getters.latestDeviceValue.temperature.air
-            },
-            'ground': {
-              'value': this.$store.getters.latestDeviceValue.temperature.ground
-            }
-          },
-          'voltage': {
-            'battery':  {
-              'value': this.$store.getters.latestDeviceValue.battery_voltage
-            }
-          }
-        },
+        }
       }
+      return values
     },
     liveDeviceValues() {
       return this.$store.state.websocket.liveDeviceValues
