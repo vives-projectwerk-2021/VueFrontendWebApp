@@ -57,7 +57,6 @@ export const store = new Vuex.Store({
         changeDeviceInfo(state,payload){
             state.devicevalues = payload.devicevalues;
             state.latestDeviceValue = payload.devicevalues.values.splice(-1)[0]
-            console.log(state.latestDeviceValue)
         },
         addSensor(state, payload) {
             state.snackbarText = payload
