@@ -51,7 +51,7 @@
       fab
       dark
       large
-      absolute
+      fixed
       bottom
       right
       ><v-icon>mdi-plus</v-icon></v-btn
