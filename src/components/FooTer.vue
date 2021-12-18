@@ -14,6 +14,7 @@
                     :key="icons_one.id"
                     class="mx-4"
                     :href="icons_one.link"
+                    target="_blank"
                     icon
                 >
                     <v-icon size="24px">
@@ -30,7 +31,7 @@
                         {{ icons_three.image }}
                     </v-icon>
                 </v-btn>
-                <a href="https://www.vives.be" class="mx-5">
+                <a href="https://www.vives.be" class="mx-5" target="_blank">
                     <v-img :src="logo_vives" max-height="28px" max-width="24px"></v-img>
                 </a>
                 <v-btn
@@ -39,10 +40,11 @@
                     class="mx-4"
                     :href="icon.link"
                     icon
+                    target="_blank"
                 >
-                <v-icon size="24px">
-                    {{ icon.image }}
-                </v-icon>
+                    <v-icon size="24px">
+                        {{ icon.image }}
+                    </v-icon>
                 </v-btn>
             </v-row>
         </v-card-text>
