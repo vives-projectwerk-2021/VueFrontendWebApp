@@ -1,28 +1,19 @@
 <template>
   <div>
     <v-card class="my-3" elevation="5" v-if="devicevalues.id" >
-      <v-row>
-        <v-col cols="9" class="py-0">
-          <v-card-title>Device name: {{ devicevalues.name }}</v-card-title>
-          <v-card-text v-if="devicevalues.location.place_name">📍 Location:  {{ devicevalues.location.place_name }} </v-card-text>
-          <v-card-text v-else>📍 Location:  [{{ devicevalues.location.lat }}, {{ devicevalues.location.long }}] </v-card-text>
-        </v-col>
-        <v-col v-if="this.$store.state.websocket.wsReadyState != 1 || !liveDeviceValues || liveDeviceValues.device_id != deviceId" cols="3" class="py-0">
-          <div align="center" class="mt-5" justify="end">
-            <v-progress-circular
-              class="mx-auto"
-              indeterminate
-              size="25"
-            ></v-progress-circular>
-            <p>Waiting for live data</p>
-          </div>
-        </v-col>
-      </v-row>
+      <v-card-title>Device name: {{ devicevalues.name }}</v-card-title>
+      <v-card-text v-if="devicevalues.location.place_name">📍 Location:  {{ devicevalues.location.place_name }} </v-card-text>
+      <v-card-text v-else>📍 Location:  [{{ devicevalues.location.lat }}, {{ devicevalues.location.long }}] </v-card-text>
     </v-card>
     <div>
         <div v-if="liveDeviceValues && liveDeviceValues.device_id == deviceId">
           <v-card>
             <LiveData :liveValues="liveDeviceValues" class="ma-4" />
+          </v-card>
+        </div>
+        <div v-else-if="latestDeviceValue">
+          <v-card>
+            <LiveData :liveValues="latestDeviceValue" class="ma-4" />
           </v-card>
         </div>
     </div>   
@@ -105,6 +96,44 @@ export default {
   computed: {
     devicevalues() {
       return this.$store.getters.devicevalues;
+    },
+    latestDeviceValue() {
+      return {
+        'device_id': this.deviceId,
+        'time': this.$store.getters.latestDeviceValue.time,
+        'sensors': {
+          'light': {
+            'value': this.$store.getters.latestDeviceValue.light
+          },
+          'moisture': {
+            'level1': {
+              'value': this.$store.getters.latestDeviceValue.moisture[0].value
+            },
+            'level2': {
+              'value': this.$store.getters.latestDeviceValue.moisture[1].value
+            },
+            'level3': {
+              'value': this.$store.getters.latestDeviceValue.moisture[2].value
+            },
+            'level4': {
+              'value': this.$store.getters.latestDeviceValue.moisture[3].value
+            }
+          },
+          'temperature': {
+            'air': {
+              'value': this.$store.getters.latestDeviceValue.temperature.air
+            },
+            'ground': {
+              'value': this.$store.getters.latestDeviceValue.temperature.ground
+            }
+          },
+          'voltage': {
+            'battery':  {
+              'value': this.$store.getters.latestDeviceValue.battery_voltage
+            }
+          }
+        },
+      }
     },
     liveDeviceValues() {
       return this.$store.state.websocket.liveDeviceValues
@@ -207,7 +236,7 @@ export default {
   methods: {
     retryWsConnection() {
       this.$store.dispatch('websocket/tryWsConnection')
-    },
+    }
   },
 };
 </script>

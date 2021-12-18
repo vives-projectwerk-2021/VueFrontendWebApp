@@ -18,6 +18,7 @@ export const store = new Vuex.Store({
         devicevalues: {},
         activeDevice: "",
         deviceiddevice: "",
+        latestDeviceValue: {},
 
         members:22,
 
@@ -40,9 +41,11 @@ export const store = new Vuex.Store({
             return state.devicevalues;
         },
 
-        devicelist(state)
-        {
+        devicelist(state) {
             return state.devicelist
+        },
+        latestDeviceValue(state) {
+            return state.latestDeviceValue
         }
     },
 
@@ -53,7 +56,8 @@ export const store = new Vuex.Store({
 
         changeDeviceInfo(state,payload){
             state.devicevalues = payload.devicevalues;
-          
+            state.latestDeviceValue = payload.devicevalues.values.splice(-1)[0]
+            console.log(state.latestDeviceValue)
         },
         addSensor(state, payload) {
             state.snackbarText = payload
@@ -73,31 +77,6 @@ export const store = new Vuex.Store({
     },
     
     actions: {
-
-        parseMessage: (store, message) => {
-            if(message.message == "sensor-data"){
-                store.commit('updateDeviceValues', message)
-            }
-        },
-        tryWsConnection: (store) => {
-            let wsConnection = undefined
-            let isValidConnection = false
-            try {
-                wsConnection =  new WebSocket(Vue.prototype.$VUE_APP_WS)
-                wsConnection.addEventListener('message', (message) => {
-                    message = JSON.parse(message.data)
-                    if(isValidConnection){
-                        store.dispatch('parseMessage', message)
-                    } else if (message.message == "welcome") {
-                        isValidConnection = true
-                        store.commit('connectToWs', wsConnection)
-                    }
-                })
-            } catch (err){
-                console.log(`Can't connect to WebSocket ${Vue.prototype.$VUE_APP_WS}`)
-            }
-        },
-
         getMembers({commit}){
             return Sensors.get_members()
             .then((response)=>{
