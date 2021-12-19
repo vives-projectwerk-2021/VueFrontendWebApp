@@ -18,6 +18,7 @@ export const store = new Vuex.Store({
         devicenameText: "Invalid Device Name: Can only be letters, numbers, underscores or dashes.",
         deviceLatText: "Invalid Latitude! (-180 to 180)",
         deviceLongText: "Invalid Longitude! (-90 to 90)",
+        timeStamp: "?start=hour",
 
         latlng: undefined,
     },
@@ -106,8 +107,9 @@ export const store = new Vuex.Store({
             .catch((error) => console.log(error));
         },
 
-        getSensorById({commit}, id){
-            Sensors.get_sensor_by_id(id)
+        getSensorById({commit}, [id, timeStamp]){
+            this.timeStamp = timeStamp
+            Sensors.get_sensor_by_id(id, timeStamp)
             .then((response) => {
 
                 commit('changeDeviceInfo', {
