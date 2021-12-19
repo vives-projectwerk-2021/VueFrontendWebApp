@@ -1,10 +1,10 @@
 <template>
   <v-card width="296" height="200">
     <v-container>
-      <div>
+      <v-row>
         <v-icon :color="color">{{icon}}</v-icon>
         <p>{{sensor}} {{level}}</p>
-      </div>
+      </v-row>
       <div class="d-flex flex-wrap">
         <p class="text-h1 mb-0">{{value}}</p>
         <p class="text-h4 align-self-end pb-1 mb-0">{{unit}}</p>

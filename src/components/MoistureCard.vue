@@ -1,10 +1,10 @@
 <template>
   <v-card max-width="150">
     <v-container>
-      <div>
+      <v-row>
         <v-icon color="light-blue">mdi-water</v-icon>
         <p class="mb-0">Moisture</p>
-      </div>
+      </v-row>
       <p class="mb-0">{{ level }}</p>
       <div class="mx-auto d-flex justify-center" v-if="percentage">
         <Progress
