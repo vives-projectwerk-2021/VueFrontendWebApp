@@ -10,7 +10,6 @@
       </v-btn>
     </div>
   
-  
     <div v-if="displayContent" class="d-flex flex-wrap">
       <MoistureCard  v-for="(moisture, index) in liveValues.sensors.moisture" :key="moisture.key" 
         class="ma-1"
@@ -20,23 +19,29 @@
 
       <SensorValueCard v-for="(temp, index) in liveValues.sensors.temperature" :key="temp.key" 
         class="ma-1"
-        sensor="🌡️ Temperature"
+        sensor=" Temperature"
         :value="temp.value"
         unit="°C"
-        :level="index">
+        :level="index"
+        icon="mdi-thermometer"
+        color="red">
       </SensorValueCard>
 
       <SensorValueCard
         class="ma-1"
-        sensor="☀️ Light intensity"
+        sensor=" Light intensity"
         :value="liveValues.sensors.light.value"
-        unit="Lumens">
+        unit="Lumens"
+        icon="mdi-brightness-4"
+        color="yellow">
       </SensorValueCard>
       <SensorValueCard
         class="ma-1"
-        sensor="🔋 Battery level"
+        sensor=" Battery level"
         :value="liveValues.sensors.voltage.battery.value"
-        unit="%">
+        unit="%"
+        icon="mdi-battery"
+        color="light-green">
       </SensorValueCard>
     </div>
   </div>
