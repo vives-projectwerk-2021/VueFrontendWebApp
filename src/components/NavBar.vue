@@ -7,9 +7,9 @@
       app
       class="pa-0 hidden-sm-and-up"
       flat
-      color="grey darken-3"
       elevate-on-scroll
       dark
+      color="green darken-3"
     >
       <v-row>
         <v-col class="px-0">
@@ -34,12 +34,13 @@
                   </v-btn>
                 </template>
 
-                <v-list>
+                <v-list color="green darken-3">
                   <v-list-item
                     :exact="true"
                     v-for="(link, i) in links"
                     :key="i"
                     :to="{ name: link }"
+                    style="color: white"
                   >
                     <v-list-item-title>{{ link }}</v-list-item-title>
                   </v-list-item>
