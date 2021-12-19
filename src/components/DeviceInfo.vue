@@ -1,6 +1,7 @@
 <template>
     <div>
         <v-container fluid>
+            <v-card elevation="5">
             <v-row class="green darken-3">
                 <v-col>
                     <p class="text-h2 text-center white--text">Your Devices</p>
@@ -8,11 +9,11 @@
             </v-row>
             <v-row class="text-h4 green darken-3">
                 <v-col>
-                    <p class="text-center white--text">On this page you can consult your devices in more detail</p>
+                    <p class="text-center white--text">On this page you have an overview of your current devices and can also add new ones</p>
                 </v-col>
             </v-row>
             <v-row>
-                 <v-col class="green darken-3" cols="6" v-for="device in devicelist" :key="device.id">
+                 <v-col class="green darken-3" lg="6" xl="12" md="6" xs="12" sm="12" v-for="device in devicelist" :key="device.id">
                         <v-card class="rounded-lg" v-if="device.location.lat && device.location.long" color="#545452" elevation="5">
                             <v-card-title  color="#434342"><router-link  class="white--text" :to="{ name: 'Sensor', params: {deviceId: device.deviceid} }">{{device.devicename}}</router-link></v-card-title>
                             <v-spacer></v-spacer>
@@ -43,6 +44,7 @@
                         </v-card>
                  </v-col>
             </v-row>
+            </v-card>
         </v-container>
         <v-btn
           elevation="2"
