@@ -14,14 +14,14 @@
     <div v-if="displayContent" class="d-flex flex-wrap">
       <MoistureCard  v-for="(moisture, index) in liveValues.sensors.moisture" :key="moisture.key" 
         class="ma-1"
-        :percentage="moisture.value"
+        :percentage="Math.round(moisture.value*100)/100"
         :level="index">
       </MoistureCard>
 
       <SensorValueCard v-for="(temp, index) in liveValues.sensors.temperature" :key="temp.key" 
         class="ma-1"
         sensor="🌡️ Temperature"
-        :value="temp.value"
+        :value="Math.round(temp.value*100)/100"
         unit="°C"
         :level="index">
       </SensorValueCard>
@@ -29,13 +29,13 @@
       <SensorValueCard
         class="ma-1"
         sensor="☀️ Light intensity"
-        :value="liveValues.sensors.light.value"
+        :value="Math.round(liveValues.sensors.light.value*100)/100"
         unit="Lumens">
       </SensorValueCard>
       <SensorValueCard
         class="ma-1"
         sensor="🔋 Battery level"
-        :value="liveValues.sensors.voltage.battery.value"
+        :value="Math.round(liveValues.sensors.voltage.battery.value*100)/100"
         unit="%">
       </SensorValueCard>
     </div>

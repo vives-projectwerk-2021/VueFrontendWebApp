@@ -14,9 +14,9 @@ const Sensors = {
     },
 
 
-    get_sensor_by_id(id){
+    get_sensor_by_id(id, period){
         console.log("Getting sensor with id: " + id );
-        return api.get(`/${this.resource}/${id}`)
+        return api.get(`/${this.resource}/${id}/${period}`)
     },
     
     add_sensor(json){

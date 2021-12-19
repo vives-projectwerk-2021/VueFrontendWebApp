@@ -104,8 +104,8 @@ export const store = new Vuex.Store({
             .catch((error) => console.log(error));
         },
 
-        getSensorById({commit}, id){
-            Sensors.get_sensor_by_id(id)
+        getSensorById({commit}, {id, period}){
+            Sensors.get_sensor_by_id(id, period)
             .then((response) => {
 
                 commit('changeDeviceInfo', {

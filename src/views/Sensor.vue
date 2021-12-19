@@ -17,8 +17,18 @@
           </v-card>
         </div>
     </div>   
-    <div>
 
+    <div>
+       <v-select
+          :items="timePeriod"
+          v-model="selectedTimePeriod"
+          label="Time period"
+          background-color="white"
+          filled
+        ></v-select>
+    </div>
+
+    <div>
       <v-card class="mt-6" elevation="5" v-if="devicevalues.values">
         <v-card-title>Moisture</v-card-title>
           <line-chart 
@@ -66,11 +76,13 @@ export default {
     return {
       loadingWS: true,
       deviceId: this.$route.params.deviceId,
+      timePeriod: ["hour", "day", "week", "month", "year"],
+      selectedTimePeriod: "hour"
     };
   },
 
   created(){
-    this.$store.dispatch("getSensorById", this.deviceId)
+    this.$store.dispatch("getSensorById", {'id': this.deviceId, 'period': this.selectedTimePeriod})
     this.$store.dispatch("deviceListener" , this.deviceId)
 
     setTimeout(() => {
@@ -235,7 +247,12 @@ export default {
         labels: time,
         values: [light],
       };
-    },
+    }
+  },
+  watch: {
+    selectedTimePeriod() {
+      this.$store.dispatch("getSensorById", {'id': this.deviceId, 'period': this.selectedTimePeriod})
+    }
   },
   methods: {
     retryWsConnection() {
