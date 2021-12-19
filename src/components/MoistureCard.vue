@@ -3,7 +3,7 @@
     <v-container>
       <v-row>
         <v-icon color="light-blue">mdi-water</v-icon>
-        <p class="mb-0">Moisture</p>
+        <v-card-title class="mb-0">Moisture</v-card-title>
       </v-row>
       <p class="mb-0">{{ level }}</p>
       <div class="mx-auto d-flex justify-center" v-if="percentage">

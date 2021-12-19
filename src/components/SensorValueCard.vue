@@ -3,7 +3,7 @@
     <v-container>
       <v-row>
         <v-icon :color="color">{{icon}}</v-icon>
-        <p>{{sensor}} {{level}}</p>
+        <v-card-title>{{sensor}} {{level}}</v-card-title>
       </v-row>
       <div class="d-flex flex-wrap">
         <p class="text-h1 mb-0">{{value}}</p>
