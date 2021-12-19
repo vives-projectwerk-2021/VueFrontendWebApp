@@ -11,17 +11,27 @@
         <v-card-text>
             <v-row class="py-1" justify="center" align="center">
                 <v-btn
-                    v-for="icon in icons_one"
-                    :key="icon.id"
+                    :key="icons_one.id"
                     class="mx-4"
-                    :href="icon.link"
+                    :href="icons_one.link"
+                    target="_blank"
                     icon
                 >
-                <v-icon size="24px">
-                    {{ icon.image }}
-                </v-icon>
+                    <v-icon size="24px">
+                        {{ icons_one.image }}
+                    </v-icon>
                 </v-btn>
-                <a href="https://www.vives.be" class="mx-5">
+                <v-btn
+                    :key="icons_three.id"
+                    class="mx-4"
+                    icon
+                    @click="sendMail"
+                >
+                    <v-icon>
+                        {{ icons_three.image }}
+                    </v-icon>
+                </v-btn>
+                <a href="https://www.vives.be" class="mx-5" target="_blank">
                     <v-img :src="logo_vives" max-height="28px" max-width="24px"></v-img>
                 </a>
                 <v-btn
@@ -30,10 +40,11 @@
                     class="mx-4"
                     :href="icon.link"
                     icon
+                    target="_blank"
                 >
-                <v-icon size="24px">
-                    {{ icon.image }}
-                </v-icon>
+                    <v-icon size="24px">
+                        {{ icon.image }}
+                    </v-icon>
                 </v-btn>
             </v-row>
         </v-card-text>
@@ -55,18 +66,17 @@ export default {
     data() {
         return {
             logo_vives: require('@/img/logo_vives.png'),
-            icons_one: [
+            icons_one:
                 {
                     id: 0,
                     image: 'mdi-github',
                     link: 'https://github.com/vives-projectwerk-2021'
                 },
+            icons_three:
                 {
                     id: 1,
                     image: 'mdi-email',
-                    link: ''
                 },
-            ],
 
             icons_two: [
                 {
@@ -80,6 +90,12 @@ export default {
                     link: 'https://twitter.com/viveshogeschool'
                 }
             ]
+        }
+    },
+
+    methods: {
+        sendMail() {
+            window.open('mailto:sille.vanlandschoot@vives.be?subject=pulu');
         }
     }
 }
