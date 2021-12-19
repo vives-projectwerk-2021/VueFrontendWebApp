@@ -13,7 +13,7 @@
                 </v-col>
             </v-row>
             <v-row>
-                 <v-col class="green darken-3" lg="6" xl="12" md="6" xs="12" sm="12" v-for="device in devicelist" :key="device.id">
+                 <v-col class="green darken-3" lg="6" xl="6" md="6" xs="12" sm="12" v-for="device in devicelist" :key="device.id">
                         <v-card class="rounded-lg" v-if="device.location.lat && device.location.long" color="#545452" elevation="5">
                             <v-card-title  color="#434342"><router-link  class="white--text" :to="{ name: 'Sensor', params: {deviceId: device.deviceid} }">{{device.devicename}}</router-link></v-card-title>
                             <v-spacer></v-spacer>
