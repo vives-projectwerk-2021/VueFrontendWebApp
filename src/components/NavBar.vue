@@ -34,7 +34,7 @@
                   </v-btn>
                 </template>
 
-                <v-list color="green darken-3">
+                <v-list :color="this.$store.state.navBarColor">
                   <v-list-item
                     :exact="true"
                     v-for="(link, i) in links"
