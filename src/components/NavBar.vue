@@ -81,7 +81,7 @@
         max-height="50"
         max-width="50"
         justify="end"
-        src="../assets/pulu.png"
+        src="../assets/pulu-light.png"
       />
     </v-app-bar>
   </div>

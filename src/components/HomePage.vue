@@ -1,6 +1,6 @@
 <template>
   <div class="pa-5">
-    <v-card class="pa-3" outlined>
+    <v-card class="pa-3" elevation="3">
       <MapPage />
     </v-card>
 
@@ -35,7 +35,7 @@
       >
         <v-row class="title fill-height" align="center" justify="center">
           <div style="color: white" class="pa-2 w-50 text-no-wrap rounded-lg">
-            <h5>{{ slide.title }}</h5>
+            <h2>{{ slide.title }}</h2>
           </div>
         </v-row>
       </v-carousel-item>
