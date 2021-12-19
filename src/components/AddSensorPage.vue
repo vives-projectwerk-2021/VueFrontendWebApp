@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card elevation="5">
+    <v-card elevation="5" :color="this.$store.state.accentColorA" dark>
       <v-row>
         <v-col>
           <p class="text-h2 text-center">Add a Sensor</p>
@@ -23,8 +23,9 @@
                 rules.devIdCounter,
               ]"
               hide-details="auto"
-              v-model="deviceid"
               counter="24"
+              v-model="deviceid"
+              @change="changedeviceid"
             ></v-text-field>
           </v-col>
 
@@ -82,10 +83,6 @@
         </v-row>
 
         <location-by-map></location-by-map>
-
-        <v-row class="text-center mb-3">
-          <v-col class="py-0"> </v-col>
-        </v-row>
       </v-form>
 
       <v-row>
@@ -200,6 +197,10 @@ export default {
       this.deviceid = id;
     },
 
+    changedeviceid() {
+      this.$store.commit('changedeviceiddevice', this.deviceid)
+    },
+
     getTTNInfo() {
       TTN.registerDevice({
         device_id: this.deviceid,
@@ -269,12 +270,30 @@ export default {
     deviceLongText() {
       return this.$store.state.deviceLongText;
     },
+    deviceiddevice() {
+      return this.$store.state.deviceiddevice;
+    }
   },
+
+  created() {
+    if (this.deviceiddevice != "") {
+      this.deviceid = this.deviceiddevice;
+    }
+  },
+
   watch: {
     deviceid() {
       this.$nextTick(() => {
         this.deviceid = this.deviceid.replace(/\s+/g, "");
       });
+    },
+    deviceiddevice(val) {
+      if (val == "") {
+        console.log("empty");
+      } else {
+        console.log(val)
+        //this.deviceid == val;
+      }
     },
     "$store.state.latlng": {
       handler: function (nv) {

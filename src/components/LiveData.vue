@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="d-flex justify-space-between my-3">
-      <h2>Live data</h2>
+      <h2>Live data: {{liveValues.time.substr(0,10)}} {{liveValues.time.substr(11,5)}}</h2>
       <v-btn
         @click="fold"
         elevation="0" fab plain small

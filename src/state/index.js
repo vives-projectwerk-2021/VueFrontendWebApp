@@ -17,6 +17,10 @@ export const store = new Vuex.Store({
         devicelist: [],
         devicevalues: {},
         activeDevice: "",
+        deviceiddevice: "",
+        latestDeviceValue: {},
+
+        members:22,
 
         snackbarText: "",
         deviceidText: "Invalid Device ID: Can only be a hexadecimal value.",
@@ -24,6 +28,11 @@ export const store = new Vuex.Store({
         deviceLongText: "Invalid Longitude! (-90 to 90)",
 
         latlng: undefined,
+
+        backgroundColor: "grey darken-3",
+        navBarColor: "green darken-3",
+        footerColor: "grey darken-4",
+        accentColorA: "green darken-3"
     },
 
     getters: {
@@ -32,9 +41,11 @@ export const store = new Vuex.Store({
             return state.devicevalues;
         },
 
-        devicelist(state)
-        {
+        devicelist(state) {
             return state.devicelist
+        },
+        latestDeviceValue(state) {
+            return state.latestDeviceValue
         }
     },
 
@@ -44,8 +55,8 @@ export const store = new Vuex.Store({
         },
 
         changeDeviceInfo(state,payload){
-            state.devicevalues = payload.devicevalues
-          
+            state.devicevalues = payload.devicevalues;
+            state.latestDeviceValue = payload.devicevalues.values.splice(-1)[0]
         },
         addSensor(state, payload) {
             state.snackbarText = payload
@@ -55,11 +66,29 @@ export const store = new Vuex.Store({
         },
         setLatLng(state, payload) {
             state.latlng = payload
-        }
-
+        },
+        changeMembers(state,payload){
+            state.members=payload
+        },
+        changedeviceiddevice(state, payload) {
+            state.deviceiddevice = payload;
+        },
     },
     
     actions: {
+        getMembers({commit}){
+            return Sensors.get_members()
+            .then((response)=>{
+                
+
+                commit('changeMembers',{
+                    members:response.data
+                })
+                this.members=response.data
+            }).catch((error)=>console.log(error))
+        },
+
+
         getAllSensors({commit} ){
             return Sensors.get_all_sensors()
             .then((response) => {
