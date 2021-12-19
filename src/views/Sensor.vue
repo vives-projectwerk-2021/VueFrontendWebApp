@@ -1,52 +1,31 @@
 <template>
   <div>
-    <v-card class="mb-6" elevation="5" v-if="devicevalues.id">
-      <v-card-title>Device name: {{ devicevalues.name }}</v-card-title>
-      <v-card-text v-if="devicevalues.location.place_name"
-        >📍 Location: {{ devicevalues.location.place_name }}
-      </v-card-text>
-      <v-card-text v-else
-        >📍 Location: [{{ devicevalues.location.lat }},
-        {{ devicevalues.location.long }}]
-      </v-card-text>
+    <v-card class="my-3" elevation="5" v-if="devicevalues.id" >
+      <v-row>
+        <v-col cols="9" class="py-0">
+          <v-card-title>Device name: {{ devicevalues.name }}</v-card-title>
+          <v-card-text v-if="devicevalues.location.place_name">📍 Location:  {{ devicevalues.location.place_name }} </v-card-text>
+          <v-card-text v-else>📍 Location:  [{{ devicevalues.location.lat }}, {{ devicevalues.location.long }}] </v-card-text>
+        </v-col>
+        <v-col v-if="this.$store.state.websocket.wsReadyState != 1 || !liveDeviceValues || liveDeviceValues.device_id != deviceId" cols="3" class="py-0">
+          <div align="center" class="mt-5" justify="end">
+            <v-progress-circular
+              class="mx-auto"
+              indeterminate
+              size="25"
+            ></v-progress-circular>
+            <p>Waiting for live data</p>
+          </div>
+        </v-col>
+      </v-row>
     </v-card>
     <div>
-      <div v-if="loadingWS">
-        <p>Waiting for websocket connection</p>
-        <v-progress-linear
-          indeterminate
-          color="yellow darken-2"
-        ></v-progress-linear>
-      </div>
-
-      <div v-else>
-        <v-card
-          v-if="!ws || ws.readyState != 1"
-          class="mx-auto text-center pa-6 red accent-1"
-        >
-          <h3>No WebSocket Connection</h3>
-          <v-btn @click="retryWsConnection" elevation="2" large outlined
-            >Retry Connecting
-          </v-btn>
-        </v-card>
-
-        <div
-          v-else-if="liveDeviceValues && liveDeviceValues.device_id == deviceId"
-        >
+        <div v-if="liveDeviceValues && liveDeviceValues.device_id == deviceId">
           <v-card>
             <LiveData :liveValues="liveDeviceValues" class="ma-4" />
           </v-card>
         </div>
-
-        <div v-else>
-          <p>Waiting for live data...</p>
-          <v-progress-linear
-            indeterminate
-            color="yellow darken-2"
-          ></v-progress-linear>
-        </div>
-      </div>
-    </div>
+    </div>   
     <div>
 
       <v-card class="mt-6" elevation="5">
@@ -112,10 +91,19 @@ export default {
   created() {
     this.$store.dispatch("getSensorById", [this.deviceId, "?start=hour"]);
     this.$store.dispatch("deviceListener", this.deviceId);
-    if (this.$store.state.wsReadyState != 1) {
+    if (this.$store.state.websocket.wsReadyState != 1) {
+
       setTimeout(() => {
+        console.log(this.devicevalues);
         this.retryWsConnection();
         this.loadingWS = false;
+        if (this.devicevalues.id == this.deviceId) {
+          console.log(this.devicevalues.id);
+        } else {
+          console.log("no device");
+          this.$store.commit('changedeviceid', this.deviceId);
+          this.$router.push({ name: 'AddSensor'});
+        }
       }, 1000);
     } else {
       this.loadingWS = false;
@@ -126,10 +114,10 @@ export default {
       return this.$store.getters.devicevalues;
     },
     liveDeviceValues() {
-      return this.$store.state.liveDeviceValues;
+      return this.$store.state.websocket.liveDeviceValues
     },
     ws() {
-      return this.$store.state.ws;
+      return this.$store.state.websocket.ws
     },
     dataForMoistureChart() {
       let values = this.devicevalues.values;
@@ -212,7 +200,7 @@ export default {
   },
   methods: {
     retryWsConnection() {
-      this.$store.dispatch("tryWsConnection");
+      this.$store.dispatch('websocket/tryWsConnection')
     },
     getTime() {
       let values = this.devicevalues.values;

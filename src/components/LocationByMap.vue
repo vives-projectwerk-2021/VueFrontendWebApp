@@ -19,7 +19,13 @@ export default {
       map: null,
       loaded: false,
       markerlocation: null,
-      pin: null
+      pin: null,
+      maxBounds: [
+        //south west
+        [-90, -180],
+        //north east
+        [90, 180],
+      ],
     };
   },
   methods: {
@@ -28,11 +34,13 @@ export default {
       L.tileLayer(
         "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
         {
+          minZoom: 2,
           maxZoom: 18,
           id: "mapbox/streets-v11",
           accessToken: config.VUE_APP_MAPBOX_TOKEN,
         }
       ).addTo(this.map);
+      this.map.setMaxBounds(this.maxBounds);
 
       delete Icon.Default.prototype._getIconUrl;
       Icon.Default.mergeOptions({
@@ -42,6 +50,7 @@ export default {
       });
       
       this.monitorClick()
+      
     },
     monitorClick(){
         this.map.on('click', (e)=> {
@@ -54,10 +63,40 @@ export default {
             }
             this.$store.dispatch("updatelatlng", e.latlng)
         });
-    }
+    },
+    monitorDrag(){
+      this.pin.on('dragend', (e)=> {
+        var marker = e.target;  // you could also simply access the marker through the closure
+        var result = marker.getLatLng(); 
+        this.$store.dispatch("updatelatlng", result)
+
+      });
+    },
   },
+  
   mounted() {
     this.setupLeafletMap()
+  },
+  watch: {
+    "$store.state.latlng": {
+      handler: function(nv) {
+        setTimeout(() =>  100);
+        if(nv){
+          if(this.pin){
+            this.pin.setLatLng(nv)          
+          }
+          else{
+            this.pin = L.marker(nv,{ riseOnHover:true,draggable:true })
+            this.pin.setLatLng(nv)          
+            this.pin.addTo(this.map);
+          }
+          this.map.panTo(nv)
+          this.monitorDrag()
+
+        }
+        
+      },
+    }
   },
 };
 </script>
