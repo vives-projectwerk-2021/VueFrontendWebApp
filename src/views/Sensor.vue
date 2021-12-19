@@ -1,23 +1,9 @@
 <template>
   <div>
     <v-card class="my-3" elevation="5" v-if="devicevalues.id" >
-      <v-row>
-        <v-col cols="9" class="py-0">
-          <v-card-title>Device name: {{ devicevalues.name }}</v-card-title>
-          <v-card-text v-if="devicevalues.location.place_name">📍 Location:  {{ devicevalues.location.place_name }} </v-card-text>
-          <v-card-text v-else>📍 Location:  [{{ devicevalues.location.lat }}, {{ devicevalues.location.long }}] </v-card-text>
-        </v-col>
-        <v-col v-if="this.$store.state.websocket.wsReadyState != 1 || !liveDeviceValues || liveDeviceValues.device_id != deviceId" cols="3" class="py-0">
-          <div align="center" class="mt-5" justify="end">
-            <v-progress-circular
-              class="mx-auto"
-              indeterminate
-              size="25"
-            ></v-progress-circular>
-            <p>Waiting for live data</p>
-          </div>
-        </v-col>
-      </v-row>
+      <v-card-title>Device name: {{ devicevalues.name }}</v-card-title>
+      <v-card-text v-if="devicevalues.location.place_name">📍 Location:  {{ devicevalues.location.place_name }} </v-card-text>
+      <v-card-text v-else>📍 Location:  [{{ devicevalues.location.lat }}, {{ devicevalues.location.long }}] </v-card-text>
     </v-card>
     <div>
         <div v-if="liveDeviceValues && liveDeviceValues.device_id == deviceId">
@@ -25,9 +11,22 @@
             <LiveData :liveValues="liveDeviceValues" class="ma-4" />
           </v-card>
         </div>
+        <div v-else-if="latestDeviceValue">
+          <v-card>
+            <LiveData :liveValues="latestDeviceValue" class="ma-4" />
+          </v-card>
+        </div>
     </div>   
     <div>
 
+      <v-card class="mt-6" elevation="5">
+        <v-select
+          label="Choose Time"
+          :items="timeChoises"
+          v-model="defaultSelect"
+          @change="chosenTimeStamp($event)"
+        />
+      </v-card>
       <v-card class="mt-6" elevation="5" v-if="devicevalues.values">
         <v-card-title>Moisture</v-card-title>
           <line-chart 
@@ -75,13 +74,15 @@ export default {
     return {
       loadingWS: true,
       deviceId: this.$route.params.deviceId,
+      defaultSelect: 'hour',
+      timeChoises: ['hour','day','week','month','year'],
+      selectedTimeStamp: "hour"
     };
   },
 
-  created(){
-    this.$store.dispatch("getSensorById", this.deviceId)
-    this.$store.dispatch("deviceListener" , this.deviceId)
-
+  created() {
+    this.$store.dispatch("getSensorById", [this.deviceId, "?start=hour"]);
+    this.$store.dispatch("deviceListener", this.deviceId);
     setTimeout(() => {
         if (this.devicevalues.id == this.deviceId) {
           //console.log("this is the device id", this.devicevalues.id);
@@ -91,7 +92,6 @@ export default {
           this.$router.push({ name: 'AddSensor'});
         }
       }, 1000)
-
     if (this.$store.state.websocket.wsReadyState != 1) {
 
       setTimeout(() => {
@@ -106,6 +106,48 @@ export default {
     devicevalues() {
       return this.$store.getters.devicevalues;
     },
+    latestDeviceValue() {
+      let values = this.$store.getters.latestDeviceValue
+      if (values) {
+        return {
+          'device_id': this.deviceId,
+          'time': values.time,
+          'sensors': {
+            'light': {
+              'value': values.light
+            },
+            'moisture': {
+              'level1': {
+                'value': values.moisture[0].value
+              },
+              'level2': {
+                'value': values.moisture[1].value
+              },
+              'level3': {
+                'value': values.moisture[2].value
+              },
+              'level4': {
+                'value': values.moisture[3].value
+              }
+            },
+            'temperature': {
+              'air': {
+                'value': values.temperature.air
+              },
+              'ground': {
+                'value': values.temperature.ground
+              }
+            },
+            'voltage': {
+              'battery':  {
+                'value': values.battery_voltage
+              }
+            }
+          },
+        }
+      }
+      return values
+    },
     liveDeviceValues() {
       return this.$store.state.websocket.liveDeviceValues
     },
@@ -117,9 +159,6 @@ export default {
       if (values == undefined) {
         return 0;
       }
-      let time = values.map((values) => {
-        return values.time;
-      });
       let allMoisture = values.map((values) => {
         return values.moisture;
       });
@@ -133,21 +172,17 @@ export default {
 
       return {
         label: xlabels,
-        labels: time,
+        labels: this.getTime(),
         values: yvalues,
       };
     },
     dataForTemperatureChart() {
       let values = this.devicevalues.values;
-      let time,
-        airTemperature,
+      let airTemperature,
         groundTemperature = 0;
       if (values == undefined) {
         return 0;
       }
-      time = values.map((values) => {
-        return values.time;
-      });
 
       airTemperature = values.map((values) => {
         return values.temperature.air;
@@ -161,7 +196,7 @@ export default {
 
       return {
         label: xlabels,
-        labels: time,
+        labels: this.getTime(),
         values: yvalues,
       };
     },
@@ -170,9 +205,6 @@ export default {
       if (values == undefined) {
         return 0;
       }
-      let time = values.map((values) => {
-        return values.time;
-      });
 
      let battery = values.map((values) => {
         return values.battery_voltage;
@@ -180,7 +212,7 @@ export default {
 
       return {
         label: ["battery"],
-        labels: time,
+        labels: this.getTime(),
         values: [battery],
       };
     },
@@ -189,9 +221,6 @@ export default {
       if (values == undefined) {
         return 0;
       }
-      let time = values.map((values) => {
-        return values.time;
-      });
 
      let light = values.map((values) => {
         return values.light;
@@ -199,7 +228,7 @@ export default {
 
       return {
         label: ["light"],
-        labels: time,
+        labels: this.getTime(),
         values: [light],
       };
     },
@@ -208,6 +237,18 @@ export default {
     retryWsConnection() {
       this.$store.dispatch('websocket/tryWsConnection')
     },
+    getTime() {
+      let values = this.devicevalues.values;
+      return  values.map((values) => {
+        return values.time;
+      });
+    },
+    chosenTimeStamp(event) {
+      this.selectedTimeStamp = event
+      this.$store.dispatch("getSensorById", [this.deviceId, `?start=${event}`])
+    }
   },
 };
 </script>
+
+
