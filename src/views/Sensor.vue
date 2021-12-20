@@ -12,7 +12,6 @@
         {{ devicevalues.location.long }}]
       </v-card-text>
       <v-card-text>
-
         <map-lat-long
                   v-if="devicevalues.location.lat && devicevalues.location.long"
                   v-bind:lat="devicevalues.location.lat"
