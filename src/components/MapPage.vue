@@ -117,9 +117,11 @@ export default {
           this.markerarray.push(marker);
         }
       });
-      this.map.fitBounds(
-        L.latLngBounds(this.markerarray.map((marker) => marker.getLatLng()))
-      );
+      if(this.markerarray){
+        this.map.fitBounds(
+          L.latLngBounds(this.markerarray.map((marker) => marker.getLatLng()))
+        );
+      }
     },
   },
   mounted() {
