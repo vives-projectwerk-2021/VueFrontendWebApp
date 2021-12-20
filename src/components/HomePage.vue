@@ -141,7 +141,6 @@ export default {
         if(amount){
           this.cards[2].subtitle=amount.members
 
-          console.log(amount.members)
         }
         
       }
@@ -165,7 +164,6 @@ export default {
         }
       });
 
-      console.log(countries);
 
       this.cards[1].subtitle = countries.length;
     },

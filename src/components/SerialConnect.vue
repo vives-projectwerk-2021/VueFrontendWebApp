@@ -64,7 +64,6 @@ export default {
       .then( async () => {      // Read the response
         this.serialWriter("aWQ=")
         const device_Id = await this.$store.dispatch("serial/readSerialPort", 16)
-        console.log("Device-id: " + device_Id)
         this.$emit('deviceId', device_Id)
       })
       .catch((error) => {
