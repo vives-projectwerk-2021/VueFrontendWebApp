@@ -7,7 +7,7 @@
         <router-view />
       </v-container>
     </v-main>
-    <v-snackbar v-if="updateAvailable">
+    <v-snackbar v-if="true">
       <button @click="update">
         Update
       </button>
