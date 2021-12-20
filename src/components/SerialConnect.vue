@@ -53,7 +53,6 @@ export default {
             "serial/readSerialPort",
             16
           );
-          console.log("Device-id: " + device_Id);
           this.$emit("deviceId", device_Id);
         })
         .catch((error) => {
