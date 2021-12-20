@@ -235,6 +235,7 @@ export default {
     UseGPS() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(this.showPosition);
+
       } else {
         console.log("error");
       }
@@ -243,6 +244,7 @@ export default {
       this.lat = position.coords.latitude;
       this.long = position.coords.longitude;
       this.Locationedit();
+      this.$store.dispatch("updatemapzoom", true)
     },
     FormatLatLong() {
       this.lat = Number(this.lat).toFixed(7);
