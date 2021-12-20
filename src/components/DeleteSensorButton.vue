@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { Sensors } from "@/api/pulu.js";
+import { Sensors, TTN } from "@/api/pulu.js";
 
 export default {
   name: "DeleteSensorButton",
@@ -43,10 +43,14 @@ export default {
     deleteSensor() {
       // send delete request to backend
       Sensors.delete_sensor(this.sensorid)
-        .then(() => {
+      .then(() => {
+        TTN.removeDevice(this.sensorid)
+        .then((res) => {
+          console.log(res)
           this.$router.go(); // refresh page
         })
-        .catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
     },
   },
 };
