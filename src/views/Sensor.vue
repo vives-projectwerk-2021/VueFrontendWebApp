@@ -11,6 +11,16 @@
         Location: [{{ devicevalues.location.lat }},
         {{ devicevalues.location.long }}]
       </v-card-text>
+      <v-card-text>
+
+        <map-lat-long
+                  v-if="devicevalues.location.lat && devicevalues.location.long"
+                  v-bind:lat="devicevalues.location.lat"
+                  v-bind:long="devicevalues.location.long"
+                  v-bind:device="devicevalues.id"
+                />
+      </v-card-text>
+
     </v-card>
     <div>
       <div v-if="liveDeviceValues && liveDeviceValues.device_id == deviceId">
@@ -65,6 +75,7 @@
 import LiveData from "@/components/LiveData";
 import LineChart from "@/components/Chart.vue";
 import MoistureHelper from "@/helpers/moistureHelper.js";
+import MapLatLong from '../components/MapLatLong.vue';
 
 export default {
   name: "Sensor",
@@ -73,6 +84,7 @@ export default {
     LineChart,
   },
   data() {
+    MapLatLong
     return {
       loadingWS: true,
       deviceId: this.$route.params.deviceId,
