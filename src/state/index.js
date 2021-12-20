@@ -97,7 +97,6 @@ export const store = new Vuex.Store({
         getAllSensors({commit} ){
             return Sensors.get_all_sensors()
             .then((response) => {
-                 console.log(response);
 
                 commit('changeDevices', {
                     devicelist: response.data
@@ -118,17 +117,14 @@ export const store = new Vuex.Store({
                     devicevalues: response.data
                 })
                 this.devicevalues = response.data
-                console.log(this.devicevalues)
             })
             .catch((error) => console.log(error));
           
         },
         
         addSensor(store, payload) {
-            console.log(payload);
             Sensors.add_sensor(payload)
             .then((response) => {
-                console.log(response);
                 if (response.data == "Already exists") {
                   this.commit('addSensor', `The device with deviceid: ${payload.deviceid} already exists`)
                 } else {
