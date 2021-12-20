@@ -37,7 +37,10 @@ const TTN = {
 
     registerDevice(json){
         return api.post(`/${this.resource}`, json);
+    },
 
+    removeDevice(id) {
+        return api.delete(`/${this.resource}/${id}`)
     }
 }
 
