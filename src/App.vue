@@ -37,6 +37,7 @@ export default {
     return {
       registration: null,
       updateAvailable: false,
+      isRefreshing: false
     };
   },
   methods: {
