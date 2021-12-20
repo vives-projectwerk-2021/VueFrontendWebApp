@@ -9,30 +9,25 @@ const Sensors = {
     resource: 'sensors',
 
     get_all_sensors(){
-        console.log("Getting all sensors");
         return api.get(`/${this.resource}`);
     },
 
 
     get_sensor_by_id(id, time){
-        console.log("Getting sensor with id: " + id );
         return api.get(`/${this.resource}/${id}${time}`)
         
     },
     
     add_sensor(json){
-        console.log("Post new sensor");
         return api.post(`/${this.resource}`, json);
     },
 
 
     get_members(){
-        console.log("Getting members");
         return api.get(`/members`)
     },
 
     delete_sensor(id) {
-        console.log("Delete sensor with id:" + id);
         return api.delete(`/${this.resource}/${id}`)
     }
 }
@@ -42,7 +37,10 @@ const TTN = {
 
     registerDevice(json){
         return api.post(`/${this.resource}`, json);
+    },
 
+    removeDevice(id) {
+        return api.delete(`/${this.resource}/${id}`)
     }
 }
 
