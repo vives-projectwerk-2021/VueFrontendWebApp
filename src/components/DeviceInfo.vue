@@ -27,23 +27,77 @@
               ></v-card-title
             >
             <v-spacer></v-spacer>
-            <v-card-text class="pt-0">
-              <ul>
-                <li><b>Device ID: </b> {{ device.deviceid }}</li>
-                <li v-if="device.location.place_name">
-                  <b>Location: </b> {{ device.location.place_name }}
-                </li>
-                <li v-else>
-                  <b>Location: </b>[{{ device.location.lat }},
-                  {{ device.location.long }}]
-                </li>
-                <li v-if="device.lastSend != testString">
-                  <b>Air Temperature: </b> {{Number(device.lastSend.temperature.air).toFixed(2)}}°C
-                </li>
-                <li v-if="device.lastSend != testString">
-                  <b>Battery Percentage: </b> {{Number(device.lastSend.battery_voltage).toFixed(2)}}%
-                </li>
-              </ul>
+            <v-card-text>
+              <v-row>
+                <v-col>
+                <v-card-text v-if="device.lastSend != testString"
+                  ><v-icon color="red">mdi-thermometer</v-icon
+                  ><b
+                    >Air Temperature:
+                    {{
+                      Number(device.lastSend.temperature.air).toFixed(2)
+                    }}°C</b></v-card-text>
+                    <v-card-text v-if="device.lastSend != testString"
+                  ><v-icon color="light-blue">mdi-water</v-icon
+                  ><b
+                    >Moisture L1:
+                    {{
+                      Number(device.lastSend.moisture[0].value).toFixed(2)
+                    }}</b
+                  ></v-card-text
+                >
+                <v-card-text v-if="device.lastSend != testString"
+                  ><v-icon color="light-blue">mdi-water</v-icon
+                  ><b
+                    >Moisture L3:
+                    {{
+                      Number(device.lastSend.moisture[2].value).toFixed(2)
+                    }}</b
+                  ></v-card-text>
+                  <v-card-text v-if="device.lastSend != testString"
+                  ><v-icon color="light-green">mdi-battery</v-icon
+                  ><b
+                    >Battery Voltage:
+                    {{ Number(device.lastSend.battery_voltage).toFixed(2) }}%</b
+                  ></v-card-text
+                >
+                </v-col>
+                <v-col>
+                <v-card-text v-if="device.lastSend != testString"
+                  ><v-icon color="red">mdi-thermometer</v-icon
+                  ><b
+                    >Ground Temperature:
+                    {{
+                      Number(device.lastSend.temperature.ground).toFixed(2)
+                    }}°C</b
+                  ></v-card-text>
+                  <v-card-text v-if="device.lastSend != testString"
+                  ><v-icon color="light-blue">mdi-water</v-icon
+                  ><b
+                    >Moisture L2:
+                    {{
+                      Number(device.lastSend.moisture[1].value).toFixed(2)
+                    }}</b
+                  ></v-card-text>
+                <v-card-text v-if="device.lastSend != testString"
+                  ><v-icon color="light-blue">mdi-water</v-icon
+                  ><b
+                    >Moisture L4:
+                    {{
+                      Number(device.lastSend.moisture[3].value).toFixed(2)
+                    }}</b
+                  ></v-card-text>
+                  <v-card-text v-if="device.lastSend != testString"
+                  ><v-icon color="yellow">mdi-brightness-4</v-icon
+                  ><b
+                    > Lumen:
+                    {{ Number(device.lastSend.light).toFixed(5)}}</b
+                  ></v-card-text
+                >
+                </v-col>
+              </v-row>
+
+
             </v-card-text>
             <v-card-text>
               <map-lat-long
@@ -93,11 +147,11 @@ export default {
   },
   data() {
     return {
-      testString: "None"
-    //   d: new Date(),
-    //   d2: new Date(device.lastSend.time),
-    //   d3: new Date(d.getTime() - d2.getTime())
-     }
+      testString: "None",
+      //   d: new Date(),
+      //   d2: new Date(device.lastSend.time),
+      //   d3: new Date(d.getTime() - d2.getTime())
+    };
   },
   computed: {
     ...mapState(["devicelist"]),
