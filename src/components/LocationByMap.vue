@@ -100,7 +100,6 @@ export default {
       "$store.state.mapzoom": {
         handler: function(nv) {
           if (nv == true) {
-            console.log("happens")
             this.map.setView(this.center, 18)
             this.$store.dispatch("updatemapzoom", false)
           }
