@@ -17,6 +17,7 @@ export default {
     return {
       center: [51.209348, 3.2246995],
       data: [],
+      markerarray: [],
       map: null,
       loaded: false,
       icon: [],
@@ -104,7 +105,6 @@ export default {
     },
     async addPoints() {
       await this.$store.dispatch("getAllSensors");
-      var markerarray = [];
       this.$store.getters.devicelist.forEach((device) => {
         if (device.location.lat && device.location.long) {
           const marker = L.marker([device.location.lat, device.location.long])
@@ -114,12 +114,14 @@ export default {
               `<b>${device.devicename}</b><br><a href="${window.location.href}sensors/${device.deviceid}">See sensor data</a>`
             );
 
-          markerarray.push(marker);
+          this.markerarray.push(marker);
         }
       });
-      this.map.fitBounds(
-        L.latLngBounds(markerarray.map((marker) => marker.getLatLng()))
-      );
+      if(this.markerarray){
+        this.map.fitBounds(
+          L.latLngBounds(this.markerarray.map((marker) => marker.getLatLng()))
+        );
+      }
     },
   },
   mounted() {

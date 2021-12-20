@@ -29,6 +29,7 @@ export const store = new Vuex.Store({
         timeStamp: "?start=hour",
 
         latlng: undefined,
+        mapzoom: false,
 
         backgroundColor: "grey darken-3",
         navBarColor: "green darken-3",
@@ -74,6 +75,9 @@ export const store = new Vuex.Store({
         changedeviceiddevice(state, payload) {
             state.deviceiddevice = payload;
         },
+        setmapzoom(state,payload) {
+            state.mapzoom = payload
+        }
     },
     
     actions: {
@@ -137,6 +141,10 @@ export const store = new Vuex.Store({
         },
         updatelatlng(store, payload) {
             this.commit('setLatLng', payload)
+        },
+        updatemapzoom(store, payload){
+            
+            this.commit('setmapzoom', payload)
         }
 
     }
