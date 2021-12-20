@@ -1,12 +1,17 @@
 <template>
   <v-app id="Pulu App">
-    <nav-bar />
+    <nav-bar /> 
 
     <v-main class="grey lighten-3">
       <v-container>
         <router-view />
       </v-container>
     </v-main>
+    <v-snackbar v-if="updateAvailable">
+      <button @click="update">
+        Update
+      </button>
+    </v-snackbar>
 
     <FooTer />
   </v-app>

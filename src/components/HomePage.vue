@@ -9,7 +9,7 @@
     <br />
     <div>
       <p class="text-h4">
-        oeloe oeloe Pulu gives an overview of the current groundwater levels in Flanders.
+        Pulu gives an overview of the current groundwater levels in Flanders.
       </p>
       <p class="text-h4">
         Our mission of this platform is to map these groundwater levels.
