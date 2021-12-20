@@ -11,12 +11,16 @@
         Location: [{{ devicevalues.location.lat }},
         {{ devicevalues.location.long }}]
       </v-card-text>
-      <map-lat-long
-                v-if="devicevalues.location.lat && devicevalues.location.long"
-                v-bind:lat="devicevalues.location.lat"
-                v-bind:long="devicevalues.location.long"
-                v-bind:device="devicevalues.id"
-              />
+      <v-card-text>
+
+        <map-lat-long
+                  v-if="devicevalues.location.lat && devicevalues.location.long"
+                  v-bind:lat="devicevalues.location.lat"
+                  v-bind:long="devicevalues.location.long"
+                  v-bind:device="devicevalues.id"
+                />
+      </v-card-text>
+
     </v-card>
     <div>
       <div v-if="liveDeviceValues && liveDeviceValues.device_id == deviceId">
