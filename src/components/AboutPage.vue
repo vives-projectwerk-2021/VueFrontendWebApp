@@ -74,8 +74,9 @@
     </v-row>
 
     <v-row justify="center">
-      <v-col cols="10" md="7">
-        <p id="DevOps" class="text-h3 mt-12 mb-0 mb-n4 text-right">Hardware</p>
+      <v-col cols="8" md="2"> </v-col>
+      <v-col cols="12" md="7">
+        <p id="DevOps" class="text-h3 mt-12 mb-n4 text-right">Hardware</p>
       </v-col>
 
       <v-col cols="12" md="9">

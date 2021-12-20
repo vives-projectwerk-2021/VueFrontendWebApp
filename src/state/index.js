@@ -29,6 +29,7 @@ export const store = new Vuex.Store({
         timeStamp: "?start=hour",
 
         latlng: undefined,
+        mapzoom: false,
 
         backgroundColor: "grey darken-3",
         navBarColor: "green darken-3",
@@ -74,6 +75,9 @@ export const store = new Vuex.Store({
         changedeviceiddevice(state, payload) {
             state.deviceiddevice = payload;
         },
+        setmapzoom(state,payload) {
+            state.mapzoom = payload
+        }
     },
     
     actions: {
@@ -93,7 +97,6 @@ export const store = new Vuex.Store({
         getAllSensors({commit} ){
             return Sensors.get_all_sensors()
             .then((response) => {
-                 console.log(response);
 
                 commit('changeDevices', {
                     devicelist: response.data
@@ -114,17 +117,14 @@ export const store = new Vuex.Store({
                     devicevalues: response.data
                 })
                 this.devicevalues = response.data
-                console.log(this.devicevalues)
             })
             .catch((error) => console.log(error));
           
         },
         
         addSensor(store, payload) {
-            console.log(payload);
             Sensors.add_sensor(payload)
             .then((response) => {
-                console.log(response);
                 if (response.data == "Already exists") {
                   this.commit('addSensor', `The device with deviceid: ${payload.deviceid} already exists`)
                 } else {
@@ -141,6 +141,10 @@ export const store = new Vuex.Store({
         },
         updatelatlng(store, payload) {
             this.commit('setLatLng', payload)
+        },
+        updatemapzoom(store, payload){
+            
+            this.commit('setmapzoom', payload)
         }
 
     }

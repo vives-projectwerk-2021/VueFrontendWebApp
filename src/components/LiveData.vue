@@ -14,7 +14,7 @@
       <v-row>
         <v-col cols="12" sm="6" md="3" v-for="(moisture, index) in liveValues.sensors.moisture" :key="moisture.key">
           <MoistureCard
-            :percentage="moisture.value"
+            :percentage="Math.round(moisture.value*10)/10"
             :level="index"
           >
           </MoistureCard>
@@ -22,7 +22,7 @@
         <v-col  cols="12" sm="6" md="3"  v-for="(temp, index) in liveValues.sensors.temperature" :key="temp.key">
           <SensorValueCard
             sensor=" Temperature"
-            :value="temp.value"
+            :value="Math.round(temp.value*10)/10"
             unit="°C"
             :level="index"
             icon="mdi-thermometer"
@@ -33,7 +33,7 @@
         <v-col  cols="12" sm="6" md="3" >
           <SensorValueCard
             sensor=" Light intensity"
-            :value="liveValues.sensors.light.value"
+            :value="Math.round(liveValues.sensors.light.value*10)/10"
             unit="Lumens"
             icon="mdi-brightness-4"
             color="yellow"
@@ -43,7 +43,7 @@
         <v-col cols="12" sm="6" md="3" >
           <SensorValueCard
             sensor=" Battery level"
-            :value="liveValues.sensors.voltage.battery.value"
+            :value="Math.round(liveValues.sensors.voltage.battery.value*10)/10"
             unit="%"
             icon="mdi-battery"
             color="light-green"
