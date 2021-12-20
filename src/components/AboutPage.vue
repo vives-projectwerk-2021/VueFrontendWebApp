@@ -11,7 +11,7 @@
           ></v-img>
         </v-card>
         <p class="text-h5 my-5 text-justify" dark>
-          We are a team of 21 students, all in our last year, studying
+          We are a team of goeie 21 students, all in our last year, studying
           ICT-Electronics at Vives in Bruges. We used our expertise and what we
           have learned over the years in this all-round group project.
         </p>
