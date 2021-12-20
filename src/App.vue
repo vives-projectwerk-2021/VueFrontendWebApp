@@ -47,6 +47,7 @@ export default {
     updateTheApp(e) {
       this.registration = e.detail;
       this.updateAvailable = true;
+      console.log("jaaaa")
     },
     update() {
       // Actual update
