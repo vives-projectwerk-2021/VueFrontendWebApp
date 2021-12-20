@@ -1,7 +1,7 @@
 <template>
-  <v-card max-width="150">
-    <v-container>
-      <v-row>
+  <v-card outlined flat>
+    <v-container style="text-align: center;">
+      <v-row justify="center">
         <v-icon color="light-blue">mdi-water</v-icon>
         <v-card-title class="mb-0">Moisture</v-card-title>
       </v-row>
