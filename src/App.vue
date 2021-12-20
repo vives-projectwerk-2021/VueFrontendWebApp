@@ -7,13 +7,10 @@
         <router-view />
       </v-container>
     </v-main>
-    <v-snackbar v-if="true">
-      <button @click="update">
-        Update
-      </button>
-    </v-snackbar>
-
     <FooTer />
+    <v-snackbar v-model="updateAvailable">
+      <button @click="update">Update</button>
+    </v-snackbar>
   </v-app>
 </template>
 
@@ -42,7 +39,8 @@ export default {
     return {
       registration: null,
       updateAvailable: false,
-      isRefreshing: false
+      isRefreshing: false,
+      snackbar: false
     };
   },
   methods: {
