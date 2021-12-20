@@ -29,8 +29,10 @@
         <div class="d-flex justify-center mb-2">
             <v-btn @click="switchCamera">Switch camera</v-btn>
         </div>
-        <div>
-            <qrcode-stream :camera="camera" @decode="onDecode" @init="onInit"></qrcode-stream>
+        <div class="d-flex justify-center">
+            <v-card height="400" width="400" class="pa-3" elevation="3">
+                <qrcode-stream :camera="camera" @decode="onDecode" @init="onInit"></qrcode-stream>
+            </v-card>
         </div>
     </div>
 </template>
@@ -116,3 +118,16 @@ import { QrcodeStream } from 'vue-qrcode-reader';
         }
     }
 </script>
+
+<style scoped>
+.qrcode-stream__pause-frame {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 60%;
+    min-height: 60%;
+    width: 100;
+    height: 100;
+    
+}
+</style>
