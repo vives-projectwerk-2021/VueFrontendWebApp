@@ -37,17 +37,11 @@
                   <b>Location: </b>[{{ device.location.lat }},
                   {{ device.location.long }}]
                 </li>
-                <li>
-                  <b>Moisture L1: </b> {{lastSend.moisture.value}}
+                <li v-if="device.lastSend != testString">
+                  <b>Air Temperature: </b> {{Number(device.lastSend.temperature.air).toFixed(2)}}°C
                 </li>
-                <li>
-                  <b>Moisture L2: </b> {{}}
-                </li>
-                <li>
-                  <b>Moisture L3: </b> {{}}
-                </li>
-                <li>
-                  <b>Moisture L4: </b> {{}}
+                <li v-if="device.lastSend != testString">
+                  <b>Battery Percentage: </b> {{Number(device.lastSend.battery_voltage).toFixed(2)}}%
                 </li>
               </ul>
             </v-card-text>
@@ -97,7 +91,14 @@ export default {
   created() {
     this.$store.dispatch("getAllSensors");
   },
-
+  data() {
+    return {
+      testString: "None"
+    //   d: new Date(),
+    //   d2: new Date(device.lastSend.time),
+    //   d3: new Date(d.getTime() - d2.getTime())
+     }
+  },
   computed: {
     ...mapState(["devicelist"]),
   },
