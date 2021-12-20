@@ -41,7 +41,7 @@ export default {
           minZoom: 2,
           maxZoom: 18,
           username: "arthur2",
-          style_id: "ckx7wi0zy0ip215p88e3fnozy",
+          style_id: "ckxepad6y03n814n07tgt0jhy",
           access_token: config.VUE_APP_MAPBOX_TOKEN,
           projection: "naturalEarth",
         }
