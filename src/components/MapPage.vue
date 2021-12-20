@@ -17,7 +17,7 @@ export default {
     return {
       center: [51.209348, 3.2246995],
       data: [],
-      markerarra: [],
+      markerarray: [],
       map: null,
       loaded: false,
       icon: [],
