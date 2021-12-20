@@ -1,21 +1,19 @@
 <template>
-  <div>
-    <br />
+  <div class="pa-5">
+    <v-card class="pa-3" elevation="3">
+      <MapPage />
+    </v-card>
 
-    <MapPage />
-
     <br />
-    <v-divider dark></v-divider>
+    <v-divider></v-divider>
     <br />
     <div>
-      <v-sheet align="center" :color="this.$store.state.backgroundColor" dark>
-        <p class="text-h4">
-          Pulu gives an overview of the current groundwater levels in Flanders.
-        </p>
-        <p class="text-h4">
-          Our mission of this platform is to map these groundwater levels.
-        </p>
-      </v-sheet>
+      <p class="text-h4">
+        Pulu gives an overview of the current groundwater levels in Flanders.
+      </p>
+      <p class="text-h4">
+        Our mission of this platform is to map these groundwater levels.
+      </p>
     </div>
 
     <br />
@@ -29,13 +27,15 @@
       :show-arrows="false"
       class="rounded-xl"
     >
-      <v-carousel-item v-for="(slide, i) in slides" :key="i" :src="slide.src">
+      <v-carousel-item
+        v-for="(slide, i) in slides"
+        :key="i"
+        :src="slide.src"
+        gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
+      >
         <v-row class="title fill-height" align="center" justify="center">
-          <div
-            :style="{ background: activeColor }"
-            class="pa-2 w-50 text-no-wrap rounded-lg"
-          >
-            <h5>{{ slide.title }}</h5>
+          <div style="color: white" class="pa-2 w-50 text-no-wrap rounded-lg">
+            <h2>{{ slide.title }}</h2>
           </div>
         </v-row>
       </v-carousel-item>
@@ -43,33 +43,39 @@
     <br />
     <v-divider></v-divider>
     <br />
-    <v-row class="d-flex justify-space-around pb-5">
-      <v-card
-        dark
-        color="green darken-3"
-        v-for="card in cards"
-        :key="card.id"
-        width="250px"
-        height="200px"
-      >
-        <h2 class="mt-4 font-weight-regular" style="text-align: center">
-          {{ card.title }}
-        </h2>
-        <p
-          class="mt-5 font-weight-black"
-          :style="{ 'font-size': '50px' }"
-          style="text-align: center"
-        >
-          {{ card.subtitle }}
-        </p>
-      </v-card>
-    </v-row>
+    <v-container fluid>
+      <v-row dense justify="center">
+        <v-col cols="6" sm="4" v-for="card in cards" :key="card.id">
+          <v-card dark color="green darken-3" height="180 " class="ma-1 pa-1">
+            <h2
+              class="mt-4 font-weight-regular hidden-xs-only"
+              style="text-align: center"
+            >
+              {{ card.title }}
+            </h2>
+            <h4
+              class="mt-4 font-weight-regular hidden-sm-and-up"
+              style="text-align: center"
+            >
+              {{ card.title }}
+            </h4>
+            <p
+              class="mt-5 font-weight-black"
+              :style="{ 'font-size': '50px' }"
+              style="text-align: center"
+            >
+              {{ card.subtitle }}
+            </p>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import MapPage from "@/components/MapPage.vue"
+import MapPage from "@/components/MapPage.vue";
 
 export default {
   name: "Home",
@@ -119,11 +125,10 @@ export default {
         {
           id: 3,
           title: "Project developers",
-          subtitle: "0"
-        }
-      ]
-      
-    }
+          subtitle: "0",
+        },
+      ],
+    };
   },
   watch: {
     "$store.state.devicelist": {
@@ -134,24 +139,21 @@ export default {
           this.getCountries(nv);
         }
       },
-      immediate: true // provides initial (not changed yet) state
+      immediate: true, // provides initial (not changed yet) state
     },
-    "$store.state.members":{
-      handler:function(amount){
-        if(amount){
-          this.cards[2].subtitle=amount.members
+    "$store.state.members": {
+      handler: function (amount) {
+        if (amount) {
+          this.cards[2].subtitle = amount.members;
 
-          console.log(amount.members)
+          console.log(amount.members);
         }
-        
-      }
-    }
+      },
+    },
   },
-  methods:{
-    async getMembers(){
-      this.$store.dispatch('getMembers');
-      
-      
+  methods: {
+    async getMembers() {
+      this.$store.dispatch("getMembers");
     },
     getCountries(arr) {
       let countries = [];
@@ -175,3 +177,12 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+p.text-h4 {
+  font-size: 2rem !important;
+  font-weight: lighter;
+  line-height: 2rem;
+  text-align: center;
+}
+</style>

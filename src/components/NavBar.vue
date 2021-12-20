@@ -7,13 +7,18 @@
       app
       class="pa-0 hidden-sm-and-up"
       flat
-      :color="this.$store.state.backgroundColor"
+      color="green darken-3"
       elevate-on-scroll
       dark
     >
       <v-row>
         <v-col class="px-0">
-          <v-card fill-height flat rounded="false" :color="this.$store.state.navBarColor">
+          <v-card
+            fill-height
+            flat
+            rounded="false"
+            :color="this.$store.state.navBarColor"
+          >
             <v-card-title class="py-0">
               <v-btn :to="{ name: 'Home' }" class="text-h5" depressed plain
                 >Pulu</v-btn
@@ -58,35 +63,27 @@
 
     <v-app-bar
       app
-      :color="this.$store.state.navBarColor"
-      flat
+      color="green darken-3"
       class="hidden-xs-only"
-      elevate-on-scroll
       dark
     >
-      <v-container class="py-0 fill-height">
-        <v-btn
-          :exact="true"
+      <v-tabs optional centered>
+        <v-tab
           v-for="link in links"
           :key="link"
           :to="{ name: link }"
-          text
-          large
-          tile
-          outlined
-          class="ml-2"
+          exact
         >
           {{ link }}
-        </v-btn>
-        <v-spacer></v-spacer>
-      </v-container>
+        </v-tab>
+      </v-tabs>
+      <v-spacer />
       <v-img
-
         max-height="50"
         max-width="50"
         justify="end"
-        src="../assets/pulu.png"
-      ></v-img>
+        src="../assets/pulu-light.png"
+      />
     </v-app-bar>
   </div>
 </template>
@@ -96,7 +93,7 @@ export default {
   name: "NavBar",
   data() {
     return {
-      links: ["Home", "AddSensor", "Sensors", "QR-scanner", "About"],
+      links: ["Home", "Sensors", "QR-scanner", "About"],
     };
   },
 };
