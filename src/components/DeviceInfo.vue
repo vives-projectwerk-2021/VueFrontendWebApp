@@ -2,6 +2,18 @@
   <div>
     <v-container fluid>
       <v-row>
+        <v-col>
+          <p class="text-h2 text-center bold"><b>Your Devices</b></p>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <p class="text-center text-h5">
+            Here you can view your devices and add new ones.
+          </p>
+        </v-col>
+      </v-row>
+      <v-row>
         <v-col cols="12" sm="6" v-for="device in devicelist" :key="device.id">
           <v-card
             v-if="device.location.lat && device.location.long"
@@ -24,6 +36,12 @@
                 <li v-else>
                   <b>Location: </b>[{{ device.location.lat }},
                   {{ device.location.long }}]
+                </li>
+                <li v-if="device.lastSend != testString">
+                  <b>Air Temperature: </b> {{Number(device.lastSend.temperature.air).toFixed(2)}}°C
+                </li>
+                <li v-if="device.lastSend != testString">
+                  <b>Battery Percentage: </b> {{Number(device.lastSend.battery_voltage).toFixed(2)}}%
                 </li>
               </ul>
             </v-card-text>
@@ -73,7 +91,14 @@ export default {
   created() {
     this.$store.dispatch("getAllSensors");
   },
-
+  data() {
+    return {
+      testString: "None"
+    //   d: new Date(),
+    //   d2: new Date(device.lastSend.time),
+    //   d3: new Date(d.getTime() - d2.getTime())
+     }
+  },
   computed: {
     ...mapState(["devicelist"]),
   },
