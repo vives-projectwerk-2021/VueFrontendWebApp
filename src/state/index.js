@@ -40,7 +40,6 @@ export const store = new Vuex.Store({
     getters: {
 
         devicevalues(state) {
-            console.log(state.devicevalues);
             return state.devicevalues;
         },
 
