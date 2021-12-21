@@ -11,12 +11,15 @@
         Location: [{{ devicevalues.location.lat }},
         {{ devicevalues.location.long }}]
       </v-card-text>
+        <div class="py-3" height="">
         <map-lat-long
                   v-if="devicevalues.location.lat && devicevalues.location.long"
                   v-bind:lat="devicevalues.location.lat"
                   v-bind:long="devicevalues.location.long"
                   v-bind:device="devicevalues.id"
+                   :style="{'height': `35vh`}"  
                 />
+        </div>
     </v-card>
 
     <div>
@@ -79,9 +82,10 @@ export default {
   components: {
     LiveData,
     LineChart,
+    MapLatLong
   },
   data() {
-    MapLatLong
+    
     return {
       loadingWS: true,
       deviceId: this.$route.params.deviceId,
