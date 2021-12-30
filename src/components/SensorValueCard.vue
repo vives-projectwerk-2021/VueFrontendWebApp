@@ -1,14 +1,17 @@
 <template>
-  <v-card width="296" height="200">
+  <v-card outlined flat>
     <v-container>
-      <v-row>
+      <v-row justify="center">
         <v-icon :color="color">{{icon}}</v-icon>
         <v-card-title>{{sensor}} {{level}}</v-card-title>
       </v-row>
-      <div class="d-flex flex-wrap">
-        <p class="text-h1 mb-0">{{value}}</p>
-        <p class="text-h4 align-self-end pb-1 mb-0">{{unit}}</p>
-      </div>
+      <v-card-text style="text-align: center;" class="pa-1">
+        <span class="text-h1 hidden-sm-and-up">{{value}}</span>
+        <span class="text-h4 hidden-xs-only">{{value}} </span>
+        
+        <span class="text-h4 hidden-sm-and-up">{{unit}}</span>
+        <span class="text-h5 hidden-xs-only">{{unit}} </span>
+      </v-card-text>
     </v-container>
   </v-card>
 </template>
